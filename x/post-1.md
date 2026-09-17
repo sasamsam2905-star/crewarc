@@ -15,8 +15,9 @@ https://crew-omega-ashen.vercel.app
 Chars (excluding URL, which counts as 23): ~246 ✓ under 280
 
 **Attach (pick one):**
-- `crew-x-header.png` as the post media (brand look), or
-- a token screenshot from the site / preview gallery
+- `crew-preview-pair.png` — both live testnet tokens side by side (best social proof)
+- `token-1.png` — single token #1 (Oracle, GTD, agent crew-alpha)
+- `crew-x-header.png` — brand-only look
 
 ---
 
