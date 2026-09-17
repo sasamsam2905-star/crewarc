@@ -177,38 +177,31 @@ describe("CREW Passport", function () {
     const { crew, deployer, factory } = await deploy();
     const provider = ethers.provider;
 
-    // 1000 funded wallets (max-per-wallet: WL 1, FCFS 1, Public 5)
+    // 1500 funded wallets (GOLD phase, max 1 per wallet)
     const wallets = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 1500; i++) {
       const w = ethers.Wallet.createRandom().connect(provider);
       await deployer.sendTransaction({ to: w.address, value: E("0.7") });
       wallets.push(w);
     }
     const now = Math.floor(Date.now() / 1000);
-    for (let c = 0; c < 1000; c += 250) {
+    for (let c = 0; c < 1500; c += 250) {
       await crew.setWhitelist(wallets.slice(c, c + 250).map((w) => w.address), true);
     }
-    await crew.setPhases(now - 10, now - 5);
+    // fcfsStart = 0 -> FCFS phase disabled (FCFS supply comes entirely via the GOLD bag)
+    await crew.setPhases(0, now - 10);
 
-    // WL: 1000 wallets x 1 = 1000 (random: exactly 500 gold + 500 FCFS)
-    for (let i = 0; i < 1000; i++) {
+    // GOLD: 1500 wallets x 1 = 1500 (bag 500 gold + 1000 FCFS -> exact split at sell-out)
+    for (let i = 0; i < 1500; i++) {
       await crew.connect(wallets[i]).mintWL(1, { value: E("0.5") });
     }
-    expect(await crew.wlMinted()).to.equal(1000);
+    expect(await crew.wlMinted()).to.equal(1500);
     expect(await crew.foundingMinted()).to.equal(500);
-    expect(await crew.fcfsMinted()).to.equal(500);
-
-    // FCFS phase: 500 slots left; the gold-receiving wallets still have their FCFS-per-wallet slot
-    const goldWallets = [];
-    for (let i = 0; i < 1000 && goldWallets.length < 500; i++) {
-      if (Number(await crew.tierOf(i + 1)) === 0) goldWallets.push(wallets[i]);
-    }
-    expect(goldWallets.length).to.equal(500);
-    for (const w of goldWallets) {
-      await deployer.sendTransaction({ to: w.address, value: E("1") });
-      await crew.connect(w).mintFCFS(1, { value: E("1") });
-    }
     expect(await crew.fcfsMinted()).to.equal(1000);
+    expect(await crew.fcfsViaWL()).to.equal(1000);
+
+    // FCFS phase is disabled (no separate phase)
+    await expect(crew.connect(wallets[0]).mintFCFS(1, { value: E("1") })).to.be.revertedWith("fcfs not open");
 
     // Public: 250 fresh wallets x 4 = 1000
     for (let i = 0; i < 250; i++) {
@@ -218,7 +211,7 @@ describe("CREW Passport", function () {
     }
 
     expect(await crew.totalSupply()).to.equal(2500);
-    expect(await crew.wlMinted()).to.equal(1000);
+    expect(await crew.wlMinted()).to.equal(1500);
     expect(await crew.foundingMinted()).to.equal(500);
     expect(await crew.fcfsMinted()).to.equal(1000);
     expect(await crew.publicMinted()).to.equal(1000);
@@ -232,10 +225,8 @@ describe("CREW Passport", function () {
       expect(counts[c], `class ${c} count`).to.equal(await crew.CLASS_CAPS(c));
     }
 
-    // WL ids 1..1000 (tier 0 or 1), FCFS phase ids 1001..1500, public 1501..2000
-    expect([0, 1]).to.include(Number(await crew.tierOf(1000)));
-    expect(await crew.tierOf(1001)).to.equal(1);
-    expect(await crew.tierOf(1500)).to.equal(1);
+    // GOLD ids 1..1500 (tier 0 or 1), public ids 1501..2500
+    expect([0, 1]).to.include(Number(await crew.tierOf(1500)));
     expect(await crew.tierOf(1501)).to.equal(2);
     expect(await crew.tierOf(2500)).to.equal(2);
 

@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const { ethers } = require("ethers");
 
-const SEED = "0x4d63f727fef8e424365db0a8c8345d925641f9aea7703bdd6e81a7dafed945a9";
+const SEED = "0xb89ce0a34b7648c584fc21460d9a1a5acb10e28d8011250e0075023bb6d0b730";
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 
 // ---- CLS: class per token id, exactly like _assignClass (seed + fallback) ----
@@ -319,7 +319,7 @@ footer code:hover{color:var(--gold2)}
     <p class="lede">Tier (how you minted) × Class (what you got) × Level (what you did). The card you see is never the card you'll keep.</p>
     <table>
       <tr><th>Axis</th><th>Tiers</th><th>Supply</th></tr>
-      <tr><td><b>Tier</b> (frame)</td><td>Founding Crew (gold, via GOLD) / FCFS (via GOLD or FCFS phase) / Public</td><td>500 / 1,000 / 1,000</td></tr>
+      <tr><td><b>Tier</b> (frame)</td><td>Founding Crew (gold, via GOLD) / FCFS (via GOLD) / Public</td><td>500 / 1,000 / 1,000</td></tr>
       <tr><td><b>Class</b> (face)</td><td>Common → Uncommon → Rare → <span style="color:var(--gold2)">Legendary</span></td><td>1,360 / 600 / 380 / 160</td></tr>
       <tr><td><b>Level</b> (badge)</td><td>L1 → L5 via on-chain attestations</td><td>earned, not minted</td></tr>
       <tr><td><b>Stamps</b></td><td>ENLISTED → ONBOARDED → VETTED → MASTER</td><td>earned, not minted</td></tr>
@@ -355,8 +355,8 @@ footer code:hover{color:var(--gold2)}
 
   <section class="sec" id="wl">
     <div class="kicker">GOLD</div>
-    <h2>GOLD — 1,000 slots @ $0.50</h2>
-    <p class="lede">Every GOLD mint is a <b>random result</b>: Founding Crew (gold frame) or FCFS — drawn on-chain from a bag of 500 gold + 500 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
+    <h2>GOLD — 1,500 slots @ $0.50</h2>
+    <p class="lede">Every GOLD mint is a <b>random result</b>: Founding Crew (gold frame) or FCFS — drawn on-chain from a bag of 500 gold + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
     <div class="wlbox">
       <div class="wl-tasks">
         <div class="wl-task">
@@ -387,7 +387,7 @@ footer code:hover{color:var(--gold2)}
     <h2>From testnet to the agent economy</h2>
     <div class="road">
       <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc Testnet</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
-      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,000 GOLD slots @ $0.50 — random result: Founding Crew (gold) or FCFS → 500 FCFS @ $1.00 → 1,000 Public @ $10. Max 1 per wallet (GOLD/FCFS), 4 (Public). Total raise: $11,000 USDC. GOLD tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 GOLD slots @ $0.50 — random result: Founding Crew (gold) or FCFS → 1,000 Public @ $10. Max 1 per wallet (GOLD), 4 (Public). Total raise: $10,750 USDC. GOLD tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
       <div class="ritem"><span class="st next">NEXT</span><div><b>Phase 2 — Mainnet mint</b><p>Same contract, deployed to Arc mainnet (chain 5042). Testnet passports are the dry run.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 4 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
@@ -408,15 +408,15 @@ footer code:hover{color:var(--gold2)}
   <footer>
     <div class="frow">
       <span>Arc Testnet contract:</span>
-      <code class="copyaddr" data-addr="0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5" data-label="Contract address">0xd5B4…75f5</code>
+      <code class="copyaddr" data-addr="0x258Cbb33A0FEA6674CC27F87B6a608641B265110" data-label="Contract address">0x258C…5110</code>
       <span>Art libraries:</span>
-      <code class="copyaddr" data-addr="0xe75b220edBf9c1141F143377B2c688D347b17925" data-label="Art library">0xe75b…7925</code>
-      <code class="copyaddr" data-addr="0x9f14d1bb452E5286b1ef18Db7d5398691260F011" data-label="Gold art library">0x9f14…F011</code>
-      <a href="https://testnet.arcscan.app/address/0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5" target="_blank">explorer ↗</a>
+      <code class="copyaddr" data-addr="0x23C420f117C93deea7d058eC4120FB1551bF1563" data-label="Art library">0x23C4…1563</code>
+      <code class="copyaddr" data-addr="0xC5f95AAD43D49673D78A82d5a5fbCbEEde83B417" data-label="Gold art library">0xC5f9…B417</code>
+      <a href="https://testnet.arcscan.app/address/0x258Cbb33A0FEA6674CC27F87B6a608641B265110" target="_blank">explorer ↗</a>
     </div>
     <div class="frow">
       <span>Deploy seed:</span>
-      <code class="copyaddr" data-addr="0x4d63f727fef8e424365db0a8c8345d925641f9aea7703bdd6e81a7dafed945a9" data-label="Seed">0x4d63…45a9</code>
+      <code class="copyaddr" data-addr="0xb89ce0a34b7648c584fc21460d9a1a5acb10e28d8011250e0075023bb6d0b730" data-label="Seed">0xb89c…b730</code>
     </div>
     <p>CREW is an experimental collectible/identity project on Arc testnet. Nothing here is financial advice. Smart contracts can contain bugs; testnet funds have no monetary value. Verify all addresses on-chain before minting.</p>
   </footer>

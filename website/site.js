@@ -7,13 +7,13 @@ const NETS = {
     name: "Arc Testnet",
     chainId: "0x4cef52",
     rpc: "https://rpc.testnet.arc.io",
-    contract: "0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5",
-    library: "0xe75b220edBf9c1141F143377B2c688D347b17925",
-    library2: "0x9f14d1bb452E5286b1ef18Db7d5398691260F011",
+    contract: "0x258Cbb33A0FEA6674CC27F87B6a608641B265110",
+    library: "0x23C420f117C93deea7d058eC4120FB1551bF1563",
+    library2: "0xC5f95AAD43D49673D78A82d5a5fbCbEEde83B417",
     explorer: "https://testnet.arcscan.app",
     symbol: "USDC",
     decimals: 18,
-    seed: "0x4d63f727fef8e424365db0a8c8345d925641f9aea7703bdd6e81a7dafed945a9",
+    seed: "0xb89ce0a34b7648c584fc21460d9a1a5acb10e28d8011250e0075023bb6d0b730",
   },
   "0x13ba": {
     name: "Arc Mainnet",
@@ -31,7 +31,7 @@ const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "P
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 const PHASES = {
-  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1000n, maxPer: 1n, label: "GOLD", priceStr: "$0.50", gold: true },
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "GOLD", priceStr: "$0.50", gold: true },
   fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
@@ -428,9 +428,9 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`GOLD open · ${state.wl}/1000`, "gold") : chip(`GOLD ${state.wl}/1000 · ${state.wl >= 1000n ? "sold out" : "closed"}`, "dim")) +
-    (o.fcfs ? chip(`FCFS OPEN · ${state.fcfs}/1000`, "gold") : chip(`FCFS ${state.fcfs}/1000 · opens in ${countdown(state.fcfsStart)}`, state.fcfsStart > now ? "dim" : "")) +
-    (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/500`, "gold") : chip(`Public ${state.pub}/500 · opens in ${countdown(state.pubStart)}`, "dim")) +
+    (o.wl ? chip(`GOLD open · ${state.wl}/1500`, "gold") : chip(`GOLD ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
+    chip(`FCFS ${state.fcfs}/1000 · via GOLD mint`, "dim") +
+    (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
 }
 function renderPhaseCards() {
@@ -447,6 +447,7 @@ function renderPhaseCards() {
     if (o) { badge = "OPEN"; cls = "open"; }
     else if (minted >= cap) { badge = "SOLD OUT"; cls = "out"; }
     else if (ph === "wl") { badge = "BY WHITELIST"; cls = "dim"; }
+    else if (ph === "fcfs") { badge = "VIA GOLD MINT"; cls = "dim"; }
     else { badge = "OPENS IN " + countdown(starts).toUpperCase(); cls = "dim"; }
     const pct = cap ? Number(minted * 100n / cap) : 0;
     const c = document.createElement("div");
@@ -455,7 +456,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>gold</b> or FCFS" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>gold</b> or FCFS" : ph === "fcfs" ? "· filled via GOLD mint" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
@@ -475,8 +476,7 @@ function renderMintControls() {
     const st = state;
     const now = BigInt(Math.floor(Date.now() / 1000));
     let msg = "No open phase for your wallet right now.";
-    if (st && !st.wlOpen && st.fcfsStart > now) msg = `WL closed for you — FCFS opens in <b>${countdown(st.fcfsStart)}</b>.`;
-    else if (st && st.fcfsStart <= now && st.pubStart > now) msg = "FCFS sold out — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
+    if (st && !st.wlOpen && st.pubStart > now) msg = "GOLD is closed — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
     info.innerHTML = msg;
     btn.textContent = "Mint closed";
     btn.disabled = true;

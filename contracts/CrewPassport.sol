@@ -31,10 +31,10 @@ contract CrewPassport is ERC721Enumerable, ERC2981, Ownable {
     uint8 public constant TIER_FCFS = 1;   // first come first served
     uint8 public constant TIER_PUBLIC = 2; // public
 
-    uint256 public constant WL_CAP = 1000;      // WL phase slots (500 gold + 500 FCFS)
+    uint256 public constant WL_CAP = 1500;      // GOLD phase slots (500 gold + 1000 FCFS)
     uint256 public constant FOUNDING_CAP = 500; // total gold (Founding Crew) supply
-    uint256 public constant WL_FCFS_BUDGET = 500; // FCFS-tier slots inside the WL bag
-    uint256 public constant FCFS_CAP = 1000;    // total FCFS supply (WL + FCFS phase)
+    uint256 public constant WL_FCFS_BUDGET = 1000; // FCFS-tier slots inside the GOLD bag
+    uint256 public constant FCFS_CAP = 1000;    // total FCFS supply (all via the GOLD bag)
     uint256 public constant PUBLIC_CAP = 1000;
 
     uint256 public constant WL_PRICE = 0.5e18;    // native USDC
@@ -126,9 +126,9 @@ contract CrewPassport is ERC721Enumerable, ERC2981, Ownable {
         bool goldLeft = foundingMinted < FOUNDING_CAP;
         bool fcfsLeft = fcfsMinted < FCFS_CAP;
         require(goldLeft || fcfsLeft, "cap reached");
-        // Bag model: WL = 500 gold balls + 500 FCFS balls, drawn without
-        // replacement proportional to remaining balls -> if the WL phase fills
-        // all 1000 slots, the final split is exactly 500 gold / 500 FCFS.
+        // Bag model: GOLD = 500 gold balls + 1000 FCFS balls, drawn without
+        // replacement proportional to remaining balls -> if the GOLD phase fills
+        // all 1500 slots, the final split is exactly 500 gold / 1000 FCFS.
         uint256 remGold = FOUNDING_CAP - foundingMinted;
         uint256 remWlFcfs = WL_FCFS_BUDGET - fcfsViaWL;
         uint8 tier;
@@ -273,7 +273,7 @@ contract CrewPassport is ERC721Enumerable, ERC2981, Ownable {
     }
 
     function setPhases(uint256 newFcfsStart, uint256 newPublicStart) external onlyOwner {
-        require(newFcfsStart <= newPublicStart, "phase order");
+        require(newFcfsStart == 0 || newFcfsStart <= newPublicStart, "phase order"); // fcfsStart 0 = FCFS phase disabled
         fcfsStart = newFcfsStart;
         publicStart = newPublicStart;
     }

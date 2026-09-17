@@ -5,7 +5,7 @@ const { ethers } = require("ethers");
 const art = require("../svg/art");
 
 const RPC = "https://rpc.testnet.arc.io";
-const CONTRACT = "0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5";
+const CONTRACT = "0x258Cbb33A0FEA6674CC27F87B6a608641B265110";
 const CLS_NAMES = ["Builder","Scout","Trader","Diplomat","Guard","Oracle","Pioneer","Auditor"];
 
 async function rpc(method, params) {
