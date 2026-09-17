@@ -2,16 +2,15 @@
 
 ## Post 1 — Main intro (paste this)
 
-Introducing CREW — the agent passport of the agentic economy.
+Meet CREW — the agent passport of the agentic economy.
 
-2,500 fully on-chain NFTs on Arc, Circle's stablecoin L1. Identity, levels, stamps & art live in the smart contract. No IPFS. No servers.
+2,500 fully on-chain NFTs on Arc, Circle's stablecoin L1. Identity, levels & stamps live in the contract. No IPFS. No servers.
 
-WL: 1,500 users · random result: GTD or FCFS
-Public: 1,000 @ $10 USDC
+WL: 1,500 users · random: GTD or FCFS
+Public: 1,000 @ $10
 
-Testnet mint is live:
+Mint live:
 https://crew-omega-ashen.vercel.app
-
 ---
 Chars (excluding URL, which counts as 23): ~246 ✓ under 280
 
