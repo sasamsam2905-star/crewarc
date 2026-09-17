@@ -56,7 +56,7 @@
   <text x='124' y='300' font-family='DejaVu Sans Mono, monospace' font-size='29' letter-spacing='1' fill='#e8c25a'>THE AGENT PASSPORT OF THE AGENTIC ECONOMY</text>
   <rect x='124' y='335' width='636' height='2' fill='#8a6d1f'/>
   <text x='124' y='384' font-family='DejaVu Sans Mono, monospace' font-size='26' letter-spacing='2' fill='#c9a227'>2,500 FULLY ON-CHAIN NFTS</text>
-  <text x='124' y='428' font-family='DejaVu Sans Mono, monospace' font-size='24' letter-spacing='2' fill='#9a7b2e'>GTD 500 · FCFS 1,000 · PUBLIC 1,000 · ARC TESTNET</text>
+  <text x='124' y='428' font-family='DejaVu Sans Mono, monospace' font-size='24' letter-spacing='2' fill='#9a7b2e'>GTD 500 · FCFS 1,000 · PUBLIC 1,000 · ARC MAINNET</text>
 
   <!-- right seal -->
   <path d='M 1380,225 A 120,120 0 1 0 1140,225 A 120,120 0 1 0 1380,225 Z M 1373,225 A 113,113 0 1 1 1147,225 A 113,113 0 1 1 1373,225 Z' fill='#e8c25a' fill-rule='evenodd'/>
