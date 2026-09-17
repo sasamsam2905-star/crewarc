@@ -44,8 +44,8 @@ const art = fs
   .readFileSync(path.join(__dirname, "..", "svg", "art.js"), "utf8")
   .replace("module.exports = { FACES, DETAILS, stamp, barcode, pad4, passportSvg, packWidths };", "window.__ART__ = { FACES, DETAILS, stamp, barcode, pad4, passportSvg, packWidths };");
 const site = fs.readFileSync(path.join(__dirname, "site.js"), "utf8");
-// X banner (header for @crewonarc) inlined + animated (marquee) in the WL section.
-const xhead = fs.readFileSync(path.join(__dirname, "..", "x", "header.svg"), "utf8").trim();
+// Note: the CREW banner in the WL section is a video (crew-banner.mp4),
+// deployed next to index.html on both Vercel and GitHub Pages.
 
 let html = `<!DOCTYPE html>
 <html lang="en">
@@ -152,12 +152,8 @@ tr:last-child td{border-bottom:none}
 /* mint */
 .phasecards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
 .phase{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-.phase.active{border-color:var(--gold)}
 .phase-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .phase-name{font-weight:700;font-size:14px;font-family:var(--font-disp);letter-spacing:1px}
-.badge{font-size:10px;letter-spacing:1.5px;font-family:var(--font-mono);border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--mut)}
-.badge.open{border-color:var(--ok);color:var(--ok)}
-.badge.out{opacity:.5}
 .phase-price{font-size:30px;font-weight:800;margin:10px 0 8px}
 .phase-price span{font-size:13px;color:var(--mut);font-weight:500}
 .phase-bar{height:6px;border-radius:4px;background:var(--panel2);overflow:hidden}
@@ -177,14 +173,9 @@ tr:last-child td{border-bottom:none}
 .wlbox input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:12px 14px;font-size:14px;margin-bottom:12px}
 .wlbox input:focus{outline:none;border-color:var(--gold)}
 #wl-done{margin-top:14px;font-size:13px;color:var(--ok)}
-/* animated X header banner (marquee) */
+/* CREW banner video (replaces marquee) */
 .xhead{margin-top:26px;border:1px solid var(--gold);border-radius:14px;overflow:hidden;position:relative;background:#160202}
-.xhead-track{display:flex;width:max-content;animation:xslide 36s linear infinite}
-.xhead-track svg{height:170px;width:auto;display:block}
-.xhead::before,.xhead::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-.xhead::before{left:0;background:linear-gradient(90deg,rgba(21,3,3,.9),transparent)}
-.xhead::after{right:0;background:linear-gradient(-90deg,rgba(21,3,3,.9),transparent)}
-@keyframes xslide{to{transform:translateX(-50%)}}
+.xheadvid{display:block;width:100%;height:auto}
 /* roadmap */
 .road{display:grid;gap:10px}
 .ritem{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;align-items:baseline}
@@ -232,7 +223,6 @@ footer code:hover{color:var(--gold2)}
 @media (prefers-reduced-motion: reduce){
   .nft3d-float{animation:none}
   .nft3d .shine::before{animation:none;opacity:0}
-  .xhead-track{animation:none}
 }
 /* responsive */
 @media(max-width:900px){
@@ -242,7 +232,6 @@ footer code:hover{color:var(--gold2)}
   .grid2{grid-template-columns:1fr}
   .grid3,.crewgrid{grid-template-columns:repeat(2,1fr)}
   .steps{grid-template-columns:repeat(2,1fr)}
-  .xhead-track svg{height:120px}
   .phasecards{grid-template-columns:1fr}
   .navlinks{display:none}
 }
@@ -311,7 +300,7 @@ footer code:hover{color:var(--gold2)}
   <section class="sec" id="crew">
     <div class="kicker">The crew</div>
     <h2>8 classes. One deterministic seed.</h2>
-    <p class="lede">Class is assigned from the deploy seed + token id, with exact supply caps enforced in-contract. These are real token ids from the live testnet contract.</p>
+    <p class="lede">Class is assigned from the deploy seed + token id, with exact supply caps enforced in-contract. These are real token ids from the live contract.</p>
     <div class="crewgrid" id="crewgrid"></div>
   </section>
 
@@ -374,20 +363,19 @@ footer code:hover{color:var(--gold2)}
       <button class="btn gold" id="wl-save" style="width:100%">Register for WL</button>
       <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
     </div>
-    <div class="xhead" aria-label="CREW on X — @crewonarc">
-      <div class="xhead-track">__XHEAD_SVG____XHEAD_SVG__</div>
+    <div class="xhead" aria-label="CREW — the agent passport of the agentic economy">
+      <video class="xheadvid" src="crew-banner.mp4" autoplay muted loop playsinline></video>
     </div>
   </section>
 
   <section class="sec" id="roadmap">
     <div class="kicker">Roadmap</div>
-    <h2>From testnet to the agent economy</h2>
+    <h2>From mint to the agent economy</h2>
     <div class="road">
-      <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc Testnet</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
-      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 WL slots @ $0.50 — random result: GTD (Guaranteed) or FCFS → 1,000 Public @ $10. Max 1 per wallet (WL), 4 (Public). Total raise: $10,750 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
-      <div class="ritem"><span class="st next">NEXT</span><div><b>Phase 2 — Mainnet mint</b><p>Same contract, deployed to Arc mainnet (chain 5042). Testnet passports are the dry run.</p></div></div>
-      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
-      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 4 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
+      <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Mint NFT</b><p>2,500 passports minting on OpenSea: 1,500 WL @ $0.50 (random result: GTD or FCFS) → 1,000 Public @ $10. Max 1 per wallet (WL), 4 (Public). Total raise: $10,750 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 2 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
+      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
     </div>
   </section>
 
@@ -405,7 +393,7 @@ footer code:hover{color:var(--gold2)}
 
   <footer>
     <div class="frow">
-      <span>Arc Testnet contract:</span>
+      <span>Contract:</span>
       <code class="copyaddr" data-addr="0x258Cbb33A0FEA6674CC27F87B6a608641B265110" data-label="Contract address">0x258C…5110</code>
       <span>Art libraries:</span>
       <code class="copyaddr" data-addr="0x23C420f117C93deea7d058eC4120FB1551bF1563" data-label="Art library">0x23C4…1563</code>
@@ -416,7 +404,7 @@ footer code:hover{color:var(--gold2)}
       <span>Deploy seed:</span>
       <code class="copyaddr" data-addr="0xb89ce0a34b7648c584fc21460d9a1a5acb10e28d8011250e0075023bb6d0b730" data-label="Seed">0xb89c…b730</code>
     </div>
-    <p>CREW is an experimental collectible/identity project on Arc testnet. Nothing here is financial advice. Smart contracts can contain bugs; testnet funds have no monetary value. Verify all addresses on-chain before minting.</p>
+    <p>CREW is an experimental collectible/identity project on Arc, Circle's stablecoin L1. Nothing here is financial advice. Smart contracts can contain bugs. Verify all addresses on-chain before minting.</p>
   </footer>
 </div>
 <div id="toast"></div>
@@ -435,7 +423,6 @@ __SITE_JS__
   .replace('"__CLS__"', JSON.stringify(clsStr))
   .replace('"__BCD__"', JSON.stringify(bcdStr))
   .replace("__SITE_JS__", site);
-html = html.split("__XHEAD_SVG__").join(xhead); // banner is inlined twice (seamless marquee)
 
 const out = path.join(__dirname, "index.html");
 fs.writeFileSync(out, html);

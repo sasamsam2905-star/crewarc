@@ -4,7 +4,7 @@
 
 // ============================== config ==============================
 const NET = {
-  name: "Arc Testnet",
+  name: "Arc Mainnet",
   rpc: "https://rpc.testnet.arc.io",
   contract: "0x258Cbb33A0FEA6674CC27F87B6a608641B265110",
 };
@@ -56,14 +56,6 @@ async function readState() {
     fcfsStart: du(r[5]), pubStart: du(r[6]), wlOpen: du(r[7]) === 1n, gtd: du(r[8]),
   };
 }
-function phaseOpen(st, now) {
-  return {
-    wl: st.wlOpen && st.wl < PHASES.wl.cap,
-    fcfs: st.fcfsStart > 0n && now >= st.fcfsStart && st.fcfs < PHASES.fcfs.cap + st.extra,
-    pub: st.pubStart > 0n && now >= st.pubStart && st.pub < PHASES.pub.cap,
-  };
-}
-
 // ============================== art ==============================
 const ART = window.__ART__;
 const CLS = window.__CLS__; // 2500 chars: class index per token id (id-1)
@@ -96,13 +88,6 @@ function renderPassport(id, o) {
 
 // ============================== dom helpers ==============================
 const el = (id) => document.getElementById(id);
-function countdown(from) {
-  const d = Number(from - BigInt(Math.floor(Date.now() / 1000)));
-  if (d <= 0) return "now";
-  const h = Math.floor(d / 3600);
-  const m = Math.floor((d % 3600) / 60);
-  return h > 0 ? h + "h " + m + "m" : m + "m";
-}
 let toastTimer = null;
 function toast(msg, kind) {
   const t = el("toast");
@@ -150,16 +135,14 @@ function chip(txt, cls) {
 function renderStatus() {
   const bar = el("statusbar");
   if (!state) {
-    bar.innerHTML = chip("status: offline — retrying…", "dim");
+    bar.innerHTML = chip("loading live counters…", "dim");
     return;
   }
-  const now = BigInt(Math.floor(Date.now() / 1000));
-  const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`GTD OPEN · ${state.gtd}/500`, "gold") : chip(`GTD ${state.gtd}/500 · ${state.gtd >= 500n ? "sold out" : "closed"}`, "dim")) +
-    chip(`FCFS ${state.fcfs}/1000 · via WL`, "dim") +
-    (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
+    chip(`GTD ${state.gtd}/500`) +
+    chip(`FCFS ${state.fcfs}/1000 · via WL`) +
+    chip(`Public ${state.pub}/1000`) +
     chip(NET.name, "net");
 }
 function renderPhaseCards() {
@@ -169,20 +152,11 @@ function renderPhaseCards() {
     const P = PHASES[ph];
     const minted = { wl: state ? state.gtd : 0n, fcfs: state ? state.fcfs : 0n, pub: state ? state.pub : 0n }[ph];
     const cap = P.cap + (state && ph === "fcfs" ? state.extra : 0n);
-    const now = BigInt(Math.floor(Date.now() / 1000));
-    const o = state ? phaseOpen(state, now)[ph] : null;
-    const starts = ph === "fcfs" ? state && state.fcfsStart : ph === "pub" ? state && state.pubStart : 0n;
-    let badge, cls;
-    if (o) { badge = "OPEN"; cls = "open"; }
-    else if (minted >= cap) { badge = "SOLD OUT"; cls = "out"; }
-    else if (ph === "wl") { badge = "BY WHITELIST"; cls = "dim"; }
-    else if (ph === "fcfs") { badge = "VIA WL MINT"; cls = "dim"; }
-    else { badge = "OPENS IN " + countdown(starts).toUpperCase(); cls = "dim"; }
     const pct = cap ? Number(minted * 100n / cap) : 0;
     const c = document.createElement("div");
-    c.className = "phase" + (o ? " active" : "");
+    c.className = "phase";
     c.innerHTML = `
-      <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
+      <div class="phase-top"><span class="phase-name">${P.label}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
       <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
