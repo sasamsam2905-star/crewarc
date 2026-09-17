@@ -184,7 +184,10 @@ tr:last-child td{border-bottom:none}
 .airdrop-amount span{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--mut);margin-top:4px}
 .airdrop-task{margin-top:auto;padding-top:18px;border-top:1px dashed rgba(201,162,39,.35)}
 .airdrop-task b{font-size:13.5px;display:block;margin-bottom:4px}
-.airdrop-task p{margin:0;color:var(--mut);font-size:12.5px}
+.airdrop-task p{margin:0 0 10px;color:var(--mut);font-size:12.5px}
+.airdrop-task input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:11px 13px;font-size:13px;margin-bottom:10px}
+.airdrop-task input:focus{outline:none;border-color:var(--gold)}
+#ad-done{margin-top:10px;font-size:12.5px;color:var(--ok)}
 .wl-tasks{display:grid;gap:10px;margin-bottom:16px}
 .wl-task{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .wl-task .wl-n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);color:var(--gold2);font-family:var(--font-mono);font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -395,6 +398,9 @@ footer code:hover{color:var(--gold2)}
           <div class="airdrop-task">
             <b>Community airdrop task</b>
             <p>Post on <a href="https://x.com/crewonarc" target="_blank" rel="noopener">X</a> about CREW and tag <b>@crewonarc</b> to enter the community airdrop.</p>
+            <input id="ad-post" placeholder="Paste your X post link (https://x.com/…)">
+            <button class="btn gold" id="ad-submit" style="width:100%">Submit post link</button>
+            <div id="ad-done" class="hidden">✓ Post registered — we'll verify the @crewonarc tag on X. Keep this device/browser.</div>
           </div>
         </div>
       </div>

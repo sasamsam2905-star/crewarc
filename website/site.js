@@ -87,6 +87,28 @@ function saveWL() {
   toast("Registered! Keep this device/browser or note your details.", "ok");
 }
 
+// ============================== $CREW airdrop post ==============================
+function saveAirdropPost() {
+  const v = el("ad-post").value.trim();
+  if (!/^https?:\/\/(www\.)?(x\.com|twitter\.com)\/\S+/i.test(v)) {
+    return toast("Valid X post link required (https://x.com/…)", "err");
+  }
+  try {
+    localStorage.setItem("crew_airdrop", JSON.stringify({ post: v, ts: Date.now() }));
+  } catch (e) { /* private mode */ }
+  el("ad-done").classList.remove("hidden");
+  toast("Post link submitted — we'll verify the @crewonarc tag.", "ok");
+}
+function restoreAirdropPost() {
+  try {
+    const rec = JSON.parse(localStorage.getItem("crew_airdrop") || "null");
+    if (rec && rec.post) {
+      el("ad-post").value = rec.post;
+      el("ad-done").classList.remove("hidden");
+    }
+  } catch (e) { /* ignore */ }
+}
+
 // ============================== render ==============================
 function chip(txt, cls) {
   return `<span class="chip ${cls || ""}">${txt}</span>`;
@@ -239,6 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
   upgrade3D(el("crewgrid"));
   el("wl-save").addEventListener("click", saveWL);
   el("wl-count").textContent = wlList().length;
+  el("ad-submit").addEventListener("click", saveAirdropPost);
+  restoreAirdropPost();
   document.querySelectorAll(".copyaddr").forEach((b) =>
     b.addEventListener("click", () => copyTxt(b.dataset.addr, b.dataset.label))
   );
