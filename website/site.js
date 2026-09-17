@@ -31,7 +31,7 @@ const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "P
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 const PHASES = {
-  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1000n, maxPer: 1n, label: "Whitelist", priceStr: "$0.50", gold: true },
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1000n, maxPer: 1n, label: "GOLD", priceStr: "$0.50", gold: true },
   fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
@@ -163,7 +163,7 @@ async function readToken(id) {
 // ============================== art ==============================
 const ART = window.__ART__;
 const CLS = window.__CLS__; // 2500 chars: class index per token id (id-1)
-const BCD = window.__BCD__; // 32000 hex chars: barcode bits per token id (id-1)
+const BCD = window.__BCD__; // 40000 hex chars (2500 ids × 16): barcode bits per token id (id-1)
 function bcOf(id) {
   return BigInt("0x" + BCD.slice((id - 1) * 16, (id - 1) * 16 + 16));
 }
@@ -428,7 +428,7 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`WL open · ${state.wl}/1000`, "gold") : chip(`WL ${state.wl}/1000 · ${state.wl >= 1000n ? "sold out" : "closed"}`, "dim")) +
+    (o.wl ? chip(`GOLD open · ${state.wl}/1000`, "gold") : chip(`GOLD ${state.wl}/1000 · ${state.wl >= 1000n ? "sold out" : "closed"}`, "dim")) +
     (o.fcfs ? chip(`FCFS OPEN · ${state.fcfs}/1000`, "gold") : chip(`FCFS ${state.fcfs}/1000 · opens in ${countdown(state.fcfsStart)}`, state.fcfsStart > now ? "dim" : "")) +
     (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/500`, "gold") : chip(`Public ${state.pub}/500 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
@@ -488,7 +488,7 @@ function renderMintControls() {
   el("qty").value = qty;
   total.innerHTML = `Total: <b>${(qty * Number(P.price) / 1e18).toLocaleString()} USDC</b> (${qty} × ${P.priceStr})`;
   const claimed = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
-  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · WL status: ${acct && acct.wl ? "<b>whitelisted ✓</b>" : "—"}`;
+  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · GOLD access: ${acct && acct.wl ? "<b>granted ✓</b>" : "—"}`;
   btn.textContent = `Mint ${qty} Passport${qty > 1 ? "s" : ""}`;
   btn.disabled = max < 1 || busy;
   if (max < 1) btn.textContent = "Sold out for you";
@@ -593,10 +593,53 @@ function upgrade3D(scope, opts) {
 }
 
 // ============================== init ==============================
+function startCursorEmbers() {
+  if (!window.matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  const cv = document.createElement("canvas");
+  cv.id = "cursor-embers";
+  Object.assign(cv.style, { position: "fixed", inset: "0", width: "100vw", height: "100vh", pointerEvents: "none", zIndex: "9999" });
+  document.body.appendChild(cv);
+  const ctx = cv.getContext("2d");
+  let W, H; const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() { W = window.innerWidth; H = window.innerHeight; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+  resize(); window.addEventListener("resize", resize);
+  const parts = [];
+  const G = { x: -200, y: -200, tx: -200, ty: -200 };
+  let active = false;
+  window.addEventListener("mousemove", (e) => {
+    G.tx = e.clientX; G.ty = e.clientY; active = true;
+    for (let i = 0; i < 2; i++) parts.push({
+      x: e.clientX + (Math.random() - 0.5) * 10, y: e.clientY + (Math.random() - 0.5) * 10,
+      vx: (Math.random() - 0.5) * 0.6, vy: -0.4 - Math.random() * 0.9,
+      r: 1 + Math.random() * 2.4, life: 1, decay: 0.015 + Math.random() * 0.02, gold: Math.random() < 0.45,
+    });
+    if (parts.length > 90) parts.splice(0, parts.length - 90);
+  });
+  (function tick() {
+    requestAnimationFrame(tick);
+    ctx.clearRect(0, 0, W, H);
+    if (!active) return;
+    G.x += (G.tx - G.x) * 0.18; G.y += (G.ty - G.y) * 0.18;
+    const g = ctx.createRadialGradient(G.x, G.y, 0, G.x, G.y, 90);
+    g.addColorStop(0, "rgba(255,120,60,0.10)"); g.addColorStop(0.5, "rgba(255,60,30,0.05)"); g.addColorStop(1, "rgba(255,60,30,0)");
+    ctx.fillStyle = g; ctx.fillRect(G.x - 90, G.y - 90, 180, 180);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.x += p.vx; p.y += p.vy; p.vy -= 0.004; p.life -= p.decay;
+      if (p.life <= 0) { parts.splice(i, 1); continue; }
+      const a = Math.max(p.life, 0);
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * a, 0, Math.PI * 2);
+      ctx.fillStyle = p.gold ? `rgba(255,196,60,${0.85 * a})` : `rgba(255,84,32,${0.8 * a})`;
+      ctx.fill();
+    }
+  })();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderHero();
   renderCrewGrid();
   upgrade3D(el("heropassport"), { glow: true });
+  startCursorEmbers();
   upgrade3D(el("crewgrid"));
   el("connect").addEventListener("click", connect);
   el("mintbtn").addEventListener("click", doMint);
