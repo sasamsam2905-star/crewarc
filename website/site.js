@@ -110,15 +110,19 @@ async function sendToSheet(type, payload) {
 
 function saveAirdropPost() {
   const v = el("ad-post").value.trim();
+  const w = el("ad-wallet").value.trim();
   if (!/^https?:\/\/(www\.)?(x\.com|twitter\.com)\/\S+/i.test(v)) {
     return toast("Valid X post link required (https://x.com/…)", "err");
   }
+  if (!/^0x[0-9a-fA-F]{40}$/.test(w)) {
+    return toast("Valid 0x wallet address required", "err");
+  }
   try {
-    localStorage.setItem("crew_airdrop", JSON.stringify({ post: v, ts: Date.now() }));
+    localStorage.setItem("crew_airdrop", JSON.stringify({ post: v, wallet: w, ts: Date.now() }));
   } catch (e) { /* private mode */ }
   el("ad-done").classList.remove("hidden");
   if (SHEETS_URL) {
-    sendToSheet("airdrop", { post: v })
+    sendToSheet("airdrop", { post: v, wallet: w })
       .then((ok) => toast(ok ? "Post submitted ✓ — sent to the airdrop list." : "Post saved on this device (sync offline).", ok ? "ok" : "warn"));
   } else {
     toast("Post link submitted — we'll verify the @crewonarc tag.", "ok");
@@ -129,6 +133,7 @@ function restoreAirdropPost() {
     const rec = JSON.parse(localStorage.getItem("crew_airdrop") || "null");
     if (rec && rec.post) {
       el("ad-post").value = rec.post;
+      if (rec.wallet) el("ad-wallet").value = rec.wallet;
       el("ad-done").classList.remove("hidden");
     }
   } catch (e) { /* ignore */ }

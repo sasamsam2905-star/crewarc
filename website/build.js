@@ -399,6 +399,7 @@ footer code:hover{color:var(--gold2)}
             <b>Community airdrop task</b>
             <p>Post on <a href="https://x.com/crewonarc" target="_blank" rel="noopener">X</a> about CREW and tag <b>@crewonarc</b> to enter the community airdrop.</p>
             <input id="ad-post" placeholder="Paste your X post link (https://x.com/…)">
+            <input id="ad-wallet" placeholder="Wallet address (0x…) — airdrop destination">
             <button class="btn gold" id="ad-submit" style="width:100%">Submit post link</button>
             <div id="ad-done" class="hidden">✓ Post registered — we'll verify the @crewonarc tag on X. Keep this device/browser.</div>
           </div>

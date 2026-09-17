@@ -1,5 +1,5 @@
 /**
- * CREW Submissions — Google Apps Script backend (v2)
+ * CREW Submissions — Google Apps Script backend (v3)
  * ==================================================
  * Semua submission dari website crewarc.xyz (form WL + form $CREW airdrop)
  * masuk sebagai baris baru di Google Sheet ini.
@@ -10,9 +10,12 @@
  *   (Tanpa "New version", kode lama yang masih berjalan tetap dipakai!)
  *   URL web app TIDAK berubah.
  *
+ * SATU KALI SAJA: di tab "Airdrop", hapus baris-baris tes lama
+ * (format 2 kolom) sebelum/ sesudah deploy v3 supaya rapi.
+ *
  * Hasil di sheet:
  *   - Tab "WL"      : Timestamp (WIB) | Wallet | Comment link
- *   - Tab "Airdrop" : Timestamp (WIB) | Post link
+ *   - Tab "Airdrop" : Timestamp (WIB) | Wallet | Post link
  */
 
 function handle(p) {
@@ -22,7 +25,7 @@ function handle(p) {
   var sheet = ensureSheet(ss, isAirdrop ? "Airdrop" : "WL");
   var ts = new Date().toLocaleString("en-GB", { timeZone: "Asia/Jakarta" });
   if (isAirdrop) {
-    sheet.appendRow([ts, String(p.post || "")]);
+    sheet.appendRow([ts, String(p.wallet || ""), String(p.post || "")]);
   } else {
     sheet.appendRow([ts, String(p.wallet || ""), String(p.comment || "")]);
   }
@@ -30,18 +33,27 @@ function handle(p) {
 }
 
 function ensureSheet(ss, name) {
+  var header = name === "Airdrop"
+    ? ["Timestamp (WIB)", "Wallet", "Post link"]
+    : ["Timestamp (WIB)", "Wallet", "Comment link"];
   var sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);
-    if (name === "Airdrop") sheet.appendRow(["Timestamp (WIB)", "Post link"]);
-    else sheet.appendRow(["Timestamp (WIB)", "Wallet", "Comment link"]);
+    sheet.appendRow(header);
     sheet.setFrozenRows(1);
+    return sheet;
+  }
+  // Upgrade header otomatis kalau masih layout lama
+  var a1 = String(sheet.getRange(1, 1).getValue());
+  var b1 = String(sheet.getRange(1, 2).getValue());
+  if (a1 !== header[0] || b1 !== header[1]) {
+    sheet.getRange(1, 1, 1, header.length).setValues([header]);
   }
   return sheet;
 }
 
 // Website mengirim: GET {url}?type=wl&wallet=...&comment=...
-// atau:             GET {url}?type=airdrop&post=...
+// atau:             GET {url}?type=airdrop&wallet=...&post=...
 function doGet(e) {
   var out;
   try {
