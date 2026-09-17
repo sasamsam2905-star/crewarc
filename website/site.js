@@ -31,7 +31,7 @@ const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "P
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 const PHASES = {
-  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "WL", priceStr: "$0.50", gold: true },
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 500n, wlCap: 1500n, maxPer: 1n, label: "GTD", priceStr: "$0.50", gold: true },
   fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
@@ -44,6 +44,7 @@ const S = {
   classOf: "0x4324aa21", tierOf: "0x53f96df2", levelOf: "0x6d5e3032", stampBits: "0x00f5e75f",
   agentName: "0x089853b9", agentSkill: "0x6e47d7f1",
   wlMintedPer: "0xd3c13d7e",
+  foundingMinted: "0x2536da0f",
   CLASS_NAMES: "0x28a869f3", RARITY_NAMES: "0x0a5b300c", CLASS_CAPS: "0xcfc4ce33",
   ownerTokens: "0xb15feaef", tokenOfOwnerByIndex: "0x2f745c59",
   seed: "0x7d94792a", onboardAgent: "0x4e7005ab", attestTask: "0x907055f9",
@@ -110,10 +111,11 @@ async function readState() {
   const r = await Promise.all([
     ccall(S.totalSupply), ccall(S.wlMinted), ccall(S.fcfsMinted), ccall(S.publicMinted),
     ccall(S.fcfsExtra), ccall(S.fcfsStart), ccall(S.publicStart), ccall(S.wlOpen),
+    ccall(S.foundingMinted),
   ]);
   return {
     total: du(r[0]), wl: du(r[1]), fcfs: du(r[2]), pub: du(r[3]), extra: du(r[4]),
-    fcfsStart: du(r[5]), pubStart: du(r[6]), wlOpen: du(r[7]) === 1n,
+    fcfsStart: du(r[5]), pubStart: du(r[6]), wlOpen: du(r[7]) === 1n, gtd: du(r[8]),
   };
 }
 function phaseOpen(st, now) {
@@ -246,7 +248,7 @@ function maxMintable(ph) {
   const P = PHASES[ph];
   const st = state;
   const minted = { wl: st.wl, fcfs: st.fcfs, pub: st.pub }[ph];
-  const rem = P.cap + (ph === "fcfs" ? st.extra : 0n) - minted;
+  const rem = (ph === "wl" ? P.wlCap : P.cap) + (ph === "fcfs" ? st.extra : 0n) - minted;
   const used = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
   const per = P.maxPer - used;
   const m = BigInt(Math.min(Number(rem), Number(per), 50));
@@ -428,7 +430,7 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`WL open · ${state.wl}/1500`, "gold") : chip(`WL ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
+    (o.wl ? chip(`GTD OPEN · ${state.gtd}/500 · WL ${state.wl}/1500`, "gold") : chip(`GTD ${state.gtd}/500 · WL ${state.wl}/1500 · ${state.gtd >= 500n ? "GTD sold out" : "closed"}`, "dim")) +
     chip(`FCFS ${state.fcfs}/1000 · via WL`, "dim") +
     (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
@@ -438,7 +440,7 @@ function renderPhaseCards() {
   wrap.innerHTML = "";
   ["wl", "fcfs", "pub"].forEach((ph) => {
     const P = PHASES[ph];
-    const minted = { wl: state ? state.wl : 0n, fcfs: state ? state.fcfs : 0n, pub: state ? state.pub : 0n }[ph];
+    const minted = { wl: state ? state.gtd : 0n, fcfs: state ? state.fcfs : 0n, pub: state ? state.pub : 0n }[ph];
     const cap = P.cap + (state && ph === "fcfs" ? state.extra : 0n);
     const now = BigInt(Math.floor(Date.now() / 1000));
     const o = state ? phaseOpen(state, now)[ph] : null;
@@ -456,7 +458,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL (1,500) · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
     wrap.appendChild(c);
   });
 }

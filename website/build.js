@@ -354,8 +354,8 @@ footer code:hover{color:var(--gold2)}
   </section>
 
   <section class="sec" id="wl">
-    <div class="kicker">WL</div>
-    <h2>WL — 1,500 slots @ $0.50</h2>
+    <div class="kicker">GTD</div>
+    <h2>GTD — 500 NFT @ $0.50 (via WL)</h2>
     <p class="lede">1,500 wallets get WL. Every WL mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
     <div class="wlbox">
       <div class="wl-tasks">
