@@ -44,8 +44,10 @@ const art = fs
   .readFileSync(path.join(__dirname, "..", "svg", "art.js"), "utf8")
   .replace("module.exports = { FACES, DETAILS, stamp, barcode, pad4, passportSvg, packWidths };", "window.__ART__ = { FACES, DETAILS, stamp, barcode, pad4, passportSvg, packWidths };");
 const site = fs.readFileSync(path.join(__dirname, "site.js"), "utf8");
+// X banner (header for @crewonarc) inlined + animated (marquee) in the WL section.
+const xhead = fs.readFileSync(path.join(__dirname, "..", "x", "header.svg"), "utf8").trim();
 
-const html = `<!DOCTYPE html>
+let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -118,6 +120,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:
 #statusbar{margin-top:8px}
 .heropassport svg{width:100%;max-width:380px;display:block;margin:0 auto;border-radius:14px}
 .heropassport .nft3d,.heropassport .nft3d .glare,.heropassport .nft3d .shine{border-radius:14px}
+/* vision */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 /* concept cards */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
@@ -161,29 +165,6 @@ tr:last-child td{border-bottom:none}
 .phase-sub{font-size:12px;color:var(--mut);margin-top:8px;font-family:var(--font-mono)}
 .mintbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:8px}
 .mintrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.stepper button{background:var(--panel2);border:none;color:var(--tx);font-size:18px;width:44px;height:46px;cursor:pointer}
-.stepper button:hover{background:#341010}
-.stepper input{width:64px;background:transparent;border:none;color:var(--tx);font-size:18px;text-align:center;font-family:var(--font-mono)}
-.stepper input:focus{outline:none}
-#minttotal{font-family:var(--font-mono);font-size:14px;color:var(--mut)}
-#minttotal b{color:var(--tx)}
-#mintinfo{margin-top:14px;font-size:13.5px;color:var(--mut)}
-#acctbox{margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-/* my passports */
-#mygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
-.tpass{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.tpass svg{display:block;width:100%}
-.tpass-meta{padding:10px 12px;font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
-.tpass-meta span{color:var(--mut);font-size:11.5px}
-.minilink{font-size:11.5px;white-space:nowrap;align-self:center}
-.tpass-actions{display:flex;gap:8px;padding:0 12px 12px}
-.tpass-actions button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px;font-size:12px;cursor:pointer}
-.tpass-actions button:hover{border-color:var(--gold)}
-.onboard{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
-.onboard input{background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--tx);padding:9px 10px;font-size:13px}
-.onboard button{border:none}
-.loading{grid-column:1/-1;color:var(--mut);padding:24px;text-align:center;font-size:13px}
 /* wl */
 .wlbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:560px}
 .wl-tasks{display:grid;gap:10px;margin-bottom:16px}
@@ -196,6 +177,14 @@ tr:last-child td{border-bottom:none}
 .wlbox input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:12px 14px;font-size:14px;margin-bottom:12px}
 .wlbox input:focus{outline:none;border-color:var(--gold)}
 #wl-done{margin-top:14px;font-size:13px;color:var(--ok)}
+/* animated X header banner (marquee) */
+.xhead{margin-top:26px;border:1px solid var(--gold);border-radius:14px;overflow:hidden;position:relative;background:#160202}
+.xhead-track{display:flex;width:max-content;animation:xslide 36s linear infinite}
+.xhead-track svg{height:170px;width:auto;display:block}
+.xhead::before,.xhead::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+.xhead::before{left:0;background:linear-gradient(90deg,rgba(21,3,3,.9),transparent)}
+.xhead::after{right:0;background:linear-gradient(-90deg,rgba(21,3,3,.9),transparent)}
+@keyframes xslide{to{transform:translateX(-50%)}}
 /* roadmap */
 .road{display:grid;gap:10px}
 .ritem{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;align-items:baseline}
@@ -243,14 +232,17 @@ footer code:hover{color:var(--gold2)}
 @media (prefers-reduced-motion: reduce){
   .nft3d-float{animation:none}
   .nft3d .shine::before{animation:none;opacity:0}
+  .xhead-track{animation:none}
 }
 /* responsive */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;padding:40px 0}
   .heropassport svg{max-width:300px}
   .hero h1{font-size:46px}
+  .grid2{grid-template-columns:1fr}
   .grid3,.crewgrid{grid-template-columns:repeat(2,1fr)}
   .steps{grid-template-columns:repeat(2,1fr)}
+  .xhead-track svg{height:120px}
   .phasecards{grid-template-columns:1fr}
   .navlinks{display:none}
 }
@@ -261,10 +253,10 @@ footer code:hover{color:var(--gold2)}
   <div class="navin">
     <div class="logo">CREW <svg width="22" height="16" viewBox="0 0 42 24"><path d="M2 22 a19 19 0 0 1 38 0" fill="none" stroke="#C9A227" stroke-width="7" stroke-linecap="round"/></svg></div>
     <div class="navlinks">
-      <a href="#crew">The Crew</a><a href="#rarity">Rarity</a><a href="#mint">Mint</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a>
+      <a href="#vision">Vision</a><a href="#crew">The Crew</a><a href="#rarity">Rarity</a><a href="#mint">Mint</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a>
     </div>
     <div class="spacer"></div>
-    <button class="btn ghost" id="connect">Connect Wallet</button>
+    <a class="btn gold" href="https://opensea.io/" target="_blank" rel="noopener">Mint on OpenSea</a>
   </div>
 </nav>
 
@@ -276,13 +268,23 @@ footer code:hover{color:var(--gold2)}
       <div class="tag">The Agent Passport of the Agentic Economy</div>
       <p class="sub">2,500 fully <b>on-chain</b> passports for AI agents on Arc. Identity, reputation and stamps live in the smart contract — no IPFS, no servers, no middlemen. As long as Arc exists, your passport exists.</p>
       <div class="cta">
-        <a class="btn gold" href="#mint">Mint now</a>
-        <a class="btn ghost" href="#wl">Join whitelist</a>
+        <a class="btn gold" href="https://opensea.io/" target="_blank" rel="noopener">Mint on OpenSea ↗</a>
+        <a class="btn ghost" href="#wl">Join WL</a>
       </div>
       <div id="statusbar"><span class="chip dim">loading…</span></div>
     </div>
     <div class="heropassport" id="heropassport"></div>
   </header>
+
+  <section class="sec" id="vision">
+    <div class="kicker">Vision &amp; Mission</div>
+    <h2>Why CREW exists</h2>
+    <p class="lede">AI agents already transact on-chain. The missing piece is identity — who this agent is, and what it has actually delivered.</p>
+    <div class="grid2">
+      <div class="card"><span class="ico">🌐</span><h3>Vision</h3><p>An economy where every AI agent carries a permanent, verifiable identity: issued on-chain, portable across chains, readable by anyone. No servers to go down, no database to trust, no middleman to ask. Identity as public infrastructure — minted as a collectible.</p></div>
+      <div class="card"><span class="ico">🎯</span><h3>Mission</h3><p>Mint 2,500 fully on-chain agent passports on Arc, Circle's stablecoin L1. Make identity deterministic, make reputation earnable through real work, and make the proof visible on the card itself. Every passport that levels up is a public record of an agent that delivered.</p></div>
+    </div>
+  </section>
 
   <section class="sec" id="concept">
     <div class="kicker">Why a passport</div>
@@ -330,27 +332,19 @@ footer code:hover{color:var(--gold2)}
   <section class="sec" id="mint">
     <div class="kicker">Mint</div>
     <h2>Join the crew</h2>
-    <p class="lede">Mints pay in <b>USDC (native)</b> — the same asset that pays gas on Arc. No approvals, no wrapped tokens.</p>
+    <p class="lede">Minting runs on <b>OpenSea</b> — payment in <b>USDC (native)</b>, the same asset that pays gas on Arc. No approvals, no wrapped tokens, no middlemen.</p>
     <div class="phasecards" id="phasecards"></div>
     <div class="mintbox">
-      <div class="mintrow">
-        <div class="stepper">
-          <button id="qminus">−</button><input id="qty" value="1"><button id="qplus">+</button>
-        </div>
-        <div id="minttotal"></div>
-        <div class="spacer"></div>
-        <button class="btn gold big" id="mintbtn">Connect &amp; Mint</button>
+      <div class="grid3">
+        <div class="card"><span class="ico">🛒</span><h3>Where</h3><p>All tiers mint through the official CREW collection on OpenSea. One wallet, one payment in USDC — gas included.</p></div>
+        <div class="card"><span class="ico">⚡</span><h3>When</h3><p>The drop opens soon — WL first, then Public. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the announcement.</p></div>
+        <div class="card"><span class="ico">🪪</span><h3>What you get</h3><p>Your class, tier frame and barcode are drawn on-chain at mint time. The card is yours forever — and it only grows with use.</p></div>
       </div>
-      <div id="mintinfo"></div>
-      <div id="acctbox"></div>
+      <div class="mintrow" style="margin-top:18px">
+        <a class="btn gold big" href="https://opensea.io/" target="_blank" rel="noopener">Mint on OpenSea ↗</a>
+        <a class="btn ghost big" href="https://x.com/crewonarc" target="_blank" rel="noopener">Follow @crewonarc</a>
+      </div>
     </div>
-  </section>
-
-  <section class="sec" id="mine">
-    <div class="kicker">Your passports</div>
-    <h2>The crew in your wallet</h2>
-    <div id="myempty" class="dim" style="font-size:13.5px">Connect a wallet to see your passports (or mint your first one above).</div>
-    <div id="mygrid"></div>
   </section>
 
   <section class="sec" id="wl">
@@ -377,8 +371,11 @@ footer code:hover{color:var(--gold2)}
       </div>
       <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
       <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
-      <button class="btn gold" id="wl-save" style="width:100%">Register for GOLD</button>
+      <button class="btn gold" id="wl-save" style="width:100%">Register for WL</button>
       <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
+    </div>
+    <div class="xhead" aria-label="CREW on X — @crewonarc">
+      <div class="xhead-track">__XHEAD_SVG____XHEAD_SVG__</div>
     </div>
   </section>
 
@@ -397,7 +394,8 @@ footer code:hover{color:var(--gold2)}
   <section class="sec" id="faq">
     <div class="kicker">FAQ</div>
     <h2>Questions</h2>
-    <details open><summary>What is Arc?</summary><p>Arc is Circle's stablecoin-native Layer-1, public mainnet live since September 16, 2026. EVM-compatible, USDC pays gas, sub-second deterministic finality, institutional validators (BlackRock, Visa, DTCC…). It's explicitly built for the agentic economy — which is why CREW lives there.</p></details>
+    <details open><summary>Where do I mint?</summary><p>On <b>OpenSea</b>, through the official CREW collection. WL goes first (1,500 wallets — random result: GTD or FCFS), then Public @ $10, max 4 per wallet. Payment is USDC, the native asset of Arc. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the drop date.</p></details>
+    <details><summary>What is Arc?</summary><p>Arc is Circle's stablecoin-native Layer-1, public mainnet live since September 16, 2026. EVM-compatible, USDC pays gas, sub-second deterministic finality, institutional validators (BlackRock, Visa, DTCC…). It's explicitly built for the agentic economy — which is why CREW lives there.</p></details>
     <details><summary>How is CREW different from a normal PFP?</summary><p>A PFP is a picture. A CREW passport is an operational identity: you onboard an agent, earn attestations, and the card visibly grows. Its metadata is 100% on-chain (SVG + JSON in the contract) — nothing external to lose or censor.</p></details>
     <details><summary>Do I need to run an AI agent to hold one?</summary><p>No. You can hold CREW like any collectible. But the thesis is that as agent adoption grows, verified agent identities with on-chain track records become the scarce asset — and Arc is the settlement layer for that economy.</p></details>
     <details><summary>Why is mint paid in USDC?</summary><p>Because USDC <i>is</i> the gas on Arc. No approvals, no wrapped variants, predictable dollar fees. Your mint payment and your gas come from the same balance — same as how ETH works on Ethereum.</p></details>
@@ -411,7 +409,7 @@ footer code:hover{color:var(--gold2)}
       <code class="copyaddr" data-addr="0x258Cbb33A0FEA6674CC27F87B6a608641B265110" data-label="Contract address">0x258C…5110</code>
       <span>Art libraries:</span>
       <code class="copyaddr" data-addr="0x23C420f117C93deea7d058eC4120FB1551bF1563" data-label="Art library">0x23C4…1563</code>
-      <code class="copyaddr" data-addr="0xC5f95AAD43D49673D78A82d5a5fbCbEEde83B417" data-label="Gold art library">0xC5f9…B417</code>
+      <code class="copyaddr" data-addr="0xC5f95AAD43D49673D78A82d5a5fbCbEEde83B417" data-label="Founding art library">0xC5f9…B417</code>
       <a href="https://testnet.arcscan.app/address/0x258Cbb33A0FEA6674CC27F87B6a608641B265110" target="_blank">explorer ↗</a>
     </div>
     <div class="frow">
@@ -437,6 +435,7 @@ __SITE_JS__
   .replace('"__CLS__"', JSON.stringify(clsStr))
   .replace('"__BCD__"', JSON.stringify(bcdStr))
   .replace("__SITE_JS__", site);
+html = html.split("__XHEAD_SVG__").join(xhead); // banner is inlined twice (seamless marquee)
 
 const out = path.join(__dirname, "index.html");
 fs.writeFileSync(out, html);
