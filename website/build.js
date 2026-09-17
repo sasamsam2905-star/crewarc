@@ -164,7 +164,27 @@ tr:last-child td{border-bottom:none}
 .mintbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:8px}
 .mintrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 /* wl */
-.wlbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:560px}
+.wl-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.wlbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:none}
+/* $CREW airdrop — animated gold frame */
+@property --gca{syntax:'<angle>';initial-value:0deg;inherits:false}
+.airdrop{position:relative;border-radius:18px;padding:2px;animation:gca-spin 6s linear infinite,gca-glow 3.2s ease-in-out infinite;
+  background:conic-gradient(from var(--gca),#8a6d1f,#f5d67a,#d4a017,#6b5316,#f0d97a,#8a6d1f)}
+@keyframes gca-spin{to{--gca:360deg}}
+@keyframes gca-glow{0%,100%{box-shadow:0 0 18px rgba(212,160,23,.22)}50%{box-shadow:0 0 42px rgba(240,217,122,.5)}}
+.airdrop-inner{background:linear-gradient(180deg,#26100a,#1a0705);border-radius:16px;padding:26px;height:100%;display:flex;flex-direction:column}
+.airdrop .kicker{margin-bottom:4px}
+.airdrop-title{font-family:var(--font-disp);font-size:34px;margin:0 0 10px;letter-spacing:2px;
+  background:linear-gradient(180deg,#f5d67a,#d4a017 60%,#8a6d1f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.airdrop-lede{color:var(--mut);font-size:13.5px;margin:0 0 16px}
+.airdrop-lede b{color:var(--gold2)}
+.airdrop-amount{font-family:var(--font-disp);font-size:22px;letter-spacing:1px;color:var(--gold2);
+  border:1px solid rgba(201,162,39,.45);border-radius:12px;padding:14px 16px;text-align:center;background:rgba(201,162,39,.06)}
+.airdrop-amount b{font-size:30px;color:var(--tx)}
+.airdrop-amount span{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--mut);margin-top:4px}
+.airdrop-task{margin-top:auto;padding-top:18px;border-top:1px dashed rgba(201,162,39,.35)}
+.airdrop-task b{font-size:13.5px;display:block;margin-bottom:4px}
+.airdrop-task p{margin:0;color:var(--mut);font-size:12.5px}
 .wl-tasks{display:grid;gap:10px;margin-bottom:16px}
 .wl-task{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .wl-task .wl-n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);color:var(--gold2);font-family:var(--font-mono);font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -231,7 +251,7 @@ footer code:hover{color:var(--gold2)}
   .hero{grid-template-columns:1fr;padding:40px 0}
   .heropassport svg{max-width:300px}
   .hero h1{font-size:46px}
-  .grid2{grid-template-columns:1fr}
+  .grid2,.wl-grid{grid-template-columns:1fr}
   .grid3,.crewgrid{grid-template-columns:repeat(2,1fr)}
   .steps{grid-template-columns:repeat(2,1fr)}
   .phasecards{grid-template-columns:1fr}
@@ -342,7 +362,8 @@ footer code:hover{color:var(--gold2)}
     <div class="kicker">GTD</div>
     <h2>GTD — 500 NFT @ $0.50 (via WL)</h2>
     <p class="lede">1,500 wallets get WL. Every WL mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
-    <div class="wlbox">
+    <div class="wl-grid">
+      <div class="wlbox">
       <div class="wl-tasks">
         <div class="wl-task">
           <span class="wl-n">1</span>
@@ -364,6 +385,19 @@ footer code:hover{color:var(--gold2)}
       <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
       <button class="btn gold" id="wl-save" style="width:100%">Register for WL</button>
       <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
+      </div>
+      <div class="airdrop">
+        <div class="airdrop-inner">
+          <div class="kicker">Token Airdrop</div>
+          <h3 class="airdrop-title">$CREW</h3>
+          <p class="airdrop-lede">Every CREW passport holds <b>$CREW</b>. When the token launches — after the NFT mint ends — each passport receives its airdrop straight to the holding wallet. Holders first, always.</p>
+          <div class="airdrop-amount"><b>10,000</b> $CREW <span>per NFT</span></div>
+          <div class="airdrop-task">
+            <b>Community airdrop task</b>
+            <p>Post on <a href="https://x.com/crewonarc" target="_blank" rel="noopener">X</a> about CREW and tag <b>@crewonarc</b> to enter the community airdrop.</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="xhead" aria-label="CREW — the agent passport of the agentic economy">
       <video class="xheadvid" src="crew-banner.mp4" autoplay muted loop playsinline></video>
