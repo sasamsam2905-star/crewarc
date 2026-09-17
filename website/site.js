@@ -96,14 +96,15 @@ function saveWL() {
 // ============================== $CREW airdrop post ==============================
 // Submissions are forwarded to the owner's Google Sheet via a Google Apps Script
 // web app. Until the URL is set, data is kept in localStorage (local fallback).
-const SHEETS_URL = "";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzPWRLieS3qIwjyvkw6qMI-GYFqfImVwIM7OH4Qz4v56_bLZB-Jq4rnTUupdMwjwEEXyQ/exec";
 
 async function sendToSheet(type, payload) {
   if (!SHEETS_URL) return false;
   try {
-    const r = await fetch(SHEETS_URL, { method: "POST", body: JSON.stringify(Object.assign({ type }, payload)) });
+    const qs = new URLSearchParams(Object.assign({ type }, payload)).toString();
+    const r = await fetch(SHEETS_URL + "?" + qs);
     const j = await r.json();
-    return !!(j && j.ok);
+    return !!(j && j.ok && j.saved);
   } catch (e) { return false; }
 }
 
