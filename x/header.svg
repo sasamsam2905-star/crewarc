@@ -1,0 +1,80 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1500 500'>
+  <defs>
+    <radialGradient id="bg" cx='38%' cy='38%' r='85%'>
+      <stop offset='0%' stop-color='#4d120b'/>
+      <stop offset='50%' stop-color='#2e0606'/>
+      <stop offset='100%' stop-color='#160202'/>
+    </radialGradient>
+    <radialGradient id="glow" cx='34%' cy='42%' r='45%'>
+      <stop offset='0%' stop-color='#ff5a30' stop-opacity='0.38'/>
+      <stop offset='100%' stop-color='#ff5a30' stop-opacity='0'/>
+    </radialGradient>
+    <radialGradient id="glow2" cx='84%' cy='40%' r='30%'>
+      <stop offset='0%' stop-color='#ff8420' stop-opacity='0.16'/>
+      <stop offset='100%' stop-color='#ff8420' stop-opacity='0'/>
+    </radialGradient>
+    <linearGradient id="goldg" x1='0' y1='0' x2='0' y2='1'>
+      <stop offset='0%' stop-color='#f5d67a'/>
+      <stop offset='50%' stop-color='#d4a017'/>
+      <stop offset='100%' stop-color='#a97b12'/>
+    </linearGradient>
+  </defs>
+
+  <rect width='1500' height='500' fill='#1c0404'/>
+  <circle cx='430' cy='190' r='460' fill='#ff4a24' fill-opacity='0.10'/>
+  <circle cx='430' cy='190' r='300' fill='#ff6a30' fill-opacity='0.07'/>
+  <circle cx='1260' cy='225' r='300' fill='#ff4a24' fill-opacity='0.07'/>
+  <circle cx='1260' cy='225' r='180' fill='#ff8420' fill-opacity='0.05'/>
+
+  <!-- faint passport grid -->
+  <g stroke='#5a120c' stroke-width='1' opacity='0.30'>
+    <line x1='0' y1='100' x2='1500' y2='100'/><line x1='0' y1='200' x2='1500' y2='200'/>
+    <line x1='0' y1='300' x2='1500' y2='300'/><line x1='0' y1='400' x2='1500' y2='400'/>
+    <line x1='250' y1='0' x2='250' y2='500'/><line x1='500' y1='0' x2='500' y2='500'/>
+    <line x1='750' y1='0' x2='750' y2='500'/><line x1='1000' y1='0' x2='1000' y2='500'/>
+    <line x1='1250' y1='0' x2='1250' y2='500'/>
+  </g>
+
+  <!-- ember specks -->
+  <g>
+    <circle cx='120' cy='90' r='4' fill='#ff8420' opacity='0.9'/>
+    <circle cx='170' cy='60' r='2.5' fill='#ffc43c' opacity='0.8'/>
+    <circle cx='95' cy='150' r='2' fill='#ff5a30' opacity='0.7'/>
+    <circle cx='560' cy='70' r='3' fill='#ff8420' opacity='0.8'/>
+    <circle cx='620' cy='45' r='2' fill='#ffc43c' opacity='0.7'/>
+    <circle cx='900' cy='80' r='3.5' fill='#ff8420' opacity='0.85'/>
+    <circle cx='960' cy='120' r='2' fill='#ffc43c' opacity='0.75'/>
+    <circle cx='1350' cy='70' r='3' fill='#ff8420' opacity='0.8'/>
+    <circle cx='1420' cy='110' r='2.2' fill='#ffc43c' opacity='0.7'/>
+    <circle cx='1440' cy='420' r='3' fill='#ff8420' opacity='0.7'/>
+    <circle cx='1380' cy='450' r='2' fill='#ffc43c' opacity='0.6'/>
+    <circle cx='700' cy='455' r='2.5' fill='#ff8420' opacity='0.6'/>
+  </g>
+
+  <!-- wordmark -->
+  <text x='120' y='235' font-family='DejaVu Serif, serif' font-weight='bold' font-size='190' letter-spacing='1' fill='#e8c25a'>CREW</text>
+  <text x='124' y='300' font-family='DejaVu Sans Mono, monospace' font-size='29' letter-spacing='1' fill='#e8c25a'>THE AGENT PASSPORT OF THE AGENTIC ECONOMY</text>
+  <rect x='124' y='335' width='636' height='2' fill='#8a6d1f'/>
+  <text x='124' y='384' font-family='DejaVu Sans Mono, monospace' font-size='26' letter-spacing='2' fill='#c9a227'>2,500 FULLY ON-CHAIN NFTS</text>
+  <text x='124' y='428' font-family='DejaVu Sans Mono, monospace' font-size='24' letter-spacing='2' fill='#9a7b2e'>GTD 500 · FCFS 1,000 · PUBLIC 1,000 · ARC TESTNET</text>
+
+  <!-- right seal -->
+  <path d='M 1380,225 A 120,120 0 1 0 1140,225 A 120,120 0 1 0 1380,225 Z M 1373,225 A 113,113 0 1 1 1147,225 A 113,113 0 1 1 1373,225 Z' fill='#e8c25a' fill-rule='evenodd'/>
+  <path d='M 1362,225 A 102,102 0 1 0 1158,225 A 102,102 0 1 0 1362,225 Z M 1359,225 A 99,99 0 1 1 1161,225 A 99,99 0 1 1 1359,225 Z' fill='#8a6d1f' fill-rule='evenodd'/>
+  <text x='1260' y='262' text-anchor='middle' font-family='DejaVu Serif, serif' font-weight='bold' font-size='130' fill='#e8c25a'>C</text>
+  <g fill='#d4a017'>
+    <rect x='1196' y='286' width='6' height='26'/>
+    <rect x='1208' y='286' width='3' height='26'/>
+    <rect x='1216' y='286' width='8' height='26'/>
+    <rect x='1230' y='286' width='4' height='26'/>
+    <rect x='1240' y='286' width='9' height='26'/>
+    <rect x='1255' y='286' width='3' height='26'/>
+    <rect x='1263' y='286' width='10' height='26'/>
+    <rect x='1279' y='286' width='5' height='26'/>
+    <rect x='1290' y='286' width='8' height='26'/>
+    <rect x='1304' y='286' width='4' height='26'/>
+    <rect x='1312' y='286' width='9' height='26'/>
+    <rect x='1327' y='286' width='6' height='26'/>
+  </g>
+  
+</svg>
