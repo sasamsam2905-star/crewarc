@@ -84,10 +84,29 @@ function saveWL() {
   localStorage.setItem("crew_wl", JSON.stringify(l));
   el("wl-count").textContent = l.length;
   el("wl-done").classList.remove("hidden");
-  toast("Registered! Keep this device/browser or note your details.", "ok");
+  if (SHEETS_URL) {
+    toast("Registering…", "ok");
+    sendToSheet("wl", { wallet: rec.wallet, comment: rec.comment })
+      .then((ok) => toast(ok ? "Registered ✓ — sent to the WL list." : "Registered — saved on this device (sync offline).", ok ? "ok" : "warn"));
+  } else {
+    toast("Registered! Keep this device/browser or note your details.", "ok");
+  }
 }
 
 // ============================== $CREW airdrop post ==============================
+// Submissions are forwarded to the owner's Google Sheet via a Google Apps Script
+// web app. Until the URL is set, data is kept in localStorage (local fallback).
+const SHEETS_URL = "";
+
+async function sendToSheet(type, payload) {
+  if (!SHEETS_URL) return false;
+  try {
+    const r = await fetch(SHEETS_URL, { method: "POST", body: JSON.stringify(Object.assign({ type }, payload)) });
+    const j = await r.json();
+    return !!(j && j.ok);
+  } catch (e) { return false; }
+}
+
 function saveAirdropPost() {
   const v = el("ad-post").value.trim();
   if (!/^https?:\/\/(www\.)?(x\.com|twitter\.com)\/\S+/i.test(v)) {
@@ -97,7 +116,12 @@ function saveAirdropPost() {
     localStorage.setItem("crew_airdrop", JSON.stringify({ post: v, ts: Date.now() }));
   } catch (e) { /* private mode */ }
   el("ad-done").classList.remove("hidden");
-  toast("Post link submitted — we'll verify the @crewonarc tag.", "ok");
+  if (SHEETS_URL) {
+    sendToSheet("airdrop", { post: v })
+      .then((ok) => toast(ok ? "Post submitted ✓ — sent to the airdrop list." : "Post saved on this device (sync offline).", ok ? "ok" : "warn"));
+  } else {
+    toast("Post link submitted — we'll verify the @crewonarc tag.", "ok");
+  }
 }
 function restoreAirdropPost() {
   try {
