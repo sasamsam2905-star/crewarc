@@ -430,7 +430,7 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`GTD OPEN · ${state.gtd}/500 · WL ${state.wl}/1500`, "gold") : chip(`GTD ${state.gtd}/500 · WL ${state.wl}/1500 · ${state.gtd >= 500n ? "GTD sold out" : "closed"}`, "dim")) +
+    (o.wl ? chip(`GTD OPEN · ${state.gtd}/500`, "gold") : chip(`GTD ${state.gtd}/500 · ${state.gtd >= 500n ? "sold out" : "closed"}`, "dim")) +
     chip(`FCFS ${state.fcfs}/1000 · via WL`, "dim") +
     (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
@@ -458,7 +458,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL (1,500) · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
