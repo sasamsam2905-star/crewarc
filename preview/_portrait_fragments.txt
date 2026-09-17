@@ -1,0 +1,77 @@
+<g fill='none' stroke-linecap='round'>
+<circle cx='300' cy='186' r='3' fill='#141414' stroke='none'/>
+<path d='M300 190 L224 320' stroke='#141414' stroke-width='3'/>
+<path d='M300 190 L376 320' stroke='#141414' stroke-width='3'/>
+<path d='M300 190 L300 258' stroke='#141414' stroke-width='2'/>
+<path d='M300 208 L283 240 L317 240 Z' fill='url(#gg)' stroke='#8a6d1f' stroke-width='1'/>
+<path d='M292 276 L300 258 L308 276' stroke='#141414' stroke-width='2'/>
+<path d='M161 301 A148 148 0 0 1 439 301' stroke='#141414' stroke-width='1.5' stroke-dasharray='5 6' opacity='0.55'/>
+<path d='M178 308 A130 130 0 0 1 422 308' stroke='#141414' stroke-width='2'/>
+<circle cx='178' cy='308' r='4' fill='#141414' stroke='none'/>
+<circle cx='422' cy='308' r='4' fill='#141414' stroke='none'/>
+<path d='M197 315 A110 110 0 0 1 403 315' stroke='#141414' stroke-width='2'/>
+<path d='M166 322 L256 322' stroke='#141414' stroke-width='1.5'/>
+<path d='M344 322 L434 322' stroke='#141414' stroke-width='1.5'/>
+<circle cx='162' cy='322' r='3' fill='#C9A227' stroke='none'/>
+<circle cx='438' cy='322' r='3' fill='#C9A227' stroke='none'/>
+<path d='M224 320 C228 266 264 242 300 242 C336 242 372 266 376 320' stroke='#141414' stroke-width='3'/>
+<path d='M224 320 C222 340 224 352 228 362' stroke='#141414' stroke-width='3'/>
+<path d='M376 320 C378 340 376 352 372 362' stroke='#141414' stroke-width='3'/>
+<path d='M228 362 C224 424 236 478 262 518' stroke='#141414' stroke-width='3'/>
+<path d='M372 362 C376 424 364 478 338 518' stroke='#141414' stroke-width='3'/>
+<path d='M262 518 C276 548 288 564 300 564 C312 564 324 548 338 518' stroke='#141414' stroke-width='3'/>
+<path d='M270 516 C280 538 290 552 300 554' stroke='#141414' stroke-width='1.5' opacity='0.5'/>
+<path d='M330 516 C320 538 310 552 300 554' stroke='#141414' stroke-width='1.5' opacity='0.5'/>
+<path d='M224 374 C200 370 190 392 198 412 C204 426 218 428 224 418' stroke='#141414' stroke-width='3'/>
+<path d='M212 386 C202 390 200 404 210 412' stroke='#141414' stroke-width='2'/>
+<circle cx='206' cy='432' r='2.5' fill='#141414' stroke='none'/>
+<path d='M376 374 C400 370 410 392 402 412 C396 426 382 428 376 418' stroke='#141414' stroke-width='3'/>
+<path d='M388 386 C398 390 400 404 390 412' stroke='#141414' stroke-width='2'/>
+<circle cx='394' cy='432' r='2.5' fill='#141414' stroke='none'/>
+<path d='M242 402 L294 388' stroke='#141414' stroke-width='6'/>
+<path d='M358 402 L306 388' stroke='#141414' stroke-width='6'/>
+<path d='M238 415 Q262 396 290 413' stroke='#141414' stroke-width='4'/>
+<path d='M242 419 Q262 429 288 419' stroke='#141414' stroke-width='3'/>
+<path d='M238 415 L228 409' stroke='#141414' stroke-width='3'/>
+<path d='M310 413 Q338 396 362 415' stroke='#141414' stroke-width='4'/>
+<path d='M312 419 Q338 429 358 419' stroke='#141414' stroke-width='3'/>
+<path d='M362 415 L372 409' stroke='#141414' stroke-width='3'/>
+<circle cx='263' cy='414' r='8' stroke='#C9A227' stroke-width='2.5'/>
+<circle cx='263' cy='414' r='3' fill='#141414' stroke='none'/>
+<circle cx='337' cy='414' r='8' stroke='#C9A227' stroke-width='2.5'/>
+<circle cx='337' cy='414' r='3' fill='#141414' stroke='none'/>
+<path d='M276 439 L284 445' stroke='#141414' stroke-width='2'/>
+<path d='M324 439 L316 445' stroke='#141414' stroke-width='2'/>
+<path d='M300 408 L300 494' stroke='#141414' stroke-width='2.5'/>
+<path d='M288 492 L300 506 L312 492' stroke='#141414' stroke-width='3'/>
+<path d='M272 528 L328 528' stroke='#141414' stroke-width='3'/>
+<path d='M282 538 Q300 544 318 538' stroke='#141414' stroke-width='2'/>
+<circle cx='268' cy='528' r='2' fill='#141414' stroke='none'/>
+<circle cx='332' cy='528' r='2' fill='#141414' stroke='none'/>
+<path d='M300 548 L300 558' stroke='#141414' stroke-width='2'/>
+<g stroke='#141414' stroke-width='1.5' opacity='0.5'>
+<path d='M230 364 C240 420 246 468 262 508'/>
+<path d='M370 364 C360 420 354 468 338 508'/>
+<path d='M242 470 L260 488'/>
+<path d='M236 482 L254 500'/>
+<path d='M358 470 L340 488'/>
+<path d='M364 482 L346 500'/>
+</g>
+<circle cx='248' cy='502' r='2' fill='#141414' stroke='none'/>
+<circle cx='352' cy='502' r='2' fill='#141414' stroke='none'/>
+<path d='M278 560 L278 604' stroke='#141414' stroke-width='3'/>
+<path d='M322 560 L322 604' stroke='#141414' stroke-width='3'/>
+<path d='M288 588 L312 588' stroke='#141414' stroke-width='2'/>
+<path d='M256 598 L300 618 L344 598' stroke='#141414' stroke-width='2.5'/>
+<circle cx='300' cy='626' r='3.5' fill='#C9A227' stroke='none'/>
+<g stroke='#C9A227'>
+<circle cx='300' cy='322' r='44' stroke-width='2'/>
+<circle cx='300' cy='322' r='34' stroke-width='6' stroke-dasharray='3 4.63'/>
+<path d='M300 296 L300 348' stroke-width='3'/>
+<path d='M277 309 L323 335' stroke-width='3'/>
+<path d='M277 335 L323 309' stroke-width='3'/>
+</g>
+<circle cx='300' cy='292' r='2.5' fill='#C9A227' stroke='none'/>
+<circle cx='300' cy='352' r='2.5' fill='#C9A227' stroke='none'/>
+<circle cx='284' cy='316' r='2.5' fill='#C9A227' stroke='none'/>
+</g>

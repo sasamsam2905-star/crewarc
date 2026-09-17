@@ -1,0 +1,200 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {CrewArt} from "./CrewArt.sol";
+import {CrewArtGold2} from "./CrewArtGold2.sol";
+
+/// @title CrewArtGold - gold banknote template for Founding Crew passports (tier 0).
+/// @dev    Separate library to stay under the 24KB contract size limit.
+///         Kept byte-identical with svg/art.js goldPassport().
+library CrewArtGold {
+    using Strings for uint256;
+
+    /// @notice Line-art portrait shared by all Founding Crew tokens
+    ///         (from the 02-founding-crew reference design).
+    function foundingPortrait() public pure returns (string memory) {
+        return string(
+            abi.encodePacked(
+                "<g fill='none' stroke-linecap='round'>",
+                CrewArtGold2.headDecor(),
+                "<path d='M198 305 C195 262 245 241 300 241 C355 241 405 262 402 305' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M198 305 C193 384 205 474 247 549' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M247 549 C259 565 279 576 300 578' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M402 305 C407 384 395 474 353 549' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M353 549 C341 565 321 576 300 578' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M300 578 L300 590' stroke='#141414' stroke-width='1'/>",
+                "<path d='M252 340 L226 315' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M348 340 L374 315' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M200 308 L231 360' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M400 308 L369 360' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M202 332 C206 414 221 494 254 551' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M219 354 C221 426 233 496 264 544' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M398 332 C394 414 379 494 346 551' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M381 354 C379 426 367 496 336 544' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M180 392 C172 432 180 472 201 506' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M420 392 C428 432 420 472 399 506' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M172 364 L284 400' stroke='#141414' stroke-width='1.6'/>",
+                "<path d='M428 364 L316 400' stroke='#141414' stroke-width='1.6'/>",
+                "<path d='M178 350 L281 384' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M422 350 L319 384' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M291 397 L180 389' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M180 389 L167 381' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M183 397 Q233 406 289 403' stroke='#141414' stroke-width='0.8'/>",
+                "<circle cx='227' cy='392' r='9.5' stroke='#C9A227' stroke-width='1.8'/>",
+                "<circle cx='227' cy='392' r='2.2' fill='#141414' stroke='none'/>",
+                "<circle cx='289' cy='400' r='1.2' fill='#141414' stroke='none'/>",
+                "<path d='M219 406 L219 415' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M309 397 L420 389' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M420 389 L433 381' stroke='#141414' stroke-width='1.5'/>",
+                "<path d='M417 397 Q367 406 311 403' stroke='#141414' stroke-width='0.8'/>",
+                "<circle cx='373' cy='392' r='9.5' stroke='#C9A227' stroke-width='1.8'/>",
+                "<circle cx='373' cy='392' r='2.2' fill='#141414' stroke='none'/>",
+                "<circle cx='311' cy='400' r='1.2' fill='#141414' stroke='none'/>",
+                "<path d='M381 406 L381 415' stroke='#141414' stroke-width='0.8'/>",
+                "<circle cx='251' cy='438' r='1.8' fill='#141414' stroke='none'/>",
+                "<circle cx='349' cy='438' r='1.8' fill='#141414' stroke='none'/>",
+                "<path d='M300 358 L300 508' stroke='#141414' stroke-width='1.2'/>",
+                "<path d='M285 508 L315 508' stroke='#141414' stroke-width='1.2'/>",
+                "<path d='M285 508 L278 502' stroke='#141414' stroke-width='1'/>",
+                "<path d='M315 508 L322 502' stroke='#141414' stroke-width='1'/>",
+                "<path d='M288 430 L301 468' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M312 430 L319 468' stroke='#141414' stroke-width='0.8'/>",
+                "<path d='M266 498 L300 495 L334 498' stroke='#141414' stroke-width='1.5'/>",
+                "<circle cx='266' cy='498' r='1.5' fill='#141414' stroke='none'/>",
+                "<circle cx='334' cy='498' r='1.5' fill='#141414' stroke='none'/>",
+                "<path d='M284 513 L316 513' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M300 505 L300 519' stroke='#141414' stroke-width='0.9'/>",
+                "<path d='M201 372 C177 362 165 390 174 418 C181 434 199 436 206 424' stroke='#141414' stroke-width='1.6'/>",
+                "<path d='M188 390 C179 397 179 410 189 418' stroke='#141414' stroke-width='1'/>",
+                "<circle cx='192' cy='440' r='1.8' fill='#141414' stroke='none'/>",
+                "<path d='M399 372 C423 362 435 390 426 418 C419 434 401 436 394 424' stroke='#141414' stroke-width='1.6'/>",
+                "<path d='M412 390 C421 397 421 410 411 418' stroke='#141414' stroke-width='1'/>",
+                "<circle cx='408' cy='440' r='1.8' fill='#141414' stroke='none'/>",
+                "<path d='M166 512 L166 542' stroke='#141414' stroke-width='1'/>",
+                "<circle cx='166' cy='505' r='2' fill='#C9A227' stroke='none'/>",
+                "<path d='M434 512 L434 542' stroke='#141414' stroke-width='1'/>",
+                "<circle cx='434' cy='505' r='2' fill='#C9A227' stroke='none'/>",
+                "<circle cx='248' cy='536' r='1.5' fill='#141414' stroke='none'/>",
+                "<circle cx='352' cy='536' r='1.5' fill='#141414' stroke='none'/>",
+
+                "<path d='M278 574 L278 631' stroke='#141414' stroke-width='3'/>",
+                "<path d='M322 574 L322 631' stroke='#141414' stroke-width='3'/>",
+                "<path d='M288 608 L312 608' stroke='#141414' stroke-width='2'/>",
+                "<path d='M257 622 L300 644 L343 622' stroke='#141414' stroke-width='2.5'/>",
+                "<path d='M257 631 L231 649' stroke='#141414' stroke-width='2' opacity='0.7'/>",
+                "<path d='M343 631 L369 649' stroke='#141414' stroke-width='2' opacity='0.7'/>",
+                "<circle cx='300' cy='652' r='3' fill='#C9A227' stroke='none'/>",
+                CrewArtGold2.mandala(),
+                "</g>"
+            )
+        );
+    }
+
+    function goldPassport(
+        uint256 id,
+        uint8 classIdx,
+        string memory serial4,
+        string memory className,
+        string memory rarityName,
+        string memory levelTxt,
+        uint8 stamps,
+        string memory agent
+    ) public pure returns (string memory) {
+        string memory sts = "";
+        string memory agentLine = bytes(agent).length > 0
+            ? string(abi.encodePacked("<text x='150' y='664' font-family='monospace' font-size='15' fill='#8a6d1f'>AGENT: ", agent, "</text>"))
+            : "";
+
+        return string(
+            abi.encodePacked(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 840'>",
+                "<defs>",
+                "<linearGradient id='gg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#8a6d1f'/><stop offset='0.5' stop-color='#d4af37'/><stop offset='1' stop-color='#f0d97a'/></linearGradient>",
+                "<g id='gc' stroke='#C9A227' stroke-width='0.6' fill='none' opacity='0.45'><path d='M0 110 Q44 26 150 0'/><path d='M110 0 Q26 44 0 150'/><path d='M0 125 Q53 33 162 0'/><path d='M125 0 Q33 53 0 162'/><path d='M0 140 Q62 40 174 0'/><path d='M140 0 Q40 62 0 174'/><path d='M0 155 Q71 47 186 0'/><path d='M155 0 Q47 71 0 186'/><path d='M0 170 Q80 54 198 0'/><path d='M170 0 Q54 80 0 198'/><path d='M0 185 Q89 61 210 0'/><path d='M185 0 Q61 89 0 210'/><path d='M0 200 Q98 68 222 0'/><path d='M200 0 Q68 98 0 222'/><path d='M0 215 Q107 75 234 0'/><path d='M215 0 Q75 107 0 234'/></g>",
+                "</defs>",
+                "<rect width='600' height='840' fill='#F8F3E3'/>",
+                "<rect x='8' y='8' width='584' height='824' fill='none' stroke='url(#gg)' stroke-width='12'/>",
+                "<rect x='26' y='26' width='548' height='788' fill='none' stroke='#8a6d1f' stroke-width='1.5'/>",
+                "<use href='#gc'/>",
+                "<use href='#gc' transform='translate(600 0) scale(-1 1)'/>",
+                "<use href='#gc' transform='translate(0 840) scale(1 -1)'/>",
+                "<use href='#gc' transform='translate(600 840) scale(-1 -1)'/>",
+                "<text x='40' y='88' font-family='Arial, Helvetica, sans-serif' font-size='58' font-weight='900' letter-spacing='3' fill='url(#gg)'>CREW</text>",
+                "<line x1='40' y1='100' x2='300' y2='100' stroke='#C9A227' stroke-width='1.5'/>",
+                "<text x='40' y='122' font-family='monospace' font-size='15' letter-spacing='3' fill='#8a6d1f'>FOUNDING CREW ", serial4, " / 500</text>",
+                "<path d='M58 176 Q72 166 88 172' stroke='#C9A227' stroke-width='1.5' fill='none'/>",
+                "<path d='M58 184 Q70 177 84 181' stroke='#C9A227' stroke-width='1.5' fill='none'/>",
+                "<path d='M122 176 Q108 166 92 172' stroke='#C9A227' stroke-width='1.5' fill='none'/>",
+                "<path d='M122 184 Q110 177 96 181' stroke='#C9A227' stroke-width='1.5' fill='none'/>",
+                "<path d='M80 178 L90 190 L100 178' stroke='#C9A227' stroke-width='2' fill='none'/>",
+                "<path d='M90 196 L91.5 199.5 L95 201 L91.5 202.5 L90 206 L88.5 202.5 L85 201 L88.5 199.5 Z' fill='#C9A227'/>",
+                "<circle cx='493' cy='120' r='48' fill='none' stroke='#C9A227' stroke-width='1.2'/>",
+                "<g stroke='#C9A227' fill='none' stroke-width='1.5'><circle cx='493' cy='120' r='31'/><ellipse cx='493' cy='120' rx='15' ry='31' stroke-width='1'/><line x1='493' y1='89' x2='493' y2='151' stroke-width='1'/><line x1='458' y1='120' x2='528' y2='120' stroke-width='1'/></g>",
+                "<circle cx='493' cy='120' r='1.5' fill='#C9A227' stroke='none'/>",
+                CrewArtGold2.roundelText(),
+                "<path d='M455 113 L456.8 118.2 L462 120 L456.8 121.8 L455 127 L453.2 121.8 L448 120 L453.2 118.2 Z' fill='#C9A227'/>",
+                "<path d='M531 113 L532.8 118.2 L538 120 L532.8 121.8 L531 127 L529.2 121.8 L524 120 L529.2 118.2 Z' fill='#C9A227'/>",
+                "<text transform='rotate(-90 36 420)' x='36' y='420' text-anchor='middle' font-size='10' letter-spacing='4' font-family='monospace' fill='#8a6d1f'>UNITED BY MISSION</text>",
+                "<text transform='rotate(90 566 450)' x='566' y='450' text-anchor='middle' font-size='10' letter-spacing='4' font-family='monospace' fill='#8a6d1f'>ONE CREW INFINITE FUTURES</text>",
+                "<circle cx='36' cy='272' r='4' fill='none' stroke='#C9A227' stroke-width='1.2'/>",
+                "<line x1='36' y1='264' x2='36' y2='268' stroke='#C9A227' stroke-width='1'/>",
+                "<line x1='36' y1='276' x2='36' y2='280' stroke='#C9A227' stroke-width='1'/>",
+                "<line x1='28' y1='272' x2='32' y2='272' stroke='#C9A227' stroke-width='1'/>",
+                "<line x1='40' y1='272' x2='44' y2='272' stroke='#C9A227' stroke-width='1'/>",
+                "<line x1='36' y1='556' x2='36' y2='568' stroke='#C9A227' stroke-width='1'/>",
+                "<path d='M566 231 L567.5 234.5 L571 236 L567.5 237.5 L566 241 L564.5 237.5 L561 236 L564.5 234.5 Z' fill='#C9A227'/>",
+                "<text x='566' y='258' text-anchor='middle' font-family='monospace' font-size='11' fill='#C9A227'>20</text>",
+                "<text x='566' y='272' text-anchor='middle' font-family='monospace' font-size='11' fill='#C9A227'>24</text>",
+                "<line x1='566' y1='280' x2='566' y2='292' stroke='#C9A227' stroke-width='1'/>",
+                "<circle cx='566' cy='300' r='2.5' fill='none' stroke='#C9A227' stroke-width='1'/>",
+                "<line x1='566' y1='308' x2='566' y2='316' stroke='#C9A227' stroke-width='1'/>",
+                foundingPortrait(),
+                "<g stroke='#C9A227' fill='none' stroke-width='1.5'>",
+                "<path d='M70 680 l24 14 v28 l-24 14 -24 -14 v-28 z'/>",
+                "</g>",
+                "<path d='M70 694 l4 8 9 1 -6 6 1 9 -8 -4 -8 4 1 -9 -6 -6 9 -1 z' fill='#C9A227'/>",
+                "<path d='M142 674 L134 674 L134 730 L142 730' fill='none' stroke='#C9A227' stroke-width='2'/>",
+                CrewArt.barcode(id, 150, 405, "#C9A227"),
+                "<path d='M418 674 L426 674 L426 730 L418 730' fill='none' stroke='#C9A227' stroke-width='2'/>",
+                "<circle cx='500' cy='702' r='34' fill='none' stroke='#C9A227' stroke-width='2'/>",
+                "<circle cx='500' cy='702' r='29' fill='none' stroke='#C9A227' stroke-width='0.8'/>",
+                "<text x='500' y='692' text-anchor='middle' font-size='7.5' font-family='monospace' letter-spacing='1' fill='#8a6d1f'>CREW ARCHIVE</text>",
+                "<text x='500' y='712' text-anchor='middle' font-size='17' font-weight='bold' font-family='monospace' fill='#8a6d1f'>", serial4, "</text>",
+                "<text x='500' y='724' text-anchor='middle' font-size='7.5' font-family='monospace' letter-spacing='1' fill='#8a6d1f'>OF 500</text>",
+                "<rect x='200' y='744' width='200' height='36' fill='none' stroke='url(#gg)' stroke-width='2'/>",
+                "<text x='300' y='768' text-anchor='middle' font-family='monospace' font-size='16' font-weight='bold' letter-spacing='2' fill='#8a6d1f'>CLEARANCE ", levelTxt, "</text>",
+                "<path d='M188 755 L190 760 L195 762 L190 764 L188 769 L186 764 L181 762 L186 760 Z' fill='#C9A227'/>",
+                "<path d='M412 755 L414 760 L419 762 L414 764 L412 769 L410 764 L405 762 L410 760 Z' fill='#C9A227'/>",
+                "<circle cx='95' cy='545' r='49' fill='none' stroke='#C9A227' stroke-width='7' stroke-dasharray='2.5 2.8'/>",
+                "<circle cx='95' cy='545' r='43' fill='none' stroke='#C9A227' stroke-width='1.5'/>",
+                "<circle cx='95' cy='545' r='30' fill='none' stroke='#C9A227' stroke-width='0.8'/>",
+                CrewArtGold2.sealText(),
+                "<path d='M87 540 L95 549 L103 540' fill='none' stroke='#C9A227' stroke-width='2'/>",
+                "<path d='M80 535 Q88 530 94 534' fill='none' stroke='#C9A227' stroke-width='1.5'/>",
+                "<path d='M110 535 Q102 530 96 534' fill='none' stroke='#C9A227' stroke-width='1.5'/>",
+                "<text x='95' y='566' text-anchor='middle' font-family='monospace' font-size='6' letter-spacing='1' fill='#8a6d1f'>EST. 2024</text>",
+                "<path d='M95 516 L96.5 519.5 L100 521 L96.5 522.5 L95 526 L93.5 522.5 L90 521 L93.5 519.5 Z' fill='#C9A227'/>",
+                "<rect x='438' y='505' width='120' height='86' rx='10' fill='none' stroke='#C9A227' stroke-width='2'/>",
+                "<rect x='444' y='511' width='108' height='74' rx='7' fill='none' stroke='#C9A227' stroke-width='0.8'/>",
+                "<text x='498' y='530' text-anchor='middle' font-family='monospace' font-size='10' letter-spacing='2' fill='#8a6d1f'>VERIFIED</text>",
+                "<g stroke='#C9A227' fill='none' stroke-width='1.2'>",
+                "<circle cx='498' cy='554' r='15'/>",
+                "<ellipse cx='498' cy='554' rx='6.5' ry='15' stroke-width='0.8'/>",
+                "<line x1='483' y1='554' x2='513' y2='554' stroke-width='0.8'/>",
+                "<line x1='486' y1='546' x2='510' y2='546' stroke-width='0.6'/>",
+                "<line x1='486' y1='562' x2='510' y2='562' stroke-width='0.6'/>",
+                "</g>",
+                "<circle cx='498' cy='554' r='1.5' fill='#C9A227'/>",
+                "<text x='498' y='579' text-anchor='middle' font-family='monospace' font-size='6.5' letter-spacing='1' fill='#8a6d1f'>ALL SYSTEMS</text>",
+                "<text x='498' y='588' text-anchor='middle' font-family='monospace' font-size='6.5' letter-spacing='1' fill='#8a6d1f'>NOMINAL</text>",
+                "<path d='M286 821 Q293 815 300 819' fill='none' stroke='#C9A227' stroke-width='1.5'/>",
+                "<path d='M314 821 Q307 815 300 819' fill='none' stroke='#C9A227' stroke-width='1.5'/>",
+                "<path d='M293 819 L300 826 L307 819' fill='none' stroke='#C9A227' stroke-width='1.8'/>",
+                agentLine,
+                sts,
+                "</svg>"
+            )
+        );
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "crew-passport",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CREW - Agent Passport of the Agentic Economy on Arc (Circle L1)",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test --grep \"deploys|WL rules|phase ordering|refunds\" && hardhat test --grep \"onboardAgent\" && hardhat test --grep \"attestTask raises\" && hardhat test --grep \"royalty is 5%\" && hardhat test --grep \"FULL MINT\"",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network arcTestnet",
+    "phases": "hardhat run scripts/set-phases.js --network arcTestnet",
+    "gallery": "node svg/render.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "chai": "^4.5.0",
+    "hardhat": "^2.22.10"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.17.0"
+  }
+}

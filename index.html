@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>CREW — Agent Passport of the Agentic Economy | Arc</title>
+<meta property="og:title" content="CREW — Agent Passport of the Agentic Economy"/>
+<meta property="og:description" content="2,500 fully on-chain passports for AI agents on Arc, Circle's stablecoin L1. Identity, reputation and stamps — all on-chain."/>
+<style>
+:root{
+  --bg:#150303; --panel:#1f0707; --panel2:#2b0c0b; --line:#421716;
+  --tx:#f4ecdf; --mut:#a5897f; --dim:#6e5450; --gold:#C9A227; --gold2:#e6c766;
+  --ok:#3fb96f; --err:#e05252;
+  --font-disp:'Cinzel',Georgia,'Times New Roman',serif;
+  --font-body:'Manrope',ui-sans-serif,system-ui,Arial,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;isolation:isolate;color:var(--tx);font-family:var(--font-body);line-height:1.55;
+  background:radial-gradient(1100px 700px at 78% -12%,rgba(255,64,39,.20),transparent 62%),
+    radial-gradient(900px 650px at 8% 108%,rgba(196,32,24,.18),transparent 60%),
+    radial-gradient(700px 520px at 50% 42%,rgba(140,20,14,.14),transparent 70%),var(--bg);
+  background-attachment:fixed}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(900px 620px at 72% 8%,rgba(255,70,40,.12),transparent 60%),
+    radial-gradient(700px 500px at 12% 90%,rgba(255,50,30,.08),transparent 60%);
+  animation:ember 4.5s ease-in-out infinite}
+@keyframes ember{0%,100%{opacity:.5}50%{opacity:1}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+a{color:var(--gold2);text-decoration:none}
+a:hover{text-decoration:underline}
+h2{font-size:24px;letter-spacing:1px;margin:0 0 6px;font-family:var(--font-disp)}
+.sec{padding:64px 0 8px}
+.sec .kicker{color:var(--gold);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;font-family:var(--font-disp)}
+.sec .lede{color:var(--mut);max-width:640px;margin:0 0 28px}
+.dim{color:var(--mut)}
+.hidden{display:none!important}
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.navin{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:3px;font-size:17px;color:var(--tx);font-family:var(--font-disp)}
+.navlinks{display:flex;gap:16px;margin-left:12px;font-size:13px}
+.navlinks a{color:var(--mut)}
+.navlinks a:hover{color:var(--tx);text-decoration:none}
+.spacer{flex:1}
+/* buttons */
+.btn{display:inline-block;padding:11px 22px;border-radius:10px;font-weight:700;font-size:14px;letter-spacing:.5px;cursor:pointer;border:1px solid transparent;transition:.15s}
+.btn.gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#171307}
+.btn.gold:hover{filter:brightness(1.08)}
+.btn.ghost{border-color:var(--line);color:var(--tx);background:transparent}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn.big{padding:15px 30px;font-size:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btnlink{background:none;border:none;color:var(--gold2);cursor:pointer;font-size:12px;padding:0}
+/* chips */
+.chip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12px;font-family:var(--font-mono);color:var(--mut);margin:3px 6px 3px 0;background:var(--panel)}
+.chip b{color:var(--tx)}
+.chip.gold{border-color:var(--gold);color:var(--gold2)}
+.chip.dim{opacity:.65}
+.chip.net{border-color:var(--gold);color:var(--gold2)}
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:64px 0 40px}
+.hero .badge{display:inline-block;border:1px solid var(--gold);color:var(--gold2);font-size:11px;letter-spacing:2.5px;border-radius:999px;padding:4px 12px;margin-bottom:18px}
+.hero h1{font-size:64px;line-height:1;margin:0;display:flex;align-items:center;gap:14px;letter-spacing:4px;font-family:var(--font-disp)}
+.hero .tag{font-size:20px;font-weight:700;margin:14px 0 10px;color:var(--gold2);font-family:var(--font-disp);letter-spacing:1px}
+.hero .sub{color:var(--mut);max-width:520px;font-size:15px}
+.cta{display:flex;gap:12px;margin:24px 0 18px}
+#statusbar{margin-top:8px}
+.heropassport svg{width:100%;max-width:380px;display:block;margin:0 auto;border-radius:14px}
+.heropassport .nft3d,.heropassport .nft3d .glare,.heropassport .nft3d .shine{border-radius:14px}
+/* concept cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:0 0 8px;font-size:15px;letter-spacing:.5px}
+.card p{margin:0;color:var(--mut);font-size:13.5px}
+.card .ico{font-size:20px;margin-bottom:10px;display:block}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:14px;right:16px;font-family:var(--font-mono);color:var(--gold);font-size:13px}
+.step b{font-size:14px}
+.step p{margin:8px 0 0;color:var(--mut);font-size:13px}
+/* crew grid */
+.crewgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ccard{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ccard svg{display:block;width:100%}
+.ccard-meta{padding:10px 12px;font-size:12.5px;border-top:1px solid var(--line)}
+.rar{font-family:var(--font-mono);font-size:11px;color:var(--mut)}
+.rar.uncom{color:#5b9dd9}
+.rar.rare{color:var(--gold2)}
+/* rarity */
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);background:var(--panel2)}
+tr:last-child td{border-bottom:none}
+.grail{margin-top:16px;border:1px dashed var(--gold);border-radius:12px;padding:16px 18px;font-size:13.5px;color:var(--mut)}
+.grail b{color:var(--gold2)}
+/* mint */
+.phasecards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.phase{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.phase.active{border-color:var(--gold)}
+.phase-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.phase-name{font-weight:700;font-size:14px;font-family:var(--font-disp);letter-spacing:1px}
+.badge{font-size:10px;letter-spacing:1.5px;font-family:var(--font-mono);border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--mut)}
+.badge.open{border-color:var(--ok);color:var(--ok)}
+.badge.out{opacity:.5}
+.phase-price{font-size:30px;font-weight:800;margin:10px 0 8px}
+.phase-price span{font-size:13px;color:var(--mut);font-weight:500}
+.phase-bar{height:6px;border-radius:4px;background:var(--panel2);overflow:hidden}
+.phase-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.phase-sub{font-size:12px;color:var(--mut);margin-top:8px;font-family:var(--font-mono)}
+.mintbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:8px}
+.mintrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stepper button{background:var(--panel2);border:none;color:var(--tx);font-size:18px;width:44px;height:46px;cursor:pointer}
+.stepper button:hover{background:#341010}
+.stepper input{width:64px;background:transparent;border:none;color:var(--tx);font-size:18px;text-align:center;font-family:var(--font-mono)}
+.stepper input:focus{outline:none}
+#minttotal{font-family:var(--font-mono);font-size:14px;color:var(--mut)}
+#minttotal b{color:var(--tx)}
+#mintinfo{margin-top:14px;font-size:13.5px;color:var(--mut)}
+#acctbox{margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* my passports */
+#mygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.tpass{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tpass svg{display:block;width:100%}
+.tpass-meta{padding:10px 12px;font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
+.tpass-meta span{color:var(--mut);font-size:11.5px}
+.minilink{font-size:11.5px;white-space:nowrap;align-self:center}
+.tpass-actions{display:flex;gap:8px;padding:0 12px 12px}
+.tpass-actions button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px;font-size:12px;cursor:pointer}
+.tpass-actions button:hover{border-color:var(--gold)}
+.onboard{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
+.onboard input{background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--tx);padding:9px 10px;font-size:13px}
+.onboard button{border:none}
+.loading{grid-column:1/-1;color:var(--mut);padding:24px;text-align:center;font-size:13px}
+/* wl */
+.wlbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:560px}
+.wl-tasks{display:grid;gap:10px;margin-bottom:16px}
+.wl-task{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.wl-task .wl-n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);color:var(--gold2);font-family:var(--font-mono);font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.wl-tx b{font-size:13.5px}
+.wl-tx p{margin:3px 0 0;font-size:12.5px;color:var(--mut)}
+.wl-task.soon{opacity:.75;border-style:dashed}
+.wl-task.soon .wl-n{border-color:var(--line);color:var(--dim)}
+.wlbox input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:12px 14px;font-size:14px;margin-bottom:12px}
+.wlbox input:focus{outline:none;border-color:var(--gold)}
+#wl-done{margin-top:14px;font-size:13px;color:var(--ok)}
+/* roadmap */
+.road{display:grid;gap:10px}
+.ritem{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;align-items:baseline}
+.ritem .st{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;min-width:84px}
+.st.done{color:var(--ok)} .st.next{color:var(--gold2)} .st.later{color:var(--dim)} .st.progress{color:var(--gold2)}
+.ritem b{font-size:14px}
+.ritem p{margin:2px 0 0;color:var(--mut);font-size:13px}
+/* faq */
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+details p{color:var(--mut);font-size:13.5px;margin:10px 0 0}
+/* footer */
+footer{margin-top:64px;border-top:1px solid var(--line);padding:28px 0 40px;font-size:12.5px;color:var(--mut)}
+footer .frow{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:10px}
+footer code{font-family:var(--font-mono);color:var(--tx);cursor:pointer}
+footer code:hover{color:var(--gold2)}
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#2b0d0c;border:1px solid var(--line);color:var(--tx);padding:12px 20px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;z-index:99}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{border-color:var(--err);color:#f2b8b8}
+/* 3D animated NFT cards (no box-shadow inside 3D layers - Chrome flattens them into hard boxes) */
+.nft3d-stage{perspective:1100px;position:relative}
+.nftshadow{position:absolute;left:13%;right:13%;top:9%;bottom:1%;background:rgba(0,0,0,.55);filter:blur(34px);border-radius:30px;opacity:.7;transition:opacity .3s,transform .16s ease-out}
+.nft3d-stage.glow .nftshadow{background:rgba(201,162,39,.42);left:11%;right:11%}
+.nft3d-float{animation:float3d 7.5s ease-in-out infinite}
+.nft3d{position:relative;border-radius:12px;transition:transform .16s ease-out;will-change:transform;transform:rotateX(4deg) rotateY(-6deg)}
+.nft3d svg{display:block;width:100%;border-radius:12px}
+.nft3d .glare{position:absolute;inset:0;border-radius:12px;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(380px circle at var(--gx,50%) var(--gy,40%),rgba(255,236,170,.28),rgba(255,244,214,.10) 32%,transparent 58%)}
+.nft3d-stage:hover .glare{opacity:1}
+.nft3d .shine{position:absolute;inset:0;border-radius:12px;overflow:hidden;pointer-events:none}
+.nft3d .shine::before{content:'';position:absolute;top:-60%;left:-80%;width:60%;height:220%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.16) 45%,rgba(255,255,255,.30) 50%,rgba(255,255,255,.16) 55%,transparent);
+  transform:rotate(8deg);animation:sweep 5.5s ease-in-out infinite}
+@keyframes sweep{0%,55%{left:-80%}85%{left:140%}100%{left:140%}}
+@keyframes float3d{
+  0%,100%{transform:rotateX(5deg) rotateY(-7deg) translateY(0)}
+  50%{transform:rotateX(-4deg) rotateY(7deg) translateY(-7px)}
+}
+.nft3d-stage:hover .nft3d-float{animation-play-state:paused}
+.nft3d-stage:hover .nftshadow{opacity:1;transform:translateY(8px) scale(1.03)}
+.nft3d-stage.glow:hover .nftshadow{background:rgba(224,178,44,.5)}
+.ccard .nft3d-stage,.tpass .nft3d-stage{border-radius:12px}
+.ccard .nft3d svg,.tpass .nft3d svg{border-radius:0}
+@media (prefers-reduced-motion: reduce){
+  .nft3d-float{animation:none}
+  .nft3d .shine::before{animation:none;opacity:0}
+}
+/* responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:40px 0}
+  .heropassport svg{max-width:300px}
+  .hero h1{font-size:46px}
+  .grid3,.crewgrid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .phasecards{grid-template-columns:1fr}
+  .navlinks{display:none}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="navin">
+    <div class="logo">CREW <svg width="22" height="16" viewBox="0 0 42 24"><path d="M2 22 a19 19 0 0 1 38 0" fill="none" stroke="#C9A227" stroke-width="7" stroke-linecap="round"/></svg></div>
+    <div class="navlinks">
+      <a href="#crew">The Crew</a><a href="#rarity">Rarity</a><a href="#mint">Mint</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="connect">Connect Wallet</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="badge">LIVE ON ARC — CIRCLE'S STABLECOIN L1</div>
+      <h1>CREW <svg width="46" height="30" viewBox="0 0 42 24"><path d="M2 22 a19 19 0 0 1 38 0" fill="none" stroke="#C9A227" stroke-width="7" stroke-linecap="round"/></svg></h1>
+      <div class="tag">The Agent Passport of the Agentic Economy</div>
+      <p class="sub">2,500 fully <b>on-chain</b> passports for AI agents on Arc. Identity, reputation and stamps live in the smart contract — no IPFS, no servers, no middlemen. As long as Arc exists, your passport exists.</p>
+      <div class="cta">
+        <a class="btn gold" href="#mint">Mint now</a>
+        <a class="btn ghost" href="#wl">Join whitelist</a>
+      </div>
+      <div id="statusbar"><span class="chip dim">loading…</span></div>
+    </div>
+    <div class="heropassport" id="heropassport"></div>
+  </header>
+
+  <section class="sec" id="concept">
+    <div class="kicker">Why a passport</div>
+    <h2>The first thing every agent needs</h2>
+    <p class="lede">AI agents already transact on-chain — they just can't be verified. CREW is the identity + reputation layer, minted as collectibles on the chain built for the agentic economy.</p>
+    <div class="grid3">
+      <div class="card"><span class="ico">🪪</span><h3>Identity</h3><p>Onboard any agent — name, skill, endpoints. The passport binds a verifiable profile to a permanent ERC-721, compatible with the ERC-8004 model (CAIP-10, cross-chain portable).</p></div>
+      <div class="card"><span class="ico">📈</span><h3>Reputation</h3><p>Every completed task can be attested on-chain (1 USDC). Attestations raise your clearance level L1→L5 and unlock stamps. Reputation can't be bought — only earned.</p></div>
+      <div class="card"><span class="ico">🧬</span><h3>A living passport</h3><p>The card itself is a procedural on-chain SVG: class face, tier frame, barcode, level badge and stamps. Fresh mints are blank; used passports grow. The most-used passport is the rarest one.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="kicker">How it works</div>
+    <h2>From mint to mission</h2>
+    <div class="steps">
+      <div class="step"><b>Mint</b><p>Pay in USDC (native). Your class, frame and barcode are determined on-chain at mint.</p></div>
+      <div class="step"><b>Onboard</b><p>Bind an agent name + skill to your passport. One tx. The ONBOARDED stamp appears.</p></div>
+      <div class="step"><b>Work</b><p>Your agent takes tasks. Each completion is attested on-chain (1 USDC) — or via x402 receipts in Phase 3.</p></div>
+      <div class="step"><b>Level up</b><p>10/50/200/500 attestations → L2/L3/L4/L5. VETTED and MASTER stamps unlock. The card updates forever.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="crew">
+    <div class="kicker">The crew</div>
+    <h2>8 classes. One deterministic seed.</h2>
+    <p class="lede">Class is assigned from the deploy seed + token id, with exact supply caps enforced in-contract. These are real token ids from the live testnet contract.</p>
+    <div class="crewgrid" id="crewgrid"></div>
+  </section>
+
+  <section class="sec" id="rarity">
+    <div class="kicker">Rarity</div>
+    <h2>Three axes of rarity</h2>
+    <p class="lede">Tier (how you minted) × Class (what you got) × Level (what you did). The card you see is never the card you'll keep.</p>
+    <table>
+      <tr><th>Axis</th><th>Tiers</th><th>Supply</th></tr>
+      <tr><td><b>Tier</b> (frame)</td><td>Founding Crew (gold, via WL) / FCFS (via WL or FCFS phase) / Public</td><td>500 / 1,000 / 1,000</td></tr>
+      <tr><td><b>Class</b> (face)</td><td>Common → Uncommon → Rare → <span style="color:var(--gold2)">Legendary</span></td><td>1,100 / 500 / 300 / 100</td></tr>
+      <tr><td><b>Level</b> (badge)</td><td>L1 → L5 via on-chain attestations</td><td>earned, not minted</td></tr>
+      <tr><td><b>Stamps</b></td><td>ENLISTED → ONBOARDED → VETTED → MASTER</td><td>earned, not minted</td></tr>
+    </table>
+    <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × Founding Crew (gold) = maximum <b>25 passports</b>. Five percent of the gold frame, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
+  </section>
+
+  <section class="sec" id="mint">
+    <div class="kicker">Mint</div>
+    <h2>Join the crew</h2>
+    <p class="lede">Mints pay in <b>USDC (native)</b> — the same asset that pays gas on Arc. No approvals, no wrapped tokens.</p>
+    <div class="phasecards" id="phasecards"></div>
+    <div class="mintbox">
+      <div class="mintrow">
+        <div class="stepper">
+          <button id="qminus">−</button><input id="qty" value="1"><button id="qplus">+</button>
+        </div>
+        <div id="minttotal"></div>
+        <div class="spacer"></div>
+        <button class="btn gold big" id="mintbtn">Connect &amp; Mint</button>
+      </div>
+      <div id="mintinfo"></div>
+      <div id="acctbox"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="mine">
+    <div class="kicker">Your passports</div>
+    <h2>The crew in your wallet</h2>
+    <div id="myempty" class="dim" style="font-size:13.5px">Connect a wallet to see your passports (or mint your first one above).</div>
+    <div id="mygrid"></div>
+  </section>
+
+  <section class="sec" id="wl">
+    <div class="kicker">Whitelist</div>
+    <h2>Whitelist — 1,000 slots @ $0.50</h2>
+    <p class="lede">Every WL mint is a <b>random result</b>: Founding Crew (gold frame) or FCFS — drawn on-chain from a bag of 500 gold + 500 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Whitelisting happens on-chain via <code>setWhitelist()</code>.</p>
+    <div class="wlbox">
+      <div class="wl-tasks">
+        <div class="wl-task">
+          <span class="wl-n">1</span>
+          <div class="wl-tx"><b>Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc on X</a></b>
+          <p>Follow the official CREW account.</p></div>
+        </div>
+        <div class="wl-task soon">
+          <span class="wl-n">2</span>
+          <div class="wl-tx"><b>Like &amp; RT the WL announcement post</b>
+          <p>Link coming soon — posted here once the CREW X account is ready.</p></div>
+        </div>
+        <div class="wl-task soon">
+          <span class="wl-n">3</span>
+          <div class="wl-tx"><b>Comment your wallet address</b>
+          <p>Comment your wallet address on the same post — coming soon.</p></div>
+        </div>
+      </div>
+      <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
+      <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
+      <button class="btn gold" id="wl-save" style="width:100%">Register for WL</button>
+      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
+    </div>
+  </section>
+
+  <section class="sec" id="roadmap">
+    <div class="kicker">Roadmap</div>
+    <h2>From testnet to the agent economy</h2>
+    <div class="road">
+      <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc Testnet</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,000 WL slots @ $0.50 — random result: Founding Crew (gold) or FCFS → 500 FCFS @ $1.00 → 1,000 Public @ $10. Max 1 per wallet (WL/FCFS), 4 (Public). Total raise: $11,000 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st next">NEXT</span><div><b>Phase 2 — Mainnet mint</b><p>Same contract, deployed to Arc mainnet (chain 5042). Testnet passports are the dry run.</p></div></div>
+      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
+      <div class="ritem"><span class="st later">LATER</span><div><b>Phase 4 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="kicker">FAQ</div>
+    <h2>Questions</h2>
+    <details open><summary>What is Arc?</summary><p>Arc is Circle's stablecoin-native Layer-1, public mainnet live since September 16, 2026. EVM-compatible, USDC pays gas, sub-second deterministic finality, institutional validators (BlackRock, Visa, DTCC…). It's explicitly built for the agentic economy — which is why CREW lives there.</p></details>
+    <details><summary>How is CREW different from a normal PFP?</summary><p>A PFP is a picture. A CREW passport is an operational identity: you onboard an agent, earn attestations, and the card visibly grows. Its metadata is 100% on-chain (SVG + JSON in the contract) — nothing external to lose or censor.</p></details>
+    <details><summary>Do I need to run an AI agent to hold one?</summary><p>No. You can hold CREW like any collectible. But the thesis is that as agent adoption grows, verified agent identities with on-chain track records become the scarce asset — and Arc is the settlement layer for that economy.</p></details>
+    <details><summary>Why is mint paid in USDC?</summary><p>Because USDC <i>is</i> the gas on Arc. No approvals, no wrapped variants, predictable dollar fees. Your mint payment and your gas come from the same balance — same as how ETH works on Ethereum.</p></details>
+    <details><summary>Can an AI agent mint for me?</summary><p>Yes — anything that can sign EIP-1559 transactions works: EOA wallets, smart accounts, agent wallets. In Phase 3 the full loop (discover → pay → attest) becomes machine-to-machine via x402.</p></details>
+    <details><summary>What about royalties?</summary><p>5% via ERC-2981, enforced by marketplaces that honor it. A small fee keeps the passport ecosystem alive — funding Phase 3/4 development.</p></details>
+  </section>
+
+  <footer>
+    <div class="frow">
+      <span>Arc Testnet contract:</span>
+      <code class="copyaddr" data-addr="0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5" data-label="Contract address">0xd5B4…75f5</code>
+      <span>Art libraries:</span>
+      <code class="copyaddr" data-addr="0xe75b220edBf9c1141F143377B2c688D347b17925" data-label="Art library">0xe75b…7925</code>
+      <code class="copyaddr" data-addr="0x9f14d1bb452E5286b1ef18Db7d5398691260F011" data-label="Gold art library">0x9f14…F011</code>
+      <a href="https://testnet.arcscan.app/address/0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5" target="_blank">explorer ↗</a>
+    </div>
+    <div class="frow">
+      <span>Deploy seed:</span>
+      <code class="copyaddr" data-addr="0x4d63f727fef8e424365db0a8c8345d925641f9aea7703bdd6e81a7dafed945a9" data-label="Seed">0x4d63…45a9</code>
+    </div>
+    <p>CREW is an experimental collectible/identity project on Arc testnet. Nothing here is financial advice. Smart contracts can contain bugs; testnet funds have no monetary value. Verify all addresses on-chain before minting.</p>
+  </footer>
+</div>
+<div id="toast"></div>
+
+<script>
+// art.js - single source of truth for CREW passport SVG layout.
+// Mirrors contracts/lib/CrewArt.sol exactly (byte-for-byte). Used by
+// svg/render.js and website/build.js. The barcode pattern is passed in
+// precomputed (bcN), because on-chain it comes from keccak256("bc", id).
+
+const FACES = [
+  // 0 BUILDER (amber)
+  "<circle cx='300' cy='420' r='150'/><circle cx='300' cy='420' r='112'/><line x1='300' y1='270' x2='300' y2='570'/><line x1='190' y1='382' x2='410' y2='382'/><circle cx='150' cy='420' r='34'/><circle cx='450' cy='420' r='34'/><line x1='116' y1='420' x2='64' y2='420'/><line x1='484' y1='420' x2='536' y2='420'/><circle cx='245' cy='432' r='30'/><circle cx='245' cy='432' r='12' fill='#141414' stroke='none'/><circle cx='355' cy='432' r='30'/><circle cx='355' cy='432' r='15' fill='#D97706' stroke='none'/><path d='M268 524 Q300 508 332 524'/><path d='M185 640 Q300 575 415 640'/><line x1='272' y1='570' x2='272' y2='606'/><line x1='328' y1='570' x2='328' y2='606'/>",
+  // 1 SCOUT (green)
+  "<path d='M165 470 A135 135 0 1 1 435 470'/><path d='M165 470 L165 522 Q300 560 435 522 L435 470'/><circle cx='300' cy='432' r='72'/><circle cx='272' cy='432' r='26'/><circle cx='272' cy='432' r='10' fill='#141414' stroke='none'/><circle cx='338' cy='432' r='15'/><circle cx='338' cy='432' r='6' fill='#16A34A' stroke='none'/><path d='M262 514 Q300 530 338 514'/><line x1='300' y1='295' x2='300' y2='248'/><circle cx='300' cy='238' r='9' fill='#16A34A' stroke='none'/>",
+  // 2 TRADER (teal)
+  "<circle cx='300' cy='430' r='150'/><path d='M195 402 L405 402 L378 458 L300 478 L222 458 Z'/><rect x='236' y='416' width='7' height='26' fill='#0D9488' stroke='none'/><rect x='250' y='424' width='7' height='18' fill='#0D9488' stroke='none'/><rect x='264' y='412' width='7' height='30' fill='#0D9488' stroke='none'/><rect x='278' y='420' width='7' height='22' fill='#0D9488' stroke='none'/><rect x='310' y='424' width='7' height='18' fill='#0D9488' stroke='none'/><rect x='324' y='414' width='7' height='28' fill='#0D9488' stroke='none'/><rect x='338' y='422' width='7' height='20' fill='#0D9488' stroke='none'/><rect x='352' y='412' width='7' height='30' fill='#0D9488' stroke='none'/><path d='M248 522 l18 -16 l18 16 l18 -16 l18 16 l18 -16'/><path d='M150 372 h-32 m16 -10 v20'/><circle cx='106' cy='372' r='5'/><path d='M450 372 h32 m-16 -10 v20'/><circle cx='494' cy='372' r='5'/>",
+  // 3 DIPLOMAT (blue)
+  "<ellipse cx='300' cy='425' rx='135' ry='148'/><path d='M185 380 Q200 300 260 278'/><path d='M415 380 Q400 300 340 278'/><path d='M225 420 q25 -24 50 0'/><path d='M325 420 q25 -24 50 0'/><path d='M272 508 Q300 524 328 508'/><line x1='260' y1='560' x2='340' y2='560'/><path d='M300 566 l-15 0 l15 36 l15 -36 z' fill='#2563EB' stroke='none'/>",
+  // 4 GUARD (brick red)
+  "<rect x='182' y='292' width='236' height='262' rx='42'/><path d='M232 410 l46 -16'/><path d='M368 410 l-46 -16'/><line x1='272' y1='512' x2='328' y2='512'/><path d='M300 338 l-15 24 h30 z' fill='#B91C1C' stroke='none'/><path d='M196 470 h24'/><path d='M380 470 h-24'/><path d='M210 500 h20'/><path d='M370 500 h-20'/>",
+  // 5 ORACLE (purple)
+  "<circle cx='300' cy='430' r='150'/><circle cx='300' cy='346' r='26'/><path d='M300 346 m0 -13 a13 13 0 1 1 -13 13 a8 8 0 1 0 8 -8'/><circle cx='247' cy='442' r='24'/><path d='M247 442 m0 -10 a10 10 0 1 1 -10 10 a6 6 0 1 0 6 -6'/><circle cx='353' cy='442' r='24'/><path d='M353 442 m0 -10 a10 10 0 1 1 -10 10 a6 6 0 1 0 6 -6'/><circle cx='390' cy='384' r='4' fill='#7C3AED' stroke='none'/><circle cx='402' cy='414' r='4' fill='#7C3AED' stroke='none'/><circle cx='394' cy='444' r='4' fill='#7C3AED' stroke='none'/><path d='M282 520 q18 12 36 0'/>",
+  // 6 PIONEER (orange)
+  "<path d='M172 520 Q172 262 300 252 Q428 262 428 520 Q300 566 172 520 Z'/><path d='M202 510 Q202 294 300 284'/><path d='M238 424 l7 -18 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7 z' fill='#EA580C' stroke='none'/><path d='M344 428 l5 -13 l5 13 l13 5 l-13 5 l-5 13 l-5 -13 l-13 -5 z' fill='#EA580C' stroke='none'/><path d='M272 506 Q300 534 328 506'/>",
+  // 7 AUDITOR (monochrome)
+  "<path d='M300 272 L428 382 L398 556 L202 556 L172 382 Z'/><path d='M228 414 l38 38'/><path d='M266 414 l-38 38'/><path d='M334 414 l38 38'/><path d='M372 414 l-38 38'/><line x1='268' y1='512' x2='332' y2='512'/><circle cx='300' cy='352' r='24'/><path d='M300 334 v36 M282 352 h36 M287 339 l26 26 M313 339 l-26 26' stroke-width='3'/>",
+];
+
+const DETAILS = [
+  "<path d='M492 300 h34 m-17 -10 v20'/><circle cx='526' cy='300' r='4'/>",
+  "<circle cx='104' cy='560' r='6'/><circle cx='120' cy='576' r='4'/><circle cx='132' cy='588' r='3'/>",
+  "<path d='M118 300 v36 m-9 -18 h18'/>",
+];
+
+// Founding Crew line-art portrait (from 02-founding-crew.png reference).
+// Shared by all 500 Founding tokens. Must mirror CrewArtGold.foundingPortrait() byte-for-byte.
+const FOUNDING_PORTRAIT =
+  `<g fill='none' stroke-linecap='round'>` +
+  `<circle cx='300' cy='94' r='2' fill='#141414' stroke='none'/>` +
+  `<path d='M300 100 L300 114' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M300 116 L212 234' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M300 116 L388 234' stroke='#141414' stroke-width='1.2'/>` +
+  `<circle cx='212' cy='234' r='3' fill='#141414' stroke='none'/>` +
+  `<circle cx='388' cy='234' r='3' fill='#141414' stroke='none'/>` +
+  `<path d='M300 116 L300 252' stroke='#141414' stroke-width='1.5'/>` +
+  `<circle cx='300' cy='149' r='2.5' fill='#141414' stroke='none'/>` +
+  `<path d='M300 160 L283 189 L317 189 Z' fill='url(#gg)' stroke='#8a6d1f' stroke-width='0.8'/>` +
+  `<path d='M150 306 A149 149 0 0 1 446 306' stroke='#141414' stroke-width='1.2' stroke-dasharray='4 5' opacity='0.75'/>` +
+  `<path d='M211 233 A151 151 0 0 1 388 233' stroke='#141414' stroke-width='1.8'/>` +
+  `<path d='M195 259 A161 161 0 0 1 404 259' stroke='#141414' stroke-width='1.8'/>` +
+  `<path d='M293 240 L300 250 L307 240' fill='none' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M300 250 L300 261' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M145 313 L248 313' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M352 313 L455 313' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M145 306 L145 320' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M455 306 L455 320' stroke='#141414' stroke-width='1.2'/>` +
+  `<circle cx='145' cy='313' r='2.5' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='455' cy='313' r='2.5' fill='#C9A227' stroke='none'/>` +
+  `<path d='M198 305 C195 262 245 241 300 241 C355 241 405 262 402 305' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M198 305 C193 384 205 474 247 549' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M247 549 C259 565 279 576 300 578' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M402 305 C407 384 395 474 353 549' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M353 549 C341 565 321 576 300 578' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M300 578 L300 590' stroke='#141414' stroke-width='1'/>` +
+  `<path d='M252 340 L226 315' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M348 340 L374 315' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M200 308 L231 360' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M400 308 L369 360' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M202 332 C206 414 221 494 254 551' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M219 354 C221 426 233 496 264 544' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M398 332 C394 414 379 494 346 551' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M381 354 C379 426 367 496 336 544' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M180 392 C172 432 180 472 201 506' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M420 392 C428 432 420 472 399 506' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M172 364 L284 400' stroke='#141414' stroke-width='1.6'/>` +
+  `<path d='M428 364 L316 400' stroke='#141414' stroke-width='1.6'/>` +
+  `<path d='M178 350 L281 384' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M422 350 L319 384' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M291 397 L180 389' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M180 389 L167 381' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M183 397 Q233 406 289 403' stroke='#141414' stroke-width='0.8'/>` +
+  `<circle cx='227' cy='392' r='9.5' stroke='#C9A227' stroke-width='1.8'/>` +
+  `<circle cx='227' cy='392' r='2.2' fill='#141414' stroke='none'/>` +
+  `<circle cx='289' cy='400' r='1.2' fill='#141414' stroke='none'/>` +
+  `<path d='M219 406 L219 415' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M309 397 L420 389' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M420 389 L433 381' stroke='#141414' stroke-width='1.5'/>` +
+  `<path d='M417 397 Q367 406 311 403' stroke='#141414' stroke-width='0.8'/>` +
+  `<circle cx='373' cy='392' r='9.5' stroke='#C9A227' stroke-width='1.8'/>` +
+  `<circle cx='373' cy='392' r='2.2' fill='#141414' stroke='none'/>` +
+  `<circle cx='311' cy='400' r='1.2' fill='#141414' stroke='none'/>` +
+  `<path d='M381 406 L381 415' stroke='#141414' stroke-width='0.8'/>` +
+  `<circle cx='251' cy='438' r='1.8' fill='#141414' stroke='none'/>` +
+  `<circle cx='349' cy='438' r='1.8' fill='#141414' stroke='none'/>` +
+  `<path d='M300 358 L300 508' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M285 508 L315 508' stroke='#141414' stroke-width='1.2'/>` +
+  `<path d='M285 508 L278 502' stroke='#141414' stroke-width='1'/>` +
+  `<path d='M315 508 L322 502' stroke='#141414' stroke-width='1'/>` +
+  `<path d='M288 430 L301 468' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M312 430 L319 468' stroke='#141414' stroke-width='0.8'/>` +
+  `<path d='M266 498 L300 495 L334 498' stroke='#141414' stroke-width='1.5'/>` +
+  `<circle cx='266' cy='498' r='1.5' fill='#141414' stroke='none'/>` +
+  `<circle cx='334' cy='498' r='1.5' fill='#141414' stroke='none'/>` +
+  `<path d='M284 513 L316 513' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M300 505 L300 519' stroke='#141414' stroke-width='0.9'/>` +
+  `<path d='M201 372 C177 362 165 390 174 418 C181 434 199 436 206 424' stroke='#141414' stroke-width='1.6'/>` +
+  `<path d='M188 390 C179 397 179 410 189 418' stroke='#141414' stroke-width='1'/>` +
+  `<circle cx='192' cy='440' r='1.8' fill='#141414' stroke='none'/>` +
+  `<path d='M399 372 C423 362 435 390 426 418 C419 434 401 436 394 424' stroke='#141414' stroke-width='1.6'/>` +
+  `<path d='M412 390 C421 397 421 410 411 418' stroke='#141414' stroke-width='1'/>` +
+  `<circle cx='408' cy='440' r='1.8' fill='#141414' stroke='none'/>` +
+  `<path d='M166 512 L166 542' stroke='#141414' stroke-width='1'/>` +
+  `<circle cx='166' cy='505' r='2' fill='#C9A227' stroke='none'/>` +
+  `<path d='M434 512 L434 542' stroke='#141414' stroke-width='1'/>` +
+  `<circle cx='434' cy='505' r='2' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='248' cy='536' r='1.5' fill='#141414' stroke='none'/>` +
+  `<circle cx='352' cy='536' r='1.5' fill='#141414' stroke='none'/>` +
+  `<path d='M278 574 L278 631' stroke='#141414' stroke-width='3'/>` +
+  `<path d='M322 574 L322 631' stroke='#141414' stroke-width='3'/>` +
+  `<path d='M288 608 L312 608' stroke='#141414' stroke-width='2'/>` +
+  `<path d='M257 622 L300 644 L343 622' stroke='#141414' stroke-width='2.5'/>` +
+  `<path d='M257 631 L231 649' stroke='#141414' stroke-width='2' opacity='0.7'/>` +
+  `<path d='M343 631 L369 649' stroke='#141414' stroke-width='2' opacity='0.7'/>` +
+  `<circle cx='300' cy='652' r='3' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='300' cy='313' r='52' fill='none' stroke='#141414' stroke-width='1.2'/>` +
+  `<g stroke='#C9A227' fill='none'>` +
+  `<circle cx='300' cy='313' r='40' stroke-width='4' stroke-dasharray='1.8 2.6'/>` +
+  `<path d='M300 279 L300 347' stroke-width='2.5'/>` +
+  `<path d='M270.6 296 L329.4 330' stroke-width='2.5'/>` +
+  `<path d='M270.6 330 L329.4 296' stroke-width='2.5'/>` +
+  `</g>` +
+  `<circle cx='300' cy='279' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='300' cy='347' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='270.6' cy='296' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='329.4' cy='330' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='270.6' cy='330' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='329.4' cy='296' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='285' cy='312' r='1.8' fill='#C9A227' stroke='none'/>` +
+  `<circle cx='300' cy='313' r='2' fill='#C9A227' stroke='none'/>` +
+  `<path d='M283 289 L297 303' stroke='#C9A227' stroke-width='1.2'/>` +
+  `</g>`;
+
+function stamp(cx, cy, r, fs, txt) {
+  return (
+    `<circle cx='${cx}' cy='${cy}' r='${r}' fill='none' stroke='#141414' stroke-width='3'/>` +
+    `<circle cx='${cx}' cy='${cy}' r='${r - 6}' fill='none' stroke='#141414' stroke-width='1'/>` +
+    `<text x='${cx}' y='${cy + 4}' text-anchor='middle' font-family='monospace' font-size='${fs}' fill='#141414'>${txt}</text>`
+  );
+}
+
+// bcN: BigInt where bit-pair for width index i (0..31) lives at bits 2*(31-i) .. 2*(31-i)+1.
+// Must mirror CrewArt.barcode().
+function barcode(bcN, x0, xmax, color) {
+  let out = "";
+  let x = x0;
+  for (let i = 0; i < 32; i++) {
+    if (x > xmax) break;
+    const w = 2 + Number((bcN >> BigInt(2 * (31 - i))) & 3n);
+    out += `<rect x='${x}' y='682' width='${w}' height='40' fill='${color}'/>`;
+    x += w + 4;
+  }
+  return out;
+}
+
+function pad4(n) {
+  return n.toString().padStart(4, "0");
+}
+
+// o = { classIdx, tier, level, stamps, agent, bcN, className, rarityName }
+function passportSvg(id, o) {
+  o = { ...o, stamps: Number(o.stamps) };
+  if (Number(o.tier) === 0) return goldPassport(id, o);
+  return standardPassport(id, o);
+}
+
+function goldPassport(id, o) {
+  const agentLine = o.agent
+    ? `<text x='150' y='664' font-family='monospace' font-size='15' fill='#8a6d1f'>AGENT: ${o.agent}</text>`
+    : "";
+  let sts = "";
+  const serial = pad4(id);
+  return (
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 840'>` +
+    `<defs>` +
+    `<linearGradient id='gg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#8a6d1f'/><stop offset='0.5' stop-color='#d4af37'/><stop offset='1' stop-color='#f0d97a'/></linearGradient>` +
+    `<g id='gc' stroke='#C9A227' stroke-width='0.6' fill='none' opacity='0.45'><path d='M0 110 Q44 26 150 0'/><path d='M110 0 Q26 44 0 150'/><path d='M0 125 Q53 33 162 0'/><path d='M125 0 Q33 53 0 162'/><path d='M0 140 Q62 40 174 0'/><path d='M140 0 Q40 62 0 174'/><path d='M0 155 Q71 47 186 0'/><path d='M155 0 Q47 71 0 186'/><path d='M0 170 Q80 54 198 0'/><path d='M170 0 Q54 80 0 198'/><path d='M0 185 Q89 61 210 0'/><path d='M185 0 Q61 89 0 210'/><path d='M0 200 Q98 68 222 0'/><path d='M200 0 Q68 98 0 222'/><path d='M0 215 Q107 75 234 0'/><path d='M215 0 Q75 107 0 234'/></g>` +
+    `</defs>` +
+    `<rect width='600' height='840' fill='#F8F3E3'/>` +
+    `<rect x='8' y='8' width='584' height='824' fill='none' stroke='url(#gg)' stroke-width='12'/>` +
+    `<rect x='26' y='26' width='548' height='788' fill='none' stroke='#8a6d1f' stroke-width='1.5'/>` +
+    `<use href='#gc'/>` +
+    `<use href='#gc' transform='translate(600 0) scale(-1 1)'/>` +
+    `<use href='#gc' transform='translate(0 840) scale(1 -1)'/>` +
+    `<use href='#gc' transform='translate(600 840) scale(-1 -1)'/>` +
+    `<text x='40' y='88' font-family='Arial, Helvetica, sans-serif' font-size='58' font-weight='900' letter-spacing='3' fill='url(#gg)'>CREW</text>` +
+    `<line x1='40' y1='100' x2='300' y2='100' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<text x='40' y='122' font-family='monospace' font-size='15' letter-spacing='3' fill='#8a6d1f'>FOUNDING CREW ${serial} / 500</text>` +
+    `<path d='M58 176 Q72 166 88 172' stroke='#C9A227' stroke-width='1.5' fill='none'/>` +
+    `<path d='M58 184 Q70 177 84 181' stroke='#C9A227' stroke-width='1.5' fill='none'/>` +
+    `<path d='M122 176 Q108 166 92 172' stroke='#C9A227' stroke-width='1.5' fill='none'/>` +
+    `<path d='M122 184 Q110 177 96 181' stroke='#C9A227' stroke-width='1.5' fill='none'/>` +
+    `<path d='M80 178 L90 190 L100 178' stroke='#C9A227' stroke-width='2' fill='none'/>` +
+    `<path d='M90 196 L91.5 199.5 L95 201 L91.5 202.5 L90 206 L88.5 202.5 L85 201 L88.5 199.5 Z' fill='#C9A227'/>` +
+    `<circle cx='493' cy='120' r='48' fill='none' stroke='#C9A227' stroke-width='1.2'/>` +
+    `<g stroke='#C9A227' fill='none' stroke-width='1.5'><circle cx='493' cy='120' r='31'/><ellipse cx='493' cy='120' rx='15' ry='31' stroke-width='1'/><line x1='493' y1='89' x2='493' y2='151' stroke-width='1'/><line x1='458' y1='120' x2='528' y2='120' stroke-width='1'/></g>` +
+    `<circle cx='493' cy='120' r='1.5' fill='#C9A227' stroke='none'/>` +
+    `<text x='462.2' y='96.1' transform='rotate(-52.2 462.2 96.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>C</text> <text x='466.1' y='91.7' transform='rotate(-43.5 466.1 91.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>R</text> <text x='470.7' y='88.0' transform='rotate(-34.8 470.7 88.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>E</text> <text x='475.8' y='85.0' transform='rotate(-26.1 475.8 85.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>W</text> <text x='481.3' y='82.8' transform='rotate(-17.4 481.3 82.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'> </text> <text x='487.1' y='81.4' transform='rotate(-8.7 487.1 81.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>P</text> <text x='493.0' y='81.0' transform='rotate(0.0 493.0 81.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>R</text> <text x='498.9' y='81.4' transform='rotate(8.7 498.9 81.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>O</text> <text x='504.7' y='82.8' transform='rotate(17.4 504.7 82.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>T</text> <text x='510.2' y='85.0' transform='rotate(26.1 510.2 85.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>O</text> <text x='515.3' y='88.0' transform='rotate(34.8 515.3 88.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>C</text> <text x='519.9' y='91.7' transform='rotate(43.5 519.9 91.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>O</text> <text x='523.8' y='96.1' transform='rotate(52.2 523.8 96.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>L</text>` +
+    `<text x='459.1' y='139.2' transform='rotate(60.5 459.1 139.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>W</text> <text x='462.3' y='144.1' transform='rotate(51.8 462.3 144.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>E</text> <text x='466.3' y='148.4' transform='rotate(43.2 466.3 148.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'> </text> <text x='470.9' y='152.1' transform='rotate(34.5 470.9 152.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>B</text> <text x='476.0' y='155.1' transform='rotate(25.9 476.0 155.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>U</text> <text x='481.4' y='157.2' transform='rotate(17.3 481.4 157.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>I</text> <text x='487.1' y='158.6' transform='rotate(8.6 487.1 158.6)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>L</text> <text x='493.0' y='159.0' transform='rotate(0.0 493.0 159.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>D</text> <text x='498.9' y='158.6' transform='rotate(-8.6 498.9 158.6)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'> </text> <text x='504.6' y='157.2' transform='rotate(-17.3 504.6 157.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>W</text> <text x='510.0' y='155.1' transform='rotate(-25.9 510.0 155.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>O</text> <text x='515.1' y='152.1' transform='rotate(-34.5 515.1 152.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>R</text> <text x='519.7' y='148.4' transform='rotate(-43.2 519.7 148.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>L</text> <text x='523.7' y='144.1' transform='rotate(-51.8 523.7 144.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>D</text> <text x='526.9' y='139.2' transform='rotate(-60.5 526.9 139.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='6.5' font-weight='bold' fill='#8a6d1f'>S</text>` +
+    `<path d='M455 113 L456.8 118.2 L462 120 L456.8 121.8 L455 127 L453.2 121.8 L448 120 L453.2 118.2 Z' fill='#C9A227'/>` +
+    `<path d='M531 113 L532.8 118.2 L538 120 L532.8 121.8 L531 127 L529.2 121.8 L524 120 L529.2 118.2 Z' fill='#C9A227'/>` +
+    `<text transform='rotate(-90 36 420)' x='36' y='420' text-anchor='middle' font-size='10' letter-spacing='4' font-family='monospace' fill='#8a6d1f'>UNITED BY MISSION</text>` +
+    `<text transform='rotate(90 566 450)' x='566' y='450' text-anchor='middle' font-size='10' letter-spacing='4' font-family='monospace' fill='#8a6d1f'>ONE CREW INFINITE FUTURES</text>` +
+    `<circle cx='36' cy='272' r='4' fill='none' stroke='#C9A227' stroke-width='1.2'/>` +
+    `<line x1='36' y1='264' x2='36' y2='268' stroke='#C9A227' stroke-width='1'/>` +
+    `<line x1='36' y1='276' x2='36' y2='280' stroke='#C9A227' stroke-width='1'/>` +
+    `<line x1='28' y1='272' x2='32' y2='272' stroke='#C9A227' stroke-width='1'/>` +
+    `<line x1='40' y1='272' x2='44' y2='272' stroke='#C9A227' stroke-width='1'/>` +
+    `<line x1='36' y1='556' x2='36' y2='568' stroke='#C9A227' stroke-width='1'/>` +
+    `<path d='M566 231 L567.5 234.5 L571 236 L567.5 237.5 L566 241 L564.5 237.5 L561 236 L564.5 234.5 Z' fill='#C9A227'/>` +
+    `<text x='566' y='258' text-anchor='middle' font-family='monospace' font-size='11' fill='#C9A227'>20</text>` +
+    `<text x='566' y='272' text-anchor='middle' font-family='monospace' font-size='11' fill='#C9A227'>24</text>` +
+    `<line x1='566' y1='280' x2='566' y2='292' stroke='#C9A227' stroke-width='1'/>` +
+    `<circle cx='566' cy='300' r='2.5' fill='none' stroke='#C9A227' stroke-width='1'/>` +
+    `<line x1='566' y1='308' x2='566' y2='316' stroke='#C9A227' stroke-width='1'/>` +
+    FOUNDING_PORTRAIT +
+    `<g stroke='#C9A227' fill='none' stroke-width='1.5'>` +
+    `<path d='M70 680 l24 14 v28 l-24 14 -24 -14 v-28 z'/>` +
+    `</g>` +
+    `<path d='M70 694 l4 8 9 1 -6 6 1 9 -8 -4 -8 4 1 -9 -6 -6 9 -1 z' fill='#C9A227'/>` +
+    `<path d='M142 674 L134 674 L134 730 L142 730' fill='none' stroke='#C9A227' stroke-width='2'/>` +
+    barcode(o.bcN, 150, 405, "#C9A227") +
+    `<path d='M418 674 L426 674 L426 730 L418 730' fill='none' stroke='#C9A227' stroke-width='2'/>` +
+    `<circle cx='500' cy='702' r='34' fill='none' stroke='#C9A227' stroke-width='2'/>` +
+    `<circle cx='500' cy='702' r='29' fill='none' stroke='#C9A227' stroke-width='0.8'/>` +
+    `<text x='500' y='692' text-anchor='middle' font-size='7.5' font-family='monospace' letter-spacing='1' fill='#8a6d1f'>CREW ARCHIVE</text>` +
+    `<text x='500' y='712' text-anchor='middle' font-size='17' font-weight='bold' font-family='monospace' fill='#8a6d1f'>${serial}</text>` +
+    `<text x='500' y='724' text-anchor='middle' font-size='7.5' font-family='monospace' letter-spacing='1' fill='#8a6d1f'>OF 500</text>` +
+    `<rect x='200' y='744' width='200' height='36' fill='none' stroke='url(#gg)' stroke-width='2'/>` +
+    `<text x='300' y='768' text-anchor='middle' font-family='monospace' font-size='16' font-weight='bold' letter-spacing='2' fill='#8a6d1f'>CLEARANCE L${o.level}</text>` +
+    `<path d='M188 755 L190 760 L195 762 L190 764 L188 769 L186 764 L181 762 L186 760 Z' fill='#C9A227'/>` +
+    `<path d='M412 755 L414 760 L419 762 L414 764 L412 769 L410 764 L405 762 L410 760 Z' fill='#C9A227'/>` +
+    `<circle cx='95' cy='545' r='49' fill='none' stroke='#C9A227' stroke-width='7' stroke-dasharray='2.5 2.8'/>` +
+    `<circle cx='95' cy='545' r='43' fill='none' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<circle cx='95' cy='545' r='30' fill='none' stroke='#C9A227' stroke-width='0.8'/>` +
+    `<text x='62.9' y='524.7' transform='rotate(-57.7 62.9 524.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>C</text> <text x='66.7' y='519.6' transform='rotate(-48.1 66.7 519.6)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>R</text> <text x='71.4' y='515.2' transform='rotate(-38.4 71.4 515.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>E</text> <text x='76.7' y='511.7' transform='rotate(-28.8 76.7 511.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>W</text> <text x='82.5' y='509.1' transform='rotate(-19.2 82.5 509.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'> </text> <text x='88.7' y='507.5' transform='rotate(-9.6 88.7 507.5)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>P</text> <text x='95.0' y='507.0' transform='rotate(0.0 95.0 507.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>R</text> <text x='101.3' y='507.5' transform='rotate(9.6 101.3 507.5)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>O</text> <text x='107.5' y='509.1' transform='rotate(19.2 107.5 509.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>T</text> <text x='113.3' y='511.7' transform='rotate(28.8 113.3 511.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>O</text> <text x='118.6' y='515.2' transform='rotate(38.4 118.6 515.2)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>C</text> <text x='123.3' y='519.6' transform='rotate(48.1 123.3 519.6)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>O</text> <text x='127.1' y='524.7' transform='rotate(57.7 127.1 524.7)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>L</text>` +
+    `<text x='61.1' y='557.1' transform='rotate(70.4 61.1 557.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>F</text> <text x='63.7' y='562.8' transform='rotate(60.4 63.7 562.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>O</text> <text x='67.3' y='568.0' transform='rotate(50.3 67.3 568.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>U</text> <text x='71.7' y='572.5' transform='rotate(40.2 71.7 572.5)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>N</text> <text x='76.9' y='576.1' transform='rotate(30.2 76.9 576.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>D</text> <text x='82.6' y='578.8' transform='rotate(20.1 82.6 578.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>I</text> <text x='88.7' y='580.4' transform='rotate(10.1 88.7 580.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>N</text> <text x='95.0' y='581.0' transform='rotate(0.0 95.0 581.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>G</text> <text x='101.3' y='580.4' transform='rotate(-10.1 101.3 580.4)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'> </text> <text x='107.4' y='578.8' transform='rotate(-20.1 107.4 578.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>M</text> <text x='113.1' y='576.1' transform='rotate(-30.2 113.1 576.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>E</text> <text x='118.3' y='572.5' transform='rotate(-40.2 118.3 572.5)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>M</text> <text x='122.7' y='568.0' transform='rotate(-50.3 122.7 568.0)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>B</text> <text x='126.3' y='562.8' transform='rotate(-60.4 126.3 562.8)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>E</text> <text x='128.9' y='557.1' transform='rotate(-70.4 128.9 557.1)' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='7.5' letter-spacing='0' fill='#8a6d1f'>R</text>` +
+    `<path d='M87 540 L95 549 L103 540' fill='none' stroke='#C9A227' stroke-width='2'/>` +
+    `<path d='M80 535 Q88 530 94 534' fill='none' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<path d='M110 535 Q102 530 96 534' fill='none' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<text x='95' y='566' text-anchor='middle' font-family='monospace' font-size='6' letter-spacing='1' fill='#8a6d1f'>EST. 2024</text>` +
+    `<path d='M95 516 L96.5 519.5 L100 521 L96.5 522.5 L95 526 L93.5 522.5 L90 521 L93.5 519.5 Z' fill='#C9A227'/>` +
+    `<rect x='438' y='505' width='120' height='86' rx='10' fill='none' stroke='#C9A227' stroke-width='2'/>` +
+    `<rect x='444' y='511' width='108' height='74' rx='7' fill='none' stroke='#C9A227' stroke-width='0.8'/>` +
+    `<text x='498' y='530' text-anchor='middle' font-family='monospace' font-size='10' letter-spacing='2' fill='#8a6d1f'>VERIFIED</text>` +
+    `<g stroke='#C9A227' fill='none' stroke-width='1.2'>` +
+    `<circle cx='498' cy='554' r='15'/>` +
+    `<ellipse cx='498' cy='554' rx='6.5' ry='15' stroke-width='0.8'/>` +
+    `<line x1='483' y1='554' x2='513' y2='554' stroke-width='0.8'/>` +
+    `<line x1='486' y1='546' x2='510' y2='546' stroke-width='0.6'/>` +
+    `<line x1='486' y1='562' x2='510' y2='562' stroke-width='0.6'/>` +
+    `</g>` +
+    `<circle cx='498' cy='554' r='1.5' fill='#C9A227'/>` +
+    `<text x='498' y='579' text-anchor='middle' font-family='monospace' font-size='6.5' letter-spacing='1' fill='#8a6d1f'>ALL SYSTEMS</text>` +
+    `<text x='498' y='588' text-anchor='middle' font-family='monospace' font-size='6.5' letter-spacing='1' fill='#8a6d1f'>NOMINAL</text>` +
+    `<path d='M286 821 Q293 815 300 819' fill='none' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<path d='M314 821 Q307 815 300 819' fill='none' stroke='#C9A227' stroke-width='1.5'/>` +
+    `<path d='M293 819 L300 826 L307 819' fill='none' stroke='#C9A227' stroke-width='1.8'/>` +
+    agentLine +
+    sts +
+    `</svg>`
+  );
+}
+
+function standardPassport(id, o) {
+  let sts = "";
+  if (o.stamps & 1) sts += stamp(516, 656, 24, 11, "ENL");
+  if (o.stamps & 2) sts += stamp(556, 700, 24, 11, "OBD");
+  if (o.stamps & 4) sts += stamp(516, 744, 24, 11, "VET");
+  if (o.stamps & 8) sts += stamp(556, 792, 24, 11, "MST");
+  const agentLine = o.agent
+    ? `<text x='40' y='670' font-family='monospace' font-size='16' fill='#141414'>AGENT: ${o.agent}</text>`
+    : "";
+  const serial = pad4(id);
+  return (
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 840'>` +
+    `<rect width='600' height='840' fill='#FAF9F6'/>` +
+    `<rect x='16' y='16' width='568' height='808' fill='none' stroke='#141414' stroke-width='3'/>` +
+    `<text x='38' y='78' font-family='Arial, Helvetica, sans-serif' font-size='46' font-weight='bold' fill='#141414'>CREW</text>` +
+    `<rect x='498' y='46' width='54' height='42' rx='8' fill='none' stroke='#C9A227' stroke-width='4'/><line x1='498' y1='63' x2='552' y2='63' stroke='#C9A227' stroke-width='3'/><line x1='498' y1='71' x2='552' y2='71' stroke='#C9A227' stroke-width='3'/><line x1='516' y1='46' x2='516' y2='88' stroke='#C9A227' stroke-width='3'/><line x1='534' y1='46' x2='534' y2='88' stroke='#C9A227' stroke-width='3'/>` +
+    `<g stroke='#141414' stroke-width='5' fill='none' stroke-linecap='round'>` +
+    FACES[o.classIdx] +
+    DETAILS[id % 3] +
+    `</g>` +
+    barcode(o.bcN, 40, 368, "#141414") +
+    agentLine +
+    `<text x='40' y='766' font-family='monospace' font-size='24' fill='#141414'>NO. ${serial} / 2500</text>` +
+    `<rect x='40' y='784' width='204' height='36' fill='none' stroke='#141414' stroke-width='3'/>` +
+    `<text x='52' y='809' font-family='monospace' font-size='19' fill='#141414'>CLASS ${o.className}</text>` +
+    `<circle cx='452' cy='796' r='26' fill='none' stroke='#141414' stroke-width='4'/>` +
+    `<text x='452' y='804' text-anchor='middle' font-family='monospace' font-size='20' font-weight='bold' fill='#141414'>L${o.level}</text>` +
+    sts +
+    `</svg>`
+  );
+}
+
+// widths (2..5) in index order -> packed BigInt (index 0 most significant)
+function packWidths(widths) {
+  let n = 0n;
+  for (let i = 0; i < 32; i++) n = (n << 2n) | BigInt(widths[i] - 2);
+  return n;
+}
+
+window.__ART__ = { FACES, DETAILS, stamp, barcode, pad4, passportSvg, packWidths };
+
+
+
+
+
+window.__CLS__ = "0770644660264543135374416562210536533510664311375330220314576747770247506417172142053112564203314411560743431615514005634044426175613276241204740153101541613434532613274473414072302220725544176425062237364227447231307304176655066131663415531113537512344533615173114201277335107307430107126045341100167017270072100071407732415651072254444171563531344356267210503122026203066114521714270174332067140756641512404540307177464117662676120735412361327344011251653562172630775245474650373036025060166716472270273724064102373200642554410766161533352771231336603041435531035202701410313450713167344053005674300565746124127033674366002517760111511740534261101006640334433516431741030224005472412334751646664762642635573240573010433215112555627055701441551175371241705041223703117147330534350337236702661346624572472121653332450507411504616664610422332772650126362137772151573264257240744434650277166633443623544763774741040572260032310356246770467565037540154454055244454716413016075634240276251620724470023313577272636376744631330302303042352323730617502400517271713721716237340167521755155351140606624421214216072534355146505676000144247761327345724270166045620267131253000712141225630503530463732467354274747001767544523354117211316102542353114640141073273400346305137143637531305743567012053543420025140001200116140426020042000660143623441521453366306254641410410105056001644414003133365105530533004336610354224410305400241006004526616055006126643010566204003206550304650614613060153102214016610603165406006660540105360112510145160364420341203004630060355603514501441551644152213134240651420045012352505012100465610201522010002045055102504065003415501133400021052124054000000440420200000130513210142010244214000340004500122200023304212332101040103000100210101043041033300201320420240102341041200242201013430102030324212000032004000004040004203202023242000200040134314002032233440340034430012002200344020422100010231000002412033403002000340200043000032004030200040442110133402403000030021304011120010012041004031412100340342312001400000200402004421030001320202400000413042003103200031001130004000000023112104000003220312402004012014002000313101110003120102140020300243000003010000143103401000200330313311141111211111121113111111111111121111111111113111111111111211113311111311111221311111121111111221311111111333121113131123211111111112113111111111211222222233322222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222";
+window.__BCD__ = "102ae549986a41fe7467dee6e7411b5e9070480aaa120c345ee80041e7557fa85f6035aa5be0afe73298ba3ca6e733ccfb36191e280ed3f4147ec4a3002e603b82d3f5e4e29cedebf1427273cc2e705ab54730fe98c6bc326e8bff4c39d48749846df8ee02872c5eeb787b9e0cc21a8b937e4299e5a91652e22c2a7b357af9107fd87f692b0a5151095b3d87fc31a14fad55abd3bb202a1f3d3b577242ec32bc8d7eb0510f870997b4200a16470e57242b81a3c504f758bab945633ec46ac318f8a2d3f6c20163ebe25e331e1bdfa3aba7a371b1f4e905adc7ef3a8a04f96069e521ddb32dbb89acc5e2fce9a2f56849a83a1485d71f69ccb0c5d3de045fa099a78fc449ec99a97bbebe0a2d8a4e9e4b2f1d0acdae334183a1653d8afcf1eb6a57f1265df096739e75ef7af6653d1d7fa64ce65c9d464c7733de1cff10a38bd5dbfd34ee050a71a0f8b3270e2759ffe98d86752162b9266b85013610f70139a4b3eba6ba2f87e7f0257d6e6f2f62ff796e33129969ce8b0b862d36f62a88c248272d26b2b379a0c1142ea02b3c3c44ebc111c9bfe4e801abaea020b4ab1e9964f5e076f17b0692bf1e15da333c5b9a58ab60428a135f56f741d5c93706fcebd61516b642d50a14bd28c071e8d281989d41738842a2dfb63b08c7c17dedfabf56723b2de965cb4a2c7b974012a2aeaea648ef4d7fc2fdabca2669d9d44ea8cb1465abd570c39833842ed328810b1ccfda53689d04863c550b06198d0ca0c829e83d6f1ca38ad5df8657fe0f695b0f88d93c2cf6d984048d3c70f18677669c2418e2d38efce50b2153391a8a62c038dfa17df6b31bfe9ff5e50a088ed02878c6b0746550ae87252a85adc25f2ab809822be5eafbcc022cfe363fa3919180e7617d080f8b6a8b37a8c1e85c083d0cdb6e24cb7aa7c03eb5be750ab2212ad3693873034347953f2caa4da351c07ba45c2c261faa2e0848d842e29578c380af9af1cb9986f68568cebb056ba84054e5343e679bf0f1b30db9e2f0d7819cc6f778b7f2da21d3d15d50e4aaf0b37c599944b284568db6abf8e3d9d5564b9f5d26f773826cd7b35bef2d1365f4b9db4452931ddab04c355bfad04a8c788ceb4f5f2ef3976c26c97c867ffc47ab8b476d55c5df7b7cb6d27914ddf04fb9839029073485a073cd6b70bc8047c6ef220d43ee295c2abec12d65dcd8782425884d06a3bd2a787173fa3f61ddcd5e9260fb12a6c2f2fb441d8640e9d056856ef76e20b22bc68c479b9b71fbb0dc7778362a46137d970ae730440fed9b1f6af6f34a621712e6324612d0f9cc43f04648357b6e21b3f32dbb55f53f40b4287cfe7d84c46a6ee53219010eedf399a0fe54e08f859cb49373a814ca6b9d8f8a4746f174567672c953fc318a661c03324793afdb4489b5b3e855c18a46c52c4ae6d21684d3ed8a8b15b65a018205e83a2e3871b34cea67546f4114599a35f266907066669ec2ffef1f9e0139de90df44a87544405fa9fc429aba4a1d20e1f6633bba3ee2cf9e8d4176aaffff6f62fb6d38503274f842193e3c426459dbed0d09639ff379dc989272dc2092226edd86b2a5f06ad96e542e67448b7fbc1dcf529c4fee4b50f0dfa2cbbe7452a5d061442cd974f9bc22be0e61ac371f91c7bfafbb36823c17eaac358334410cb7257209ee47994ad25ffef1743eb29bcf116bbd308cd225b8233f598867e6d7c8407ede0b0b8b2b1ba3a0f975b4dad5e34f7b6ab98030371d6c9e37247c44afd77e6d412bf8af5dfeae394cdbed0bba71ef0c0e012eebaa64bd4309fec8a0d2304cdae39eff4b05d0d2f4d558faf72bc5a80addea49832c90f5ee380751ed4a65a3a23bad596843e1b36af4b34a98866f16bcc276031f1a992bf642ca103c7439ad224ec3e9dbbf32f49d355e050a48700af2c74f92f7c5b854935ac53bfca8b6feef4761df2f67447217ae1d7eb8c88356564d74ba3d3dc2f81cd6fc07722a64aa5ebfa365ec86bd11c20d9a797b16511e1afbee48f974b9288b090c37a0d2d508ba6dda345e31aa27cb4ea3da9b517e7013b63616cb73c77e39c856177f89df1e0d0eae6b9a7e28754b69cc730a36b885a51889f99a5749d048cbe4c4e46e5d2768a4fa049129917a7e309dbb5912c01a5f8eb82d761fea6d96e4d88a14a0572d5e75aaa29dcb2a038353cc7b01768f33b5467e72ba261840070126d972a1f0c6ce82cc273bd88f56797828d7582aafdc06e1316c79eb780bd6ad5b1bc11e05213953402135f6211ac260e8642e9ad41a4334132af2ac8f0cb4b1fe31e88e40fb7260530c8ff9b9daf471448db05854798a7a2d6b2fe2d79d35642a1a2e9a727de789c023c194b984e4e2bf17f4ced9e10c3afeced6d95f49599f353d7bdd941920963577772e7a68f1075fa30066a5e63399a29b61aa846680360350dedc3eb71a408249ea6abd756c9f6e3b116dc0f83bb9baaad4baec56fdb81e311d62158f83af82678f39091b398793012201eaa9af3633e643a52f3ce1e0409b47677f4b987ee8b5f51f9be783f8195703a91da7ad3ab33b1f681d08b334246796d6d60136491ec6b42d573e01f9fc61418e78d41b7ecad8a3852af9c11d40f727d91375996280f001d3288321814909993cd0959c742056b8a1a48e340579534525cca4c5065d383ad61119b897af9ee1c3f50318e8366c22d662c8ef878ad0f97b7f4d4049ce674632b180097497baeaf6545e77c5d3ee1fefa20241bfaf70afc4e72917b3c103247ecfcdf9f62ea41109a765d0de38907409ff2abd0b58e0583caff935f3dddfa0ea1cdcc4425aac50f3eb60c0332406af6f1e68ab7e9ed3e859111d00dc81e6d1f5531b59463061d00063bf9b6f5d7c0aaa8e10f8266b0cf2ab05d5c56e010c5be9a10302f9b78d55071bface5f79ac98a2d3f612acb24139b3b9220f58d395820ec351fbe5eeba9ac01be658848ba5b3cf9c1d69a54294d20530dd6f483abbbb76feff9f0bc2d9a259a924f12841eb91fe4023b7bc4a342b1e2b51eb2694acf4b0266ec45f428e5b83e000197bd6febe400ad269a368ccf449c0501610ef93240428423ffdabe8b14cf8d832c4c439180b8bda722290dd19cd77d4770c1106267b9c8bf6ee2c4c3da8d73c6f79f7a06ec9fd8bce554b6a2fb55759ff2f623ab8406fcee96e2611f83e084db9270e1c71479050e78e1cca7cb023e1d12738eeef69de59a39f0ef63a4da99402da72fa02c70da9e046d84f9389252773fe0eb8af5252ce844391783419a78f3987b0f3324bc1535e5b70c8a35e5916f50952522b86be311e446860f7a1308c18b351e47a8c63bacd8766212265fa92006d4ac232cc48ae7f4bd4614bdce7740f8dcc7a7b2b4d5d2a5a20cbb8c8ebe0fb68adfa748ec0dd9041088ab805817a225e11c1753d06abfdff1308ce7ff5bb80f0f82fce38a31a45334ac033f6bb9cb29fceb6894e201a01603f21d8afc8895bb0b71e5b32898dd41923213c83e4bce7cf34ba356a970375b5f476774b751500daf90a3c2f468d7d66debc40ffacd0d84983ce7b58ad662ebef4117036a8eec1dbce788692f4eb7fdbfd81be4a7d467b528a6ba79329bc1908d5b829b6bfc8a26e43b218c74bd7ca6cd2f1edff19555eb9ed05a4061c190ac983afe88b5e4fcb86afa68342b591e587fea5a29decddc533cebb48e8dba2433e63523a7ecda5c3f6c37abb9e5b7fc1d38ff6ea213a62c8a4553ff7849ada9159ba252484a5ed695a8a9268580462e3c0b84e5b1876858d01e574734e605bb47a15e72bbb915e0c5a5326bd96e3a1c3f8749dbf31b9077524662f521c5a80e6861c391722fd04613b99a732e0b21df8eb1abc582e65844dbd3e4ad86b97a3a8196c485c75d8f6bc2b33fed70ac8b2bdd4900ff7ab7c20c15dcebb222e0ca078fede44e59a1100b5eb639ecc1005945afa060f1fad93d0349bee07ff6d9ae32e0af2988863e9a7a9eb14e54213816abe040907015d170e88a321a165231f36df57e809f889e08d791fdab64f3ab08f498f9cac14343737f485f3afec8d0aef6a206f204fcd38fcb95c3012474013329a66bfa8475c7c1ebc6daa8c83528f3651f0d295b0fe106354a2f87c189514e323e861fb297a451c5de9527c931e6bca111ef26a93c4c8f5306f1a1866863b1280956a5a402ffabb71baa472db5d620fb8e7c19f35de169da236f7a865173c69be0877e6ed858f2124658e2a2284da632345c8fba6999e57932e32e86c277d9df1c17f13388359fb9b4d0c2a4662cd264d73044c53c339760d8ee61b054c92082cdd08d3eb7cddd921f93f3ed5c39b7450ff25445d19bbe0af3159c3694d830f8226d9af9d526995cf520dad030cf35273e5bdbb216b2fd920c58fed7f45f0aecef220b09a9ff78a142cb6ebbb3d47899ac4c1d16f173cf4259541874a275052dbe4e036300344eaced297f46794b5dc602755e334fecd125bd0affdd19928c5994bac1d3a1f6af12b253f1ce5d26b39d9da5dd02ffc81efc5766d4d540890e8c4c9cb04617903a3c67f9245ceacee6308c9148d9a5353ad90b3229a384935ba5e94a8096f003fbb87cb87ce3da5ca75539761bbc096c6dd0c1e0fa15906c71933cb96a5b0749229cf3ae7c277c29fc7900b8b3996e5638ece8da33f7def590844fa97cec2d1aeeae454ea54c38889bb453cdcdf58d52c0f0ac97e52d51b27180121dcb4794b3615e110a5cb445bf58b6709e0d06acdedaef406b8f9bf67d1c14288c78392345e8b87719ed150ad882680d00cbe6830e81d77039891077d35578fe033033f3d31271db0d1dec64d28aaebc4bed4436306758dfd256055a6547b258bd98cb7ed44a24d8cae0e05981620ab6d626951be7a25e42f97fe92dcc3e7fe5db5982cdaa80dc9f39adcf1a4d775ad43c458f4e15dceb9395888f8833a31d504263c55e05d130a617dd9053c0bb8ec1823a21b4faa6b430037debaac651abc4658aad900804834b184f47205b54df61f959caa8b77ddc0507ac7ada986826bf5dda2190a9f1cef0d9b86c80ce64686120d7d7f396636a215555991b0659469db4b009c83e747398499f1487889ee4486c3fd2f946ee08502467ccee3f80cf485469d8625b94393cd4a530bed3b623ac6ef18317c5258c4dff31947530b1f40427ec79acde27a660e83b712bb14d72f6397f37c9bb04c96bdc40494d2bdac22d0759d03c7f506200e5418e1b2cfe1801d94cffc22432169f81e271211bd2d83f074d150bc6da0db448ce950f4ad34e9ac0d4cd1a2bef4e4b3517bcda89e7e4342b5492ae46a1db026e32cd63e3833a6a91a7755f961f81c920a87972ce12e5890716f10815c5776ffbd7bbe05295efe30c6df02d6399c8e6aa298f1c934dbf19dae54f291b1478677a2382e77e5b8e9f94e0b34b5a3e56c61c3801c8e2e1de1e4f31e0004d16d38154f614a82a37a2aed603ee3212b74eb4a102e3ebe0cc028188a2ae0198ba3a1fb60253519f6470db283e0fbb0b5464fe3294bda0991b2d3b21560ae42aae161e4124195c2b92ce9d79dac2b76f87b9d72e30b01041202e8cf54a1d79d61089ec1cdea2acee73b53f880a74e55663eb91b59e2a53eb039f8c8662ac59448eb67841a8ec7bb8095cfc53df0803156e80706df50cadac9cdbb453dbfcd7545c584e6e23793db6b580f7ff27156cb4ff857329780620ae75e6bbdad0b2c099d8d553f9de3fcfa96741f885371e3653c4b8a4c969687367c88c4bc506419e87edfa191807936c8c6b02f3a7fd7bc68c9a9cbf393236a4713e5ccc177b81b9ccf19f40c4a5fa5ecc4b21d13935a00f82915fdbd3933e3f66534bf1ce661d40de62b7ba91a4dd22ab4049c718b444b2783f5d68eeabf45d5dc232551db8a5f00a5511186027ccb7dffe4816a407dab17fe5239c4bc63bbe3398a347ac609650eebff2311af94a34a45f775425a92bd8c59b84e9c56c70bf125284002a708bd20eb8b00343f9c23eaf893148275355a74b097c6ddb0595c50653a8b45520e55897285bb24b2226771a81a40ca015f83f654e97f60c7356069e3c83817fd0abc07af5c94abfe45e9c87bb18d4e1ae3985790774b070e0de9ca6c6caf02b169f75a167afa3bfd5dd3d5a18a983972deb86c1eacf29a3a35ba91f5dde9b7e33ab9f5063e5eeee8a7a711156c02ce77af1ea12f9b55cff889377fa36ebe2b97cfcb3c3778e32afccad3c2da00776b84e78e882c51456168b7f66223dada8834a0ea43cf787bbc41092e581ec4bb0c5fb7ec596b6e4a537becd786e3d7e3006c3167069cd9695fc805650ab82151bac476b01377fb8554e4d2bd95af310f8204cd0877b81f97a91662bdda3c024bfe554d4002eb37b69159e1f7de1c674131898d3dea463029929cebd6060cce4b02158205a370a7f520419d5661b5dcabcb4eb374c1856d7b4bcfb48fa57af93e03e09d20cc7022268da814ae70e1d9b44b811394e26a8b2c3054d418b5dc25579e09cd84dcb84a22e5046345449b3165b06d8afbd6b48f395ad16a9e36b4a47b4632b362d13d66e3ac7959f3eb0f6e75ead5d12a2f826f434ac8add824e7b29615fc7e91963295e59bd004b8f4b876911cbc8c9a42f8f8e34a9b9fb6a14e39066064719e1f153a79b7e776313c5276082f5ec040f42ff12f8a5271582556db6464199d091ee3f3d971f2cc2d0cc1dd54fdd7190169d807d218f30f16e1e836d5a2ff34d8fad1ec04bb1a6fca569b0682a2d6420c783e6309f8396eb15d0b4a2f0a91ef19189d44eacec3fa2618c7ba071fdc05be85c46af79c3a5380c1f2572172f02e2be6b504e9238c598b1109789ce570507b644769a016d535d55b2ceea0307a8e00a63345e23d73c2b151096744cc17c950d852a70b3d6b3668bb38eb92abd7464ed5edd218799e00ee64519791fab7505bde84d35c30acae799c99079e7971feab058adafc9dbcb0c2288357012622dd87adc984959447dd75787eff68f5669821fce8ef0d267f5ee4ecd936ea91a5aa4a8e3317db3b9dd65190a6e6b2a29c8a62f30fd6a7e4353f5dbbf6ebb9b16499b630e100737b2d38b4e10eda3a1c69f71366f00e677fd132f5cec6889a00de5c10a53a819edd1cecf8e7da625f6e982c703a8108d270f6c1106849f3d976bffdfd3cb1a3040c0689085a57ef6e23615280f574a3ebbbe674e208205b49c2a7b0a27540f4b80b01f295287567f177f4e558bd3625ffb05964822897b6b70dcf9b0f1259744d95d365314545a76c7ec12d7d8be59fadc6178aa0c26db72db24683a12392ea1d8633e5917be14514ce9a61557fd561b3c248b629b646ca36394f8362c57bf20a6279f23a2ff2059d54663af147ffe2f0d70b03dcdbefc5fc31e635d963407d7bf7bf0b036c2970498cc893d14f262a85a96676f6705f2861fe538e1133c9d1f911e950f543d03c7f0eac88eb775d9fe53226c3d9824385a1bb845045b48db0bb85164cbf57743c2f115b923f3e374590e713fb30842cdb1412d8da45f5b23a13aece30d438d711f5b4769c9f24ab4a4f5eff02c6a453c07b7dadb9203ff725eb2aebca82dfce6e53f388c3659a4dd9547e66c7a8f8841c1018d4005148390718a0037f9d2ab090991b25ac87ef93b669735d214e6d5db532459487498c107f34bbe3ca3beb64a4b6af7d118bd6b095bba7bd375f1572fb306dc8aaccb99af1f693219ed8a1346dffcec1af6f0c9b41e61265c5203b94352d4b7bd370479758e0724a0631d73d2b0446f678e6d7699c2c11340f12fb8320073e3124e2b986bd2d57cb1684d0c1d9507f190297383a4548e7d0c2865c0949eda3d43fb8d6b1532703a31ec780d1227cb3a20c99aa8fcd59cf268ba7d825992d38e7d997c8b52e5e8d1a5c612ff2d7368d75a71d459c2118a61fd6da97ca5f30c4cfd9bf65bd5b40bf0f5b14b459c74578371ef2cb75ebb0ead4457748be076eb3b5c33f063465130e2208a86357919a4e3366362f3b3b2081aecf7f44e1603e3a58f19ff02bc991f1779326349c2fefa191d78dc3ce0fe4e5b2b3bbcd74c362fdc66944cf88ba73e51c79bd8754d47bd83ba6b5c1e9db8111ab8388b21c2f47d31eaee6f0f3bc582674366a9cd3b3707ece3115a92157aa4945623273475ffc18a96c50439b101767929ed824dbf0a039853ba821f18450ed0dedfb6050c3a21dfb17725f0c5dd2804d7e346c601d4f8f105f3ca4d7514253fa39f5abdc151b32c275666353daf25e9aa94d6470d05b83c35b481016c67a6c1e5e0065ba9eb1b4011df3c16a4f751186f5b1cf739435af17e9da35c218febfa10188003de1f387767c922193d60000ef6e81863586345dc7d71f26ebb0a2e39b10ccf2e4a1492a5b761480c4f6b8fd2472b6553298212db82f49faf1609c6edad62befc752ec2f2f09f5e3437ea35cfe1830ee2a239600ec3642183a988168a30a21c608b4277b4565f6420757641d0136e00f6b55f07a9e91914ae581c4fd78a1d7dbf980daf4c08101cb15845c58a6364dea68a420917d8e50eff9a05e4c85e1c78ee56f3ebf40232822bee69e948679efe1d8bb639e3dd3ff1a363961d3dbdfdc78d472fc5d711705a42ef4aeab46971c6ac124124c1701faefb9b9d105f1f6aa45820fe83a6fafae92fcbd94ed7b9e000372da3034ece1706b648dda9c311ebc42ba3e951959ed21c032cec6049cfda31c30e93ce80252387a3205e6c6e53857a52f771029ec8ac27cabb63bf6c34abef15447123d9d28e0d09bac1f4bee4685159551a88de37b3d5f9f609b06dd0d71d5212f3f8542ffa58dbc0fd4d53b967cc7657c513f675c54e2c6f394cdd0d1d00884213901eae34a63aac42814994923926ba2625fc5625ea2b270a4b1f0f2e57d36d7f467364727ec5cd7543927f913f437d26b56664a46c209755cef55a0688d1207753bff67c2ed19ba0679d2a41f849cdf695a606e9fc64c6de276bb14a125f443065fe0dedb8c973adf0103e178bfe9dc21600289755139233ce50b2f1da53ed1477f2bf2146da1dcd444256ec60b6d79f4af4d8d2a29c073b130b0ff1553575e91b309981bb0d5736821baf72efd1d245755aaa23b825bd9c4d48ceb856de04c33967b1bfdce3c1747d330d5591a5b59b4328d4ce55214413b23920247c635206307f4ebc2b37731eaca2b42a376c479529d92e38e707ece7da6960385c00722e5f27695f91d84bc1348e17f05b7aba7cd9f241197e256ae58371031d78053a269ac62694e90496267ea03b91c3a59e8ddc11df0c5d91d0eadb26638ea1eecc390d068bd77cc78567c9a3207d01eb226fc62a9a03f9ce35ce77692d181df66dfa89af7f930fac586bbe097d73981b1f7711a13c18860ef3e158c4afe8101c323bfd561a2599a99ba66ba571ed882b0fc25245d563608efd56035e357d7dedca821d1b50640d24d089d24bb1946449870e5062e5642614eb5f7970f1d08f672b20a40db3f90f0a5616ea0f174375251237484493058bfc9b1306aeec46e1c32eaa74740e2850d2b01d66c24babe007b388557b0049795838351f77ecd59e0bcdf5012f744b0533fabbe75a132a3c5ec3d9a364a46020b51c06a8032f8fec052453161373399da3a9fabc3001f02855e94680430518dba1c9fdcc74b2ff38be578986dfaa73a6600558f09ed3deb1ff74b618c04d4468827c74e65f7233b937b9c211d6908b0e9d7c283ab27bfb038b6b1517d753113dd291a48561a1556c61932335e29d54d37f750dc4ac152cd8aa03f0b5299fd6bfc2838317a8ea9061c0315e1664316f2b5c8923ad1ce3a8986d965f0c2a182f75840c03830c2a1dc289b2c50e39724058511633659ac56fdfdcce0199d331761ff1f8f061cda97ab63a8e372d0ec3465cf3e318b5c3444e942bcbe8482599d58b42ebfaaffc6d156978aa75abcb15c562150635b62af765ae4844156a2521b996df3eed96eb9a3f5e3048419052f9e1a0bd3504bd469cd36f944706b833ef2a67d97e58c62bfd6b790fbe07e560f453d9afe23170feae6d094366c7627c60aa462fdadbcef1e1506279ff798ec35a09ca1da2ecd905addcb632f5f52b40e16c5075d69911873d9d46486db5a8a5740efbc06822671ffa33f36f5abe213142dff4691f4ae99650e44d1d942c2ae4f6e5ea9911d7babb7eac83b07afa5f1807d8ff7dd18170bf009b61e773b07f359a84603c52986e7eb9f804ba696729cb07c0099efcf82318454d7ce37c4e40e2e02c399e364e9289090d0e58bffc67346a86e1e31dd35065f93720c4e837998d90152323a0411c20a4259dfd7a627fa60cbf80c1900492a44bf2bde7ef9189eb119b56eaea241b2a50d82d204eeffc39e5ca7009658572af53058b7b34fbeb30e14ce2faaba39a8432f151689b1aee3fdd50d8b6d13eead650a45f6f48367606c91139437bd72871604480ab1433a8fe6a5d3e96f3f11ca56e57e2fe61a18b766c6efebe27c791c5f01c804155ab1dfb40625732912fad1ec2130fc9fe6cc62b80e478d94a38e43faa525cb23d01b5db9dd7baa3ec3592e49d3c54d2c99ca262238562116c9b7830620b26dd2244988ea36a3d616783cb9500e3670b29212a6564168f68fa4336b59b445c94ac47cac3a7218e5897834501f0ea5118da429a9675ea28d0c01fc33c9f840cd424b91c6be410eed36da18fd3c5505b0fee397a399392c8e63be8a8cc3e8ac76357a3f702c18c4b01654e12deb2f45d2c781975696db97c402c234c1f612bff91a74b0bcde9e2dc3e9744b57cc5aeda468dadcbba3d73ef5336a2750ef5f839bcf16492e3c080cc5b3a4838b9a5482dd2b3e111517cf72c8cbaf8ec4c9d99b0b8f79b8ce14d7325257b6dbe5621c85ac0b4d64080f01fb21016fd61ddd53bd12da80aee3d774218192a8cea83f6314d356ab9ce27d0679ac291a53afbd3864151a24ff68cda6f8ddc4df2eda59e42b4ffe78cfacdfa6777acb10a81c0b1156f1e6bc618901b194d78b766d4d7875d2b05f1a5e04c9a5255552e77f5312c059fefdad66a2fbd5f6f20a4d3cecc5d3b6b45d16a8bc390237b1655afa1e81831e709c4b301985d0d6d9648c22d778041372ffa8f6ab9f4906f6bdd8f7ce0fcf745d814b3cce82f33f46a7121ea79eebbe233c60fa51329ee25109d0fdb6d51a1c2a20c80e8f69931e99c884a462e9e5570067489e1c52eb40fafba67ca3c81840b4d2be805b77c915f94fbd370141c19241b7fddfdde6597ec6ce907bb52f139e4749b4ee2c31f32c64648c7d2ae0b75ae57414c20d95e1da0db89e5499fe56707f4778a98fffb21da0bf6136cfb667af013a321dd0f293fefb99a32040f543f35ab1c4b526bfcfa0ce1e5fb1a34439719e92f88a58d5d643d526d805a2566af8525a65a4dc661274920f1223b311d6e93f29bd10320a47890c4c91086651014a8003492119ce432b9e81208ecb992843974d66d76c967f14b546777bd86dddcc26f672a0d4b8afb2675bce1afad8fde5a5145bea523747160ac24dda78abbfc37e60c580b08ebd082b8b8d0589418c50ead2b8e0becdcc3503afb59e9c37cd60098e199082b87bf93c24cc3b2f1a275779ec44e6a82d6aa0495457db76bcd4cc838261d52d2c872401469df4e7daafe58aaa0b9e1653f2d16a4ff066b44a2f5581767385656e705f4a24536760101bed596be7832aec454178326ca5dee1615986488b7b8ab677fc0f95e5b6f1dafefeb13ee94c96764359381773d36a41e7f89410ff3787d92ba274d91ecfeb47bea807f6876ee94ff33a34249038f9089bada05ae512e86ab31de719ac4a149e088d049031ecca85f1d070db3a537bb93fa2cfc3ba100c12d21ef2b7359f50d757adf38ba7287455b566941c585064dfcea661f46cf79678a45804f1bc41c9a3fe9d4b17226cfc001c7068f4cf936389cd90b40290c90a49fdf817b35ffa1f8bb56ae6051ad419db79a7bee420ba08a9f66030bf5eb0d9cb8f67e4ba6bc7b7a2c0058660250c86ec79b25633f6cf1ba190f4200998b024135ae752500bc76c31dec8379fff46a797328b21f830458f915fb900351147584915af34ccabccce26a71749ef7639dcf59015baaed3fb904d1b19d96456cec2953cfce94e53b69fc9576157c580dcf71bf1f1fa8d170bb4f00260aecfb37357440d8adac7172016a287082a84c137b9860fe51d198b7cf18ae911d168a4bd1feb28ef988f4197458de67c3b5360b9bfd6f01246c89d0defb47ded4fedb0dbb92e1c479602125984d6c13bab0ad61910173878ea4aea607cd2b05e506f64383419baac54b40676712ad9b021121953ebb24a9ddf0e91e623b4d41c77dc838b74cd9a9a93ce9c72422f73bac6de41d070f59dc5f867b6117438027b1533215e7646aea8115952e5523df37f9783aad2a2a25597b6d0119f3ddc4433d2deacc34d77acbad538d100923d65fb1185d1fe73d232aa4eb099d0b0018521c175637af2c705e1440ec5636e3645ee5b5e01665ceebbdf5fd6239a7b69fedceb7d6f098b4f041824f7e2c49c96e4be040b352729726e1abdc3ed359fe0caa242599b60e68cb030bb2c10d26eef55375f787210b24bc3a1c9f2bbe9032185281c6fc7de42c81d43976063ebac7996d008b8835b79cba11020c71bb9730332e792481636b77b2c2cfd082a1c1dbb2d83775154cb226a638fc00ae5f83e2a7e13555274ce94ba984b034848ffe121e43459847d84e0313203d3bd2b4c6cf21cedba65700a5ccd6a26f7af21ae345aea511b1bf3f238454fd8d50d5f4f0a61c79aa3fe48fedb45c72798124ccf37db8eedc05b1aa39f2c274f0a454e307c1904daf0f153318a2879d461847a4f74ef6de622aed39cd66f0d9d147783cda786fd0a0d4fd21fdddc3561bfaab298d1c7ff0eecd324c7b39aca5ee2a50a0c924054f32f3a239cc6183e1a2e8aca538d89bc10f0d4c2f76eafbbe6c6b9d0729143aaefd63f4c7fbfd48fb2e46a48d7de6ca4b539446c3ce7897c30b2664f57e06e9846b0c0b66c3377a5bfcd09ba8e9a32a1fcda5220bc671096a78900fb458eaeca3a1c20473a00d5ecfe9683b2093b2f41fd38759a0399c351be16d21219a98d40e366bcd957222e9b61cf14e5e2c3574c9f7c1d19722e1b9f7892e1c0efa3bb84308aa33ed53038df65c0d608e3dfc1b8d374932f8971b8f6aa68b5b069e9f2d511a68f37ca0bbcf58baa0b170fef4eac165ae7f365b9c963236211476aaaa63e923a949bceb360822ce61933276193465c2baa78b4a6ae27e8f394e61ba2c3fe31a73536b84bcebbe5c903a5762597d7b1ac5d527e07315078f15950fa5278fb26df5c8fb6eadd275946ad565812f81e425e19b599413b18a06f602b39fbb508c59f459923ba2365bf9e7026ee9f759604f6d12292be72a0720770005ced2a7f2ac4bc433cb58086919971e096f73780fbde1d50ebad6a17db36e8853f837626ff8227c781a906da8a94b5354cc4a8187454cc622ad7afedea968842ebd816f8d7b6576038b1aae3e77ad43c732103e10e61f5a2ae5053f6422570686c90a3ee0b1411fd6031d4ff5ec37607d248d49d4d84714e039105bfb55230374e97b96dad624d0d6ba7f70300e14a4c84bb21d970946c5525c5d51e9028cb391fead4367bb259272d72432ff7a0fe62b7c54782100cb226064201f8f8ebd6d48e813a59bc7de959566cf68ba907fee6918806a197ed7c8feb702ea9f3aadf1409748e231489543bba9616987591b1a01cada2ec29d9e5dafaae1440d8492b9b4eb8f1392733970868ebcb62f0d681aefac27e8d7ef3ea22a198787126467063791e00fb13219aeebb57dbf7790fcaa846e08782f8b8961d663418acd08ad2d64fa2bcc984149fec0bfe1835a82a07c726ebe58a425cd67c76154f5fefff9094326f1251a0cace0f104db1f79e3a8e8aee5ee1a516a47656f08a78edfff99792fdb0ae1fa73953fe24006e5797bfecbf8c1a40c414c33d2fa13b5d6b671088907c7b96f78e78701f80551d38c4a0e29549b95df336f59e261d3b57bb8c31328fb03057a575a5c51090961652ac3add372c9c4f2858e05b68f65e0f2f6f41620c0ca621bbd1705eade03681b28800ff1f805230b43d0d4fa666315a57afac8b878a05922f172fda5eda03d34ef63626b89849402c6fcc20544791fbc42fac83571f9badf23f971d8475c0c4721121320d51ec4bc5553edab9df10c86aa5f8aad05eb4ce444a7dddbdef81d14b4c7188069915a91d9f265f938e90a14244d56d61069b155536bc904c6f5e07ade5d61b1b206a8c99e20b6aabb3379e39a0fbb105fc256a6bcc72b0e9ee61cabd2d62644ee7e130f2a76c22e4d7b7f164c283a6fad271a8b2536715257759db7d857d2c61cdca564a491b70365881b01884accab078116572e4402cd3d1d0d731f663d4bb69a25b2929538c6012a7e4c650e955eb7698ab6ef848e646d463f0a5acc3724a29db88087c8ff38c75289962d20f4bb6bbc9f5dad9f0ce0bb6e53a04fbcb8487ff98e35b0ce6b64a16482bf0732ba3612e643f88fd785422995c1b81592b3a1556bffe5ce4ca8ed4a3d5d213bf1f4c428bb2b4d5e29f6db8ace18dabf6d4fa52dd3035405f5ac35d3f6cc0e196d4d400491748d815d4c3148d1ce299803116422f411fadb16f43a2377587879373a35824a11fd3bacf74df8335b073ff0914567e165410af81d90140ef1e6a41a13e5f33d9446fb8b64da79d850ed84bd9b83a15d7d1933e106b4d047af034861b52433b7ed19ca3595017913e2cb3488f1d3f510b5bd7168153a3dec8ef6b12880860f326ba25fa13100b704105c6fdc4c3503e8ac1d9ac1689a81ed77c3f17502eaa5a2e92958ceeaba7f52bb0af8d4a0d7fc84fe4b64f4a66ca6b96a4e48f47770ae856265698abd3c3f52e6c8e5713dc2cc38e6d5100cd8e699402e28631b28a6e7f6a2ac6992cfcb75504676e02ff0d933b6cafbaa6cd7ed41f9a8d361cacfcac699b2bcf2e99299941560b64f9f0d53787b6c1de8f5415f51356697fa49e16ef151fd92db990099f37e8d014ca25dba65e13f5c4b46b5dd81b4e13d5052bd788a57662f5c4e7bf0abec0350b98884f767fcf130ad16a6e690dd7ba130dfff4267300cf01cef1338375b7fcf22cf2cde9ecaeb081e5da2f919c854177928ba1cd26ca0939782637bb33bf738a78285d74094b668e9682efbbff3f17ae0bde933efcfa3dee22a9a4060820ed485eb386f0573b2277d4d859fa07d9ac116d4e1fd95a8473faa3693f06211c0025cecc506f6a66586b9b4906affc27caf9e78e5249bf843d04620e22e2f54ebda2c7aa73ef453b7e558a4bd69a18d065f6857a2e1b399edc79559ba970842a7f6f9ba80cf16e3288f720c8ce7f0cb6ce0afff248a68fe849544ce32a6bfe402cbef1c59e571c64f9d3a38780620bfba37951b8f19e806b79dd216516cb44569c75ca67b4d7c3eb8810bd17b5ace64167377f50e955ea5123a46c3f2381a3ef1129882224775a75dfffc2cb1a94f4c489fa1ff349d6f106c6dc4d3ea7e9bcd95e27b5a2be6f5bd06fe8a5c1b03195386129f37b7f7c4f3eb438e985a48e73b6dba2274bb1b807e233a33573e3ffc46f48cf1c8d172130360611aa2e28aa040ea3f89a24c01fc47599e288d89a9c52e74da960c4ae3fab7dc679cf9cbb887be88451ab4188f985ab8f4c9b98b05320b547ef7ce6561ca824ae4159fe2a991fdd8b401a7c80555c119edb32094f6ff605e3191acbca9ce6e2f159379d8a850849ce7fac560701f537f62466f2a2b8afbdeba60586ce1e590cf6f6621e50bbef52c48d9638c4f224b618935a844822bc51d5a5479a7dd4bfdaa72435d3bacf47a51d02266ea84abaf9d1a91d126a82af51577ea004866621a9ea014224c47d29269357dbffbffc00ed6c6c25db3412b7b7bee2eb994a1803039b0029e1a2a0737c755b0f4d55452d0e5e3382bbea7ea4670a5b562a1aa09940438059712501eaadbd451d59df672d6c98893839747ce377437ac7fcaae6cb1fe943ec39637e227d55eca27f4e1a90706b4b40bd04db5e001319d8c84b3424077daef39705a95226f14f7d94e06d439a6738cd90b0b533084c5aaaeca3277b59ce7cbb5e8d5acde7437e739bc377a6c0406837929bebbff32111f61c913c3c8e6b84210cbec66873abf22f4b77eb33808d8ba6e7b62537b7ca3f04939d601a82a8168e5717f9463d8c3fa25e6bbc8d4c6f248bee8a029d73c2596b3bececf3b8c5338bc122790472d2a63f1816d10a3877a67dfe0a9155e245719e617baa1172cb490b5fcf926af289dfd1f8a6da2dcb14805c93b4ace80a38d8b201716d9087592bda9873fe10b1f981e8eac8a40ab07acfc8dd954411bdefefef5da06ec02d4a6045ed02303262c5280434f6c8af0e43f572694908f6f5d4c743c3ee23c2e414243ecaa4226665d2319d972fcb1e4d5da10bb729d75f9bd4f0d024c460e6e4a6a9e525595c2b441f704df3797b90774de0f1d083705310f0e3cf5bde06896c7c4958b97c24cd5496e9582d184e07254a547aae5aa244745d62facddfa874fca0b0bc6c301c0cbc7d1d01992688489900306d87346e56e7a4b18032986229a37586f5d75f4f66aa38ed3f15c3742d04457a72b25c6c6b78df40dc4653db4da92f86db04de299d0517b2d3f5f3276b7b18db71eafce2db252ca86e7ea423e79ba0032b330809fba844bdd9c1915d075d4a6e98147c55339ba375099ae1fd4fe00c81f8b6fbfebfe365c0a603e196ff2a3457a194bd9c086712d5b8d8d5e22a785d3dd820274b134654cd803d7d652d40f5dbc8ef65ed519deddc4069ca8c49ab3771315d42063c24f225c721a0ac4752bc07521dffa775f2ad85ea0e535631a32d0dc0c82e4df9c8e1dc55e8a998098d6e016240ab6800e7b4fcea8a6e50708fc2625309717186b5241ac757da25d1bd2bd3a54b7a04c82dea84569882b1bf27ae82cc89483f6e070d1f1957c85f8fdcdd58976f2356eed3a6787a15588218b5cef51f0244410f589b9b8d6fb06c649781b8469a3ba7f20b7535c0d81ce387b4b1d393370442ed562c3dfe64da361989db7a5555b3fdbe965d74a1e70b3c8652496ecf836cbec9875c065048cd106272d8c481cf77d502983662391f33b064c4c26d905cf0ffd9cc880a9ac39e16a011926d929151d22b66f96cfedb5b5ab4c4d516b0b61ae3d6e640068a4b0975107bae067091e33f263ed3f72034e64b997275368d48d55efe724b0febb1ee20a6eb656a0a8c9c3706a2b2f9984819deaa3e2834b5ab2f576bb961bbafaa12df64a8eee60da52bbf879064fc1f90af1c6da93ae5b506e23052d47ff77f39dcd2a4c31d05e1730c78e17878642a86ac85a8e173e8a34de18aab1b108c4be690384d1beb2c9a84e2155a0eacdab0670e42c5cbd187f2249773941362763d5f87318b9f273b07168ec9a02bce838f7caaa5f216bb91b2b4768105a6dc9b7751ef9c1904e6e355be3e21eb754be5c3e1928ac38d2147d7f5a6af1c36a5aa78dde261ea239909b961b17362b508ccfa5ba56dc9ce7bbc006935357c99b2778f58d4814891b994fa1913aff8cc002c23f9adefc673b71c65abd54c5b88af60374b91d94548aff245c38c893311fa8278c76a99e8457b5667bd56b13661ae4699c1b62daddeb90cdc8d8d1e334cacc141def8783b46a1d590bb6d0250226366a3117fc78c3e8158120860e2031d4f89d9366344ecd959e27994ca8fd4840b8c777111b68da2ddd1a4967ec248c1ac11c4e2d4c9ccb5ee25e20e0279b43c5ce0b66e504e75d94dffa4e86be8d318840ca4ff6ada4c91c1f57afc2096e311444e7b59b44a615f665610d40ed568885c9f79f77a4bbf2d6122a648b253d47e187fd3766091495d3646f53c4fe5295f2cab55dbd7f01a5abcfcff7e1ecd09e088d7f64a04a7c0f7cc882c37e763300d8095d941d2df1e635bf8c84fdd11a05b45b133b8450dbcf7dd7daf448540e2ca1a0d4b7fb3677be6671442ef7d1493fdac51005e7f75f633d36c09223dca6555f381b8a12a9ab7e9964dd5ee137d5a89eac47155f1bc281aaee166635bb29ad3a44792aaeaf0a5c8ed2d3a6b16018816296c21f1a8a69d5ae331fecf5c09b17b8e85fad3c1ca142e74879df41236c87607a2848f3275294dd0020c67a56ac4ce88714fe8c50ba72b48b9ebd1f02562d01a5a300a7fe3072febb90d73d1de57a83fd2c39399653548060c3cec62ee2df6982d8e171b176aa737d4aab09e43b32255d222ca7be7704518bb2d88d6b6756c28ddcd0b74415213674d8e501a9b278a6dfb02f03b0e5b9958e39fbac52e4bd11422756db5167c477a0bb5e7b0e09adb51a52db51041d7db56e629b7aabcb554392e87b8a5486853b82786c976948004ef2e629a29ef9e67002271d59d8e1f5c5b9db94c7d8808470aabe7584b82b97fdd425ed417abb80e9ca925f09b2fc3ae5b8ef3ef3c9d9c5e6ed592a2f71ea46436b282fd45dd628330f63756273e763878021a63b7bb729363319c1b5225e20fb9a49a8bc9ed2a476d8feae3ccdc11461f1dfbdfe19739653aa8bfdc0fc141ef4fae6a07b4c71b2f0a9718ec23e5f19459678ab81d3dee07ef7f5861ef0e5486e6e9a17aa78b56d8586782659d4e6623fb9a1b9c00636d85d4eec81c0693a29bc034abb64cb1c551625d653dd1b422de8a662a657046db8923b5f54dbdf88f08dbddbb436206397a370d55a439ed0db964c38dd4cc98222c7d537af6c17a7fec8fb09baa373d401c9301ac7275046a8bdfea48611cf7b8e193533a88a9a81e18cfa7d0783e11e7258e118612d5d4cee2cf362a05cf998c51f9e7d5c6482f4c217aff434b100703b744e73a058395102b38ec6d7ea3344d05ab034b18729719cd0f359a1601f4663cee88b60bbc25e05ff10840c000b20aaf1379b499ad5d2ce49b552f6106eb9ebcaecf7ef9ee87e95014f94a9495b7ceb8f56cb781b92fff9a4fe336dbacceead94b205201e53fc419464a011c241f15c2318f6916ddab8fb7ea8f82d0a95ae7ed668c242fe1b13e33e9ee2933abede2d4d533df4ed96e0e78114c63993de43c07b3a1d458d1b6879e7f790ec61d910b93626b46a8ce23eb17a40559659d629c69fe64bb2f7bf43f62908e950c95d2771554e7770ca7b2abf08df0276384263c4b5dcabceea8c668f409da48a7ab663b1dbe21b9ee336e0a9c0f773a4a65841b30d299f9a3020ab848bb69c8e1d0e1822bddc7749e78540a16bd70a4dc467a695389a5e60e05cc04a6ed9dd6d094e1fdc3763952c02006c4ac8f579e9cf956a734a37d0caa316f3f9756562012cf789679c9a7d83d034c57ab10433a61e0f386fb76127bf8fcf80addde9d7d4b279c8fce4610a905e2cac1a66370afba5df149a901bb422d493d25fdc439834d16e4b96b892eb8ae0e25c2646e734853895bc85abae3c37768973eb14f332533c1da595a5e0bdaad044bad0432454f5eab4d237dc372730392b7cc7540cc8725e112cf2bd95cea656688ceae289516ddc8a0dd675f5f39d9f7d295803b357a64a1495d7dd6cdda3dcd21f1e6f90fb32f83db8f0a31e9ffde14c25c4342ee09a809920f47ec4866c70d6ed79458ed9dc9bdb7894672fc780b01a7a352b0078569a72d78f49b6d4a35811c6bbade97b0ee1a23aaf61a071d59f3094fe9726fcc0111a4540c0ab666062d85e7e1798eb14f4737756304f56d6fea3440391986081f3548ae31fd3df08e6ba58cb16155d8281381311e68d11797f0ea43002d7ec4706d68b56929f6a1b95771ca2afbf2bab6c566b85ca1cf987ee63670052de2d3b6c1f401f1299ec637ebbef8dd6567b67eb6ee11e6491e6edc2cecd75a31718da92bedf445a98398f7cfd02c2cda480bd4b1aff8f7e52afced35fb5fcb38d528bae05529adf258d40e85a4e3ba7e2d5528aaf5be406543ad0430ec8d2db135e8fbb7c426403e2beba96085b090fd12e742842c270c6c9fe0c9075c8f393f38568f799ffd50ac9b8034f562ae7dad66d6ae396069abdbde3fdf8bedecf0028a4c81d64f1b6094529e0e1ef06d9b7ac9404a0a5b13461defca944b3c3b8e1b49834cb3910f97937a6259e8f352b928aad7354c0c437a6a23ef4ef83bf9488a50b6cb4a233c11275f7ef9c87c707f269214ff11357107ad65ae3131b5efb93483a8d31fbd04307ae3c706214f9401cc01b44b4752faeebee36417c05de0cc5c91085c96f55f9c30ac8f4bdbb68fcfb30d7b23503664b9c6bc0d8ec3490868b28ef3af396b7227f7c47d9380a67410aa4228dc0545b2e38486539ee08e81f17e93f531efe5d64a38d08e21cacccb0ac80ab9af680cb2dbe61b19f5de405da1d753d3e61befbdcb473526443ef5f1f27537ccd4381218b758be913217bb4f8d06a736c82ce3197daf272d0f3aee0cf652f3c6afade295e319291d249a09f1c4ee1e2fc3b6c6d52fa07d382532e3be23987026923a4231ea71abcc112a9cecbf03fff6f56c8e0c678f2f49bd910cf10c49ea913cfbfb52ac3248a856dd10674a3c47c135b20aa613d766b54e6b55b63771f3aaae1bc3296a9ae97024ed620938df984b68e25bc9f6e8a64e3be4cbf3a33249faa8a37d09379d4b667bf05b8533a947f183db6317cbda22df5e3c8bd66ce6de7c7c84339b1c69ee020fa6b507df7c2d5574def39b9e1c162aedf63d4b1b55c90d968d981a1fcfe73327ae712f7e0d7d5a85af2db8e6e4f9ea514dd1be326c36cc6d8b85eb8daa1e87dd5a9ba1cde126a5b73d5aeaeff443a2ed29faba2332f56212d9c68f9ca3816d55a76d840c993e6dcb2321e4edbb073d4ba77f594f59ddc7e81ebef82a6651a6801bcaf496f6f7b31c85c4402326db7687a0e3f22ca6f3f05dd384ac059cd961818ab376d4006ca3727ad88b93aba9285f43a260f1702932e166fe91b5740732a2b8835c57fc576a583603603c6f3c9a3073ff8e4781b46090d51e7425906af6327a754597bdb7e6bcac6a197245ce85ec5a04b0405fbd9cb21e33f68e28b580cf25cd2e8098c3ba7109df278aa8bbb4917fd52c03cff4809c1c64f947094731568d1156239042faa95cf571a6d00bf2fa1424b03ef85e07b8c3c8dc7d4a14ee0e5f6858360e7809e804b1d935a59f9156ad50e60c132bae665c64a08d6faf0cf8d317df69aeabdea0c512f00525283301b16943a500cc18ddc2e7fc97dec521b89db65d6327bc0f4e2f43c70f7bbd78e5883a08664f538c0c1999f374c9aea0613c929021dbf0c7e3d0d802117363b8e5e37e08c8be56d4687bfd600c66418a295a37a11d90b45e5675145e516ab21c92ee450aaaca79da573672d8979c3234ca0e5726b5dfc11d71b173ab4131b3b6f3479ad1a70e3c68002d5e422454b21224bf09b527b41abdce2b421d5eeb64ec75577d959c8a60594b90545110403ed742d19c0cf7eca829ecbea766f67c1d080a4d8374ffd2ac67e5adf1075da1356b81dcb575371e5bace726376107660ee5975bfbab25336c31d34be159231c58ed72f6a81f2fb5d0bf2aedbcd4524e29d1f26bed6ccd5fd8feb37f6bad10a6e78b1edd15ee0115042309e1ae29a01ad3bc70ef058679dfef958cafd434e5a6bac285a9984df3c7ffc78cb6470e9f7f65226019f42961bb2458059561242105b3cbd1cf864cf11a1aa8857259a4d2820055b47f6301a3280f218e6da653bea997476c5b397110c363455984c2de2046313b7a76fda229f165af7e679677db2a19442bf684874a80148c5b6cd282afb9ec1f52633865fa4cfc4ab441b78981fc075638d901a9db27d0e478f7dba36889e25e4287a94949b09ec614a80af9ed160621eab32c98254bc6f45f1a0a76abc3a2b830d5de1a2b70f3a5a131a63ed1460ac421fedea3d7e8981f7e56d7413b9600c9ed726a0646a1ade66fbcd493f4619bdc9fe0c31f1135aa8f468fed0436e8aca342b015785b3806852df3e8db1bf00d3ce5ca6e80619e20d5da8dee759db6a6792a49eb0b1dc09c6047139db1d455d31a57ef79e4cb7e913a800f1352ba678e3047066ddfb722ea855310449707ea3f739231f81510e020757e0ad1b7c6f7dabb3e57d91d45427566f4d3c9f84e177c19823ff6b6bd618209ee9d219f0bb5a77d54e0d939e9a5ade25893a393104cb97531fa6fe8924aad39f14da583641f1669162563de38baae5d12a5a6f8cf8d64ca4e53cf16c81186616f9fd17a172df1950b5faf2bc8aa600591ca2800e4a64526b081d94363f357c73ed28152eb43eb733f566b979db7eeba81a8177b229e7f37dd72d030d3d1364ab1d1b5c94ba7ed7d5bdbb32f0abc7f0580f2bebaa751d5fd17f0cbfad0e827cccd197ab8da4fdda4a30ab76b191a945e449218fec973943bbefcfc029f207e1e46b77f7fb2228bb6888df73e799a07f68ad480f403555d1bd0c8836c56d6658f636bd31f9aa6b5aa78bdb2da49b66739711c919b174ceb1d094d96c9271bdef893466b55ae795f45591e09f6221000c11fd92344fbfbf30f681ab770064b5bca0c6ff3ee19abaa90a6700a739535316746ce91784e6b04c4f1c1ae1da9269df475fb05d9a5adff70950890a1ff3005f6ca18a29f66fb6f725c096dd8a31e62ae37e18413823ce445cad14defba5fa34ce544fb39b3b58b51b1a530e7aa55f6bb6868b812dce7bffe8cebf7a51cdb65458954e2c215fd1d1fa03fa517f0162bf412290322673f2937b01b727f01e34a5379aeaef1908725bbe63b709f1f87bceef50f810718c77b77732e862f9481ef4d0ed5393a26622e755a7805e632b8970e1075f723dde528f9d2ced90ad9fa565ea1dd5851404b403b28f0b646d86546bca42f471ee31f9a2160a250b640cfb39762cb828d458a7d167f9a31235189ebe7e4a04991fd1b84bc90d068c891b3ca4f11bfd5b96d3aa5187fdd192702802ec713685f0de2ecf43ddf22de0705ddb1f19d9ebfa0e65904685d84f7a4e1ba4d8feb8ad643310665fcd2126748fdbb8162802028a8b420a3b692dd5cad86f8c0c1690bd60b6df3e8e4712fb9ac057a8dc14765962c736febda50645b44ef2c432de73d344f10949dcf011f8316b48a03e2409762320b8ece0d4a37ba9b0760607c54e7e74b389cf8372295816d4fa2a996663234366f42272e6ccee5cc5917d8e6a648f493bb18df9608093ee8906e448984c394d3599ac658f9457596447f814a1c7dcd26968237bb2866898b3b7099ae80800198cd76ab46abe15446bec35db96ae5fb4540e6be27177e5657e7994735d1c14ad60402baf0305bd2312fdf5edaf63c9d05bdd71df415d4a945d4d19364bbc6a1c62ae953e608d1df1d99b7ca8ec192818a74436d7c61ff8a8188cea469eae25d730f3c745ca6994e5bf27b34e4c7c7383c68f96b27b160ff7a13589aa8899b953d9e98402bbc18f44fe8e7bc1fed14d3760fc42831a7add4f20c2d1c1f7cfb3b9234b16baf4829e32619cc8da323c563d5c1a15756605a6825b514f483315f0a0f461baf9e85bae252c4a8e6f03f4c1c109367f003a73edb9f84a3ad2b113649fca292da910bf222912e718ad886540452f49f53ad08afe4782e1ea2712076f214dcbbf03ac108db8f17d6591ee789558342bb427da80f44da0aba21d273da23871eaf6396ce3cede26435fe3026f0f709891abf12dc382b94034aabc078886283da488070fb3fb491291ee38bfaffbfce430ed27c57c83d808a3e15e7725805ea0fe22994fede7e6bda652260dd32e1ddd7eb74f13ab840aa55d452d56cfeef4e557ce63645d683f748249146ad62d313a4074f703d8a452cb555bb5a4a1634864d9a9acbbd3c694fa9585fc9d795fa656444f19e825e6708b2c17405343f2831a74d9979dbf162fb3430d9a5b45419f995be33c25d02ba65bea7026e597553a8e682634e11d88d15568af8041ab4c6f6efde90e7c656f413fc0f7ddff746b11ae9220590513b523b4350e037f5e242f68eb98e4ce8b71e02bdc29314bfbf9c702f67a4c3f897727111c6c4a6e38ebb4c02b56f1ce1563a504e03a466a4e0147510444a9bc12fa7ca2c3c1db3d3e8f645577aafeff2da9b91acff568efdd535a5a7f3726c41a0a4d3a731f08f52343facd69c4efaecc5441d1da5c8cb6f52c24e57e0dbc6eaf39fd0e76e7ba86b09732e1e4cd08318dcdc9af6b04a90733edc8aac4f5870fcc1444516f534201169b4c0413800da1bae5f3f4cb92ebd604db2932203309c5482b412e2d820e5eaf10cb9670c92ed41aa5bfd2c2b5edab3eb5442c5e89d4cb5fe24d4fca7ec5487f48472128cf02a4ab6e4a2def4f7d781322abc6f5309a254fd656d018746e1154625864e914e072981ce4ad43b772cf1fe6df4ebd1c0f89cab2156af16fcb6f67c734e063f1143ceff86ba4dd90ed45c0fc47e4c0c9741ff127b49a4ccbc772658a77c8bb4099d1142443483baca68c422172b1d77c87ff8d349b6b4510348ed808ca56a2abb6ee2a2e5b2c9fe2497cd1db329d26ef8b9f35b53ffe78a4a8f01ebfd771e769dcf846905d4269d3e55a217abbf1defcf2467263fa8592aab0a41c96ed6611123b48c8063d342d074c7f7b6078ce8827dc1f1c4ad1e5fb7261675acce77454220351825cc059529dd33c8e95231457b3c8600dc358ecd4accc3bbd05c4a9297fb4ae2a42549498135b2571985b82e7b59c634cd548f2c59647f2151b7623008058fa05c5021adf41662c14861520235d1ec03961dc7dbad18042a2d9e7a3b65b0bafe26bb12354fcbb8d36a97de35ac252b1abf170e1aceff1c6edc2d64cdf80460d41c72c80e36db8325c75c44b739e2e17f66cf89cdf8088a480441b8828d9255436c901a64829b173bb7a5284c1c2a2273c465f8ff315805d3a0f781f54a96dc4ca24ec3591996e27f8f7813555d98428a9dd5983daf4311398dbda9ce2906a82088dd389969a942bd177212674ce5208792b3ec116052ef14ae0685b401a531a4feb6dde01d58a63c690e30936a7098ce7f0a4e5902090211458653612fe9591641f312bbd17e398c244c310570220f0f188714df4007d8810e02341cfaca48d73a7d6ca7d5bceca2a8e55d1ff2297aa9c795b3f0aae5b139937c9f05debdd34d2182fd11fb6ddf4890a7a43d45ac3b88db95a627cba33f4aa0434c4a3772fba653b20e3a24d92da42d4face402df9e2912304695e1bbd9d6340ed276fdc21230124b887f23dc2e7efa263e7c9a636933e8996cbd2e9ba8950a4b701f910fa7bfd0eb9a17b15d0279ea88eeb4efc6a12223a2adb27b99572bfc2fb242ed1d73579fc2615a86fde0946aba3dd2df12dd887726ceef3fbbb2f2a39cb0bc16332d07b0081b10d4e6c904c554df286ed7beda3082e64fea72b0cdfee35444036b8556ca221cef845bc6a7109af1672884a9a8752d9f087d4cea6a9a29bab05152785ab20781a1466d9d26ff5a338dd168b059f7388cad8dc96b1ba0b55813d4e6189e20e58c6744d8beee53d870f8793ffa859b92da7ded599a7bd66bfbb5f06528955c02bf32c4270424342b604cea92bbb23a95558f824ed7ea35fe917fb3539f32665911f348e487eb942c04e94c9a44f9eb01a5c7b36eac1d63d7b41f3c9fa4d86e440167de474bedab14306bfbcb19a1fbba9daed77b713c5cf650fbc87790a30f214917968dcb26882f821c55b292a2d36e453d9d48b648f0545f994db4153179d704eac4c52f57a6ba1b9df1c2a1e3efb75773ad25f72863ff268198ecee417ec8b385db23dc07b9900dedc9d660c42de85aa260d23b401aa636160a035a3b0215d082a8888c4b75145be0f528c92b9492e61a8f050bfe98aa3be4ed46f35d88f4e0b80c957b22b086759e2af929ba5485e0001ed217f84a1cc6f8c3f767ccdac36664d23e0ebed8e6fdd0f2b219486364515fb71d39a3ea220717201b12d35ef31643ba561de2196f000e471d88e92dff395c28ea27b42506a13a9eb2d018271c78466f80e5c3ff8b3a0e226d78c3eee040eda0969a133ee00a586abeaa0b0dbb0324a62429b8b1c69b3518e9cb0ef9c46639231e9d870dbbcde4a056bf8a35d99307a098391af090efcd52a391dcdd99f5b6866e44794ee07ec7ca222bc0f166056f254addd8c379a7061c4cb30364c208029bd09327b4193efe0f5a68122a5a2ce0569c3786ab08f4c21b3d839c76588bdbbf2b107c842c3a7bc29d14d4ecbfe7359790f6b8960e6dbc821a2589d2112a5506eef8908e3c7be8b0a236c26fb6bda702b97d57670ca9c270fb9518a93c3a186acb89035ad6268e926d4aeaabed372e46fd0e0f4d4da38da2ea02797b016f40b922eda549811da1a5c281f054f308a9db646ed7eabf938737ba1906b7a09da35516459ecd4c8b67dc057974befbdf0ff76fcd4f2fbdd0572c043d60a9f6783ecac9d3f7dcf7bb2f525c2458fd1039079bb382d75e8442692a17b7a81f830a060d997e90429debdd7ce30959d853cd4ae68d56ebe0c826ee84afca9ff641c1758ae02197ea9b6d31dae2dfaa356422fb1ac1bcb7e52767a5e1384a9d4c8f438fe41366b96f0921ec7897dc1f45bbeda76e2bce8e5d0a6195ee1356badec6d3662c42c61e2e50ba2fa5d9ece21b5367b341bdfdff4ef47b666d9115e816ca6bc41ba7ae185d3380fa0b2b0d6daebf0ee806c6999f1a87abfed8cd661905727450724d5b9220d2939dcd49e3aa262d938012ade26d9e87aea390ae9dbec8171966a734f48d898ad5b3f63926a9db642d0c82f144387ef5f3e18a1f4a6c267aeab7e2f6ff015750884eb013ce6fc6997c16759ad2ba050e20b8163a7b17c56de0149c56a4898711fe4ad692d6d68bb5c59518f2260627413bdd9dc259e09546c1b4a232574f764138078a7baf9380c4cb50174933fe69097c19a054277cc8f47b1571c65ff46b6aa4fc82687f057e70b3ca5c12cfc1548d72081fed46d280fcaaf5f1ac97c5f41cb67128ff6002ad3ce724b5c647d230bea4367921ebe1af7c8b7ffddaad9336dfd7fe758cc20ae55fdd77fbcefeb8379a2e309d92346e0189a497263827d5be32c0fabb88018f3431ab5e7c5c7f8bdf95aea0f9c5e531084723bfae879f9e569b7675bdbede47ccba2d489d4113f7354c456fe2721ad9f0afd13c5ab1c8afa1958b9033b7caa6dde9cea52fca7e5e48a4762f0baa0f2fbaf4f80121532bd2d1bd893cd9bb72342b3bc95198fe1465eb3daaf55411d21f926bd30b6e93e59c0a28ffae4a45e5f7bc5c239ac49006ff263da517c5371f2d065532cdd5735f763a9936b466f3bceeec32717cd77b6a0e3888f191f3f9f50d3eaa680ae48d557a5a1b857f9c532334b732215abbe6a5f49fc2dff77f1384c5ec1f5534b49a47f3aa1aab65f88f71b74b9eee3646a8ce30b28732fcfb114ac35cce72cc7489a36b2bab5c3d3b6a5037ebd72cc898f6e0d75676b5161add123627937ad27a508eae40f6c2e3b7d07c126baa48af7a6813d830b921589a3d714cbd4e061862f391944c843dbf7f2559a909718d37a3121f2dbd35e52438c57ea258cf086307742552d054d79a23142ba574093d4fc612be130e411e1ddba108c17a19587b03e2a281638ac4e11033f575c61e4152f4706abfd60f5dd0714e05a8922a880b413e3737d3e989723d430347337efa75ceb6968c750855ddff50a7c7b5a13ea9a35cd6f6f802038253f39012c7a1adc8f557ffcac38f571de417d89ecb26c7e727be1fd935aae5a6d9fbd3641a30e11c91dea24ea0d1f05c0e47529849847f8769130cd2917b5cc1ab6e60802f9c2a5ab671f4cf112a2b401a149e1a1f28f3b79111d71420b643d81058b9fc0f37b6b6317dbc5f1d2c0785effd898b81c53c0867c2792e3f1ac458700cbc7f1f8c6683405d309a2a300a6a29d386055571663439f4caea0f52cc93268f7443cc0286250915128e1916b665e48e2bcc1180c1e31c80fbb8747a9121419cff373bc23215a3dc25944465796e21df956173016a31af59ce225f74ac551a155eb3d88eb2e757aa0823919c7fee11d4df0d5f81804720d2fd11412225d824600d8d8c7ad66c3be99404e2745edddb38959719a95e35017cd24b34840a68aa0d3a9af5fbb047fbcb6be837feab6b88f55e746c3dc84f92795985fda7223006768a18877453d3467807166446e1c99e9c395bbc8d9975ae7c163d5ba8312e621b9e1405b8362cf06b";
+</script>
+<script>
+/* CREW — Agent Passport site logic. No external deps. */
+"use strict";
+
+// ============================== config ==============================
+const NETS = {
+  "0x4cef52": {
+    name: "Arc Testnet",
+    chainId: "0x4cef52",
+    rpc: "https://rpc.testnet.arc.io",
+    contract: "0xd5B4a8E5968072dc6D1afE3dde8669d0364875f5",
+    library: "0xe75b220edBf9c1141F143377B2c688D347b17925",
+    library2: "0x9f14d1bb452E5286b1ef18Db7d5398691260F011",
+    explorer: "https://testnet.arcscan.app",
+    symbol: "USDC",
+    decimals: 18,
+    seed: "0x4d63f727fef8e424365db0a8c8345d925641f9aea7703bdd6e81a7dafed945a9",
+  },
+  "0x13ba": {
+    name: "Arc Mainnet",
+    chainId: "0x13ba",
+    rpc: "https://rpc.mainnet.arc.io",
+    contract: "", // set after mainnet deploy
+    library: "",
+    explorer: "https://explorer.arc.io",
+    symbol: "USDC",
+    decimals: 18,
+    seed: "",
+  },
+};
+const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "Pioneer", "Auditor"];
+const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
+const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
+const PHASES = {
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1000n, maxPer: 1n, label: "Whitelist", priceStr: "$0.50", gold: true },
+  fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
+  pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
+};
+const PHASE_IDX = { wl: 0, fcfs: 1, pub: 2 };
+
+const S = {
+  totalSupply: "0x18160ddd", wlMinted: "0x463fb323", fcfsMinted: "0xe81e1c83", publicMinted: "0xa4f4f8af",
+  fcfsExtra: "0xbc43c321", fcfsStart: "0xe483b3c3", publicStart: "0xa5f4c6ff", wlOpen: "0x1a904acb",
+  isWhitelisted: "0x3af32abf", balanceOf: "0x70a08231", tierMinted: "0x9ccfda3b",
+  classOf: "0x4324aa21", tierOf: "0x53f96df2", levelOf: "0x6d5e3032", stampBits: "0x00f5e75f",
+  agentName: "0x089853b9", agentSkill: "0x6e47d7f1",
+  wlMintedPer: "0xd3c13d7e",
+  CLASS_NAMES: "0x28a869f3", RARITY_NAMES: "0x0a5b300c", CLASS_CAPS: "0xcfc4ce33",
+  ownerTokens: "0xb15feaef", tokenOfOwnerByIndex: "0x2f745c59",
+  seed: "0x7d94792a", onboardAgent: "0x4e7005ab", attestTask: "0x907055f9",
+};
+
+// ============================== mini ABI ==============================
+const u = (v) => "0x" + BigInt(v).toString(16).padStart(64, "0");
+const a32 = (a) => "0x" + a.slice(2).toLowerCase().padStart(64, "0");
+function wordsOf(hex) {
+  const h = hex && hex.startsWith("0x") ? hex.slice(2) : "";
+  const w = [];
+  for (let i = 0; i + 64 <= h.length; i += 64) w.push(h.slice(i, i + 64));
+  return w;
+}
+const du = (hex) => (hex && hex.length > 2 ? BigInt(hex) : 0n);
+function hexToBytes(h) {
+  const b = new Uint8Array(h.length / 2);
+  for (let i = 0; i < b.length; i++) b[i] = parseInt(h.slice(i * 2, i * 2 + 2), 16);
+  return b;
+}
+function dstr(hex) {
+  const w = wordsOf(hex);
+  if (!w.length) return "";
+  const off = Number(du("0x" + w[0])) >> 5;
+  if (!w[off]) return "";
+  const len = Number(du("0x" + w[off]));
+  const data = w.slice(off + 1, off + 1 + Math.ceil(len / 32)).join("");
+  const bytes = hexToBytes(data.padEnd(len * 2, "0").slice(0, len * 2));
+  return new TextDecoder().decode(bytes);
+}
+function strHex(s) {
+  let h = "";
+  for (const x of new TextEncoder().encode(s)) h += x.toString(16).padStart(2, "0");
+  return h;
+}
+
+// ============================== state ==============================
+let wallet = typeof window !== "undefined" && window.ethereum ? window.ethereum : null;
+let account = null;
+let netId = "0x4cef52"; // read-only default: Arc testnet
+let state = null;
+let stateErr = false;
+let acct = null;
+let qty = 1;
+const net = () => NETS[netId];
+
+async function rpc(method, params) {
+  if (wallet) return wallet.request({ method, params });
+  const r = await fetch(net().rpc, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+  });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "rpc error");
+  return j.result;
+}
+async function ccall(sel, args = []) {
+  const data = sel + args.map((a) => a.slice(2)).join("");
+  return rpc("eth_call", [{ to: net().contract, data }, "latest"]);
+}
+
+async function readState() {
+  const r = await Promise.all([
+    ccall(S.totalSupply), ccall(S.wlMinted), ccall(S.fcfsMinted), ccall(S.publicMinted),
+    ccall(S.fcfsExtra), ccall(S.fcfsStart), ccall(S.publicStart), ccall(S.wlOpen),
+  ]);
+  return {
+    total: du(r[0]), wl: du(r[1]), fcfs: du(r[2]), pub: du(r[3]), extra: du(r[4]),
+    fcfsStart: du(r[5]), pubStart: du(r[6]), wlOpen: du(r[7]) === 1n,
+  };
+}
+function phaseOpen(st, now) {
+  return {
+    wl: st.wlOpen && st.wl < PHASES.wl.cap,
+    fcfs: st.fcfsStart > 0n && now >= st.fcfsStart && st.fcfs < PHASES.fcfs.cap + st.extra,
+    pub: st.pubStart > 0n && now >= st.pubStart && st.pub < PHASES.pub.cap,
+  };
+}
+function openPhaseNow() {
+  if (!state) return null;
+  const o = phaseOpen(state, BigInt(Math.floor(Date.now() / 1000)));
+  if (o.wl) return "wl";
+  if (o.fcfs) return "fcfs";
+  if (o.pub) return "pub";
+  return null;
+}
+async function readAccount() {
+  if (!account) return null;
+  const r = await Promise.all([
+    rpc("eth_getBalance", [account, "latest"]),
+    ccall(S.isWhitelisted, [a32(account)]),
+    ccall(S.tierMinted, [u(0), a32(account)]),
+    ccall(S.tierMinted, [u(1), a32(account)]),
+    ccall(S.tierMinted, [u(2), a32(account)]),
+    ccall(S.wlMintedPer, [a32(account)]),
+  ]);
+  return { balance: du(r[0]), wl: du(r[1]) === 1n, tierMinted: [du(r[2]), du(r[3]), du(r[4])], wlPer: du(r[5]) };
+}
+async function readToken(id) {
+  const r = await Promise.all([
+    ccall(S.classOf, [u(id)]), ccall(S.tierOf, [u(id)]),
+    ccall(S.levelOf, [u(id)]), ccall(S.stampBits, [u(id)]),
+    ccall(S.agentName, [u(id)]), ccall(S.agentSkill, [u(id)]),
+  ]);
+  return {
+    id,
+    classIdx: Number(du(r[0])),
+    tier: Number(du(r[1])),
+    level: Number(du(r[2])),
+    stamps: Number(du(r[3])),
+    agent: dstr(r[4]),
+    skill: dstr(r[5]),
+  };
+}
+
+// ============================== art ==============================
+const ART = window.__ART__;
+const CLS = window.__CLS__; // 2500 chars: class index per token id (id-1)
+const BCD = window.__BCD__; // 32000 hex chars: barcode bits per token id (id-1)
+function bcOf(id) {
+  return BigInt("0x" + BCD.slice((id - 1) * 16, (id - 1) * 16 + 16));
+}
+function renderPassport(id, o) {
+  return ART.passportSvg(id, { className: CLASSES[o.classIdx], rarityName: RARITY[o.classIdx], bcN: bcOf(id), ...o });
+}
+
+// ============================== dom helpers ==============================
+const el = (id) => document.getElementById(id);
+function fmtUSDC(big) {
+  return (Number(big) / 1e18).toLocaleString("en-US", { maximumFractionDigits: 4 });
+}
+function short(a) {
+  return a ? a.slice(0, 6) + "…" + a.slice(-4) : "";
+}
+function countdown(from) {
+  const d = Number(from - BigInt(Math.floor(Date.now() / 1000)));
+  if (d <= 0) return "now";
+  const h = Math.floor(d / 3600);
+  const m = Math.floor((d % 3600) / 60);
+  return h > 0 ? h + "h " + m + "m" : m + "m";
+}
+let toastTimer = null;
+function toast(msg, kind) {
+  const t = el("toast");
+  t.textContent = msg;
+  t.className = "show " + (kind || "ok");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (t.className = ""), 6000);
+}
+async function copyTxt(s, label) {
+  try {
+    await navigator.clipboard.writeText(s);
+    toast((label || s) + " copied", "ok");
+  } catch (e) {
+    toast("Copy failed", "err");
+  }
+}
+
+// ============================== wallet ==============================
+async function connect() {
+  if (!wallet) {
+    toast("No wallet detected — open this site in a browser with MetaMask", "err");
+    return;
+  }
+  try {
+    const accts = await wallet.request({ method: "eth_requestAccounts" });
+    account = accts[0];
+    let cid = (await wallet.request({ method: "eth_chainId" })).toLowerCase();
+    if (!NETS[cid]) {
+      const t = NETS["0x4cef52"];
+      try {
+        await wallet.request({ method: "wallet_switchEthereumChain", params: [{ chainId: t.chainId }] });
+      } catch (e) {
+        await wallet.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: t.chainId,
+              chainName: t.name,
+              rpcUrls: [t.rpc],
+              nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
+              blockExplorerUrls: [t.explorer],
+            },
+          ],
+        });
+      }
+    }
+    netId = NETS[cid] ? cid : "0x4cef52";
+    wallet.on && wallet.on("accountsChanged", (a) => { account = a[0]; refreshAll(); });
+    wallet.on && wallet.on("chainChanged", (c) => { netId = c.toLowerCase(); refreshAll(); });
+    await refreshAll();
+  } catch (e) {
+    toast("Connect failed: " + (e.message || e), "err");
+  }
+}
+
+// ============================== mint ==============================
+function maxMintable(ph) {
+  const P = PHASES[ph];
+  const st = state;
+  const minted = { wl: st.wl, fcfs: st.fcfs, pub: st.pub }[ph];
+  const rem = P.cap + (ph === "fcfs" ? st.extra : 0n) - minted;
+  const used = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
+  const per = P.maxPer - used;
+  const m = BigInt(Math.min(Number(rem), Number(per), 50));
+  return m > 0n ? Number(m) : 0;
+}
+function currentOpenPhase() {
+  const ph = openPhaseNow();
+  if (ph === "wl" && acct && !acct.wl) return null; // WL phase but not whitelisted
+  return ph;
+}
+async function doMint() {
+  if (busy) return;
+  const ph = currentOpenPhase();
+  if (!account) {
+    await connect();
+    if (!account) return;
+  }
+  if (!net().contract) return toast("Contract not set for this network", "err");
+  const p2 = currentOpenPhase();
+  if (!p2) return toast("No open phase for your wallet right now", "err");
+  const P = PHASES[p2];
+  const max = maxMintable(p2);
+  if (qty < 1 || qty > max) return toast("Quantity out of range (max " + max + ")", "err");
+  const cost = BigInt(qty) * P.price;
+  if (acct && acct.balance < cost) return toast("Not enough USDC for gas + mint", "err");
+  busy = true;
+  setMintBtn("Confirm in wallet…");
+  try {
+    const data = P.sel + u(qty).slice(2);
+    const value = "0x" + cost.toString(16);
+    const hash = await wallet.request({
+      method: "eth_sendTransaction",
+      params: [{ from: account, to: net().contract, data, value }],
+    });
+    setMintBtn("Minting…");
+    toast("Tx sent: " + hash.slice(0, 14) + "…");
+    for (let i = 0; i < 90; i++) {
+      await new Promise((r) => setTimeout(r, 2000));
+      const rc = await rpc("eth_getTransactionReceipt", [hash]).catch(() => null);
+      if (rc) {
+        if (rc.status === "0x1") {
+          toast("✅ Minted " + qty + " passport(s)!", "ok");
+          await refreshAll();
+          loadMyPassports();
+        } else toast("Mint reverted on-chain", "err");
+        break;
+      }
+    }
+  } catch (e) {
+    toast("Mint failed: " + (e.message || e), "err");
+  }
+  busy = false;
+  setMintBtn();
+}
+let busy = false;
+function setMintBtn(txt) {
+  const b = el("mintbtn");
+  if (txt) { b.textContent = txt; b.disabled = true; return; }
+  b.disabled = busy;
+}
+
+// ============================== my passports ==============================
+async function loadMyPassports() {
+  const grid = el("mygrid");
+  const empty = el("myempty");
+  if (!account) { grid.innerHTML = ""; empty.style.display = "block"; return; }
+  empty.style.display = "none";
+  grid.innerHTML = '<div class="loading">Loading your passports…</div>';
+  try {
+    const n = du(await ccall(S.ownerTokens, [a32(account)]));
+    const ids = [];
+    for (let i = 0n; i < n; i++) {
+      ids.push(Number(du(await ccall(S.tokenOfOwnerByIndex, [a32(account), u(i)]))));
+    }
+    const tokens = await Promise.all(ids.map(readToken));
+    grid.innerHTML = "";
+    tokens.forEach((t) => grid.appendChild(tokenCard(t)));
+    upgrade3D(grid);
+  } catch (e) {
+    grid.innerHTML = '<div class="loading">Could not load (offline?)</div>';
+  }
+}
+function tokenCard(t) {
+  const d = document.createElement("div");
+  d.className = "tpass";
+  const tierName = t.tier === 0 ? "Founding Crew" : t.tier === 1 ? "FCFS" : "Public";
+  d.innerHTML =
+    renderPassport(t.id, t) +
+    `<div class="tpass-meta">
+       <div><b>#${ART.pad4(t.id)}</b> ${CLASSES[t.classIdx]} · ${RARITY[t.classIdx]}<br><span>${tierName} · L${t.level}${t.agent ? " · " + t.agent : ""}</span></div>
+       <a class="minilink" target="_blank" href="${net().explorer}/token/erc721/${net().contract}?id=${t.id}">explorer ↗</a>
+     </div>
+     <div class="tpass-actions">
+       <button onclick="toggleOnboard(${t.id})">Onboard agent</button>
+       <button onclick="attest(${t.id})">Attest task (1 USDC)</button>
+     </div>
+     <div class="onboard hidden" id="ob-${t.id}">
+       <input id="ob-name-${t.id}" maxlength="32" placeholder="Agent name (e.g. quant-07)">
+       <input id="ob-skill-${t.id}" maxlength="48" placeholder="Skill (e.g. defi-arb)">
+       <button class="primary" onclick="saveOnboard(${t.id})">Save on-chain</button>
+     </div>`;
+  return d;
+}
+function toggleOnboard(id) {
+  el("ob-" + id).classList.toggle("hidden");
+}
+async function saveOnboard(id) {
+  const name = el("ob-name-" + id).value.trim();
+  const skill = el("ob-skill-" + id).value.trim();
+  if (!name) return toast("Agent name required", "err");
+  try {
+    const nh = strHex(name), sh = strHex(skill || "generalist");
+    const nwords = 1 + Math.ceil(nh.length / 64);
+    const padHex = (h) => { const n = Math.ceil(h.length / 64) * 64; return h.padEnd(n, "0"); };
+    const w = (v) => BigInt(v).toString(16).padStart(64, "0");
+    const data = S.onboardAgent + w(id) + w(3 * 32) + w((3 + nwords) * 32) + w(nh.length / 2) + padHex(nh) + w(sh.length / 2) + padHex(sh);
+    const hash = await wallet.request({ method: "eth_sendTransaction", params: [{ from: account, to: net().contract, data }] });
+    toast("Onboarding agent… " + hash.slice(0, 12) + "…");
+    await new Promise((r) => setTimeout(r, 6000));
+    await refreshAll();
+    loadMyPassports();
+    toast("✅ Agent onboarded", "ok");
+  } catch (e) {
+    toast("Onboard failed: " + (e.message || e), "err");
+  }
+}
+async function attest(id) {
+  if (!account) return toast("Connect wallet first", "err");
+  try {
+    const hash = await wallet.request({
+      method: "eth_sendTransaction",
+      params: [{ from: account, to: net().contract, data: S.attestTask + u(id).slice(2), value: "0x" + (10n ** 18n).toString(16) }],
+    });
+    toast("Attestation sent… " + hash.slice(0, 12) + "…");
+    await new Promise((r) => setTimeout(r, 6000));
+    await refreshAll();
+    loadMyPassports();
+  } catch (e) {
+    toast("Attest failed: " + (e.message || e), "err");
+  }
+}
+
+// ============================== WL form ==============================
+function wlList() {
+  try { return JSON.parse(localStorage.getItem("crew_wl") || "[]"); } catch (e) { return []; }
+}
+function saveWL() {
+  const rec = {
+    wallet: el("wl-wallet").value.trim(),
+    comment: el("wl-comment").value.trim(),
+    ts: Date.now(),
+  };
+  if (!/^0x[0-9a-fA-F]{40}$/.test(rec.wallet)) return toast("Valid 0x wallet address required", "err");
+  if (!rec.comment) toast("Registered — you can add your comment link later.", "ok");
+  const l = wlList();
+  if (l.some((r) => r.wallet.toLowerCase() === rec.wallet.toLowerCase())) {
+    l = l.filter((r) => r.wallet.toLowerCase() !== rec.wallet.toLowerCase());
+  }
+  l.push(rec);
+  localStorage.setItem("crew_wl", JSON.stringify(l));
+  el("wl-count").textContent = l.length;
+  el("wl-done").classList.remove("hidden");
+  toast("Registered! Keep this device/browser or note your details.", "ok");
+}
+
+// ============================== render ==============================
+function chip(txt, cls) {
+  return `<span class="chip ${cls || ""}">${txt}</span>`;
+}
+function renderStatus() {
+  const bar = el("statusbar");
+  if (!state) {
+    bar.innerHTML = net().contract
+      ? chip("status: offline — retrying…", "dim")
+      : chip("mainnet contract pending — showing testnet data", "dim");
+    return;
+  }
+  const now = BigInt(Math.floor(Date.now() / 1000));
+  const o = phaseOpen(state, now);
+  bar.innerHTML =
+    chip(`minted ${state.total} / 2500`) +
+    (o.wl ? chip(`WL open · ${state.wl}/1000`, "gold") : chip(`WL ${state.wl}/1000 · ${state.wl >= 1000n ? "sold out" : "closed"}`, "dim")) +
+    (o.fcfs ? chip(`FCFS OPEN · ${state.fcfs}/1000`, "gold") : chip(`FCFS ${state.fcfs}/1000 · opens in ${countdown(state.fcfsStart)}`, state.fcfsStart > now ? "dim" : "")) +
+    (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/500`, "gold") : chip(`Public ${state.pub}/500 · opens in ${countdown(state.pubStart)}`, "dim")) +
+    chip(net().name, "net");
+}
+function renderPhaseCards() {
+  const wrap = el("phasecards");
+  wrap.innerHTML = "";
+  ["wl", "fcfs", "pub"].forEach((ph) => {
+    const P = PHASES[ph];
+    const minted = { wl: state ? state.wl : 0n, fcfs: state ? state.fcfs : 0n, pub: state ? state.pub : 0n }[ph];
+    const cap = P.cap + (state && ph === "fcfs" ? state.extra : 0n);
+    const now = BigInt(Math.floor(Date.now() / 1000));
+    const o = state ? phaseOpen(state, now)[ph] : null;
+    const starts = ph === "fcfs" ? state && state.fcfsStart : ph === "pub" ? state && state.pubStart : 0n;
+    let badge, cls;
+    if (o) { badge = "OPEN"; cls = "open"; }
+    else if (minted >= cap) { badge = "SOLD OUT"; cls = "out"; }
+    else if (ph === "wl") { badge = "BY WHITELIST"; cls = "dim"; }
+    else { badge = "OPENS IN " + countdown(starts).toUpperCase(); cls = "dim"; }
+    const pct = cap ? Number(minted * 100n / cap) : 0;
+    const c = document.createElement("div");
+    c.className = "phase" + (o ? " active" : "");
+    c.innerHTML = `
+      <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
+      <div class="phase-price">${P.priceStr} <span>USDC</span></div>
+      <div class="phase-bar"><i style="width:${pct}%"></i></div>
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>gold</b> or FCFS" : ""}</div>`;
+    wrap.appendChild(c);
+  });
+}
+function renderMintControls() {
+  const ph = currentOpenPhase();
+  const info = el("mintinfo");
+  const btn = el("mintbtn");
+  const total = el("minttotal");
+  if (!account) {
+    info.innerHTML = "Connect your wallet to mint. Pays in <b>USDC (native)</b> — the same asset that pays gas on Arc.";
+    btn.textContent = "Connect & Mint";
+    btn.disabled = false;
+    total.textContent = "";
+    return;
+  }
+  if (!ph) {
+    const st = state;
+    const now = BigInt(Math.floor(Date.now() / 1000));
+    let msg = "No open phase for your wallet right now.";
+    if (st && !st.wlOpen && st.fcfsStart > now) msg = `WL closed for you — FCFS opens in <b>${countdown(st.fcfsStart)}</b>.`;
+    else if (st && st.fcfsStart <= now && st.pubStart > now) msg = "FCFS sold out — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
+    info.innerHTML = msg;
+    btn.textContent = "Mint closed";
+    btn.disabled = true;
+    return;
+  }
+  const P = PHASES[ph];
+  const max = maxMintable(ph);
+  if (qty > max) qty = Math.max(1, max);
+  el("qty").value = qty;
+  total.innerHTML = `Total: <b>${(qty * Number(P.price) / 1e18).toLocaleString()} USDC</b> (${qty} × ${P.priceStr})`;
+  const claimed = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
+  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · WL status: ${acct && acct.wl ? "<b>whitelisted ✓</b>" : "—"}`;
+  btn.textContent = `Mint ${qty} Passport${qty > 1 ? "s" : ""}`;
+  btn.disabled = max < 1 || busy;
+  if (max < 1) btn.textContent = "Sold out for you";
+}
+function renderAccount() {
+  const box = el("acctbox");
+  if (!account) { box.innerHTML = ""; return; }
+  box.innerHTML = `
+    <span class="chip net" title="${account}">${short(account)}</span>
+    <span class="chip">balance: <b>${acct ? fmtUSDC(acct.balance) : "…"}</b> USDC</span>
+    ${acct && acct.wl ? chip("WL ✓", "gold") : ""}
+    <button class="btnlink" onclick="copyTxt('${account}', 'Address')">copy</button>`;
+}
+function renderAll() {
+  renderStatus();
+  if (state) {
+    renderPhaseCards();
+    renderMintControls();
+  }
+  renderAccount();
+}
+async function refreshAll() {
+  if (!net().contract) {
+    state = null;
+    renderAll();
+    return;
+  }
+  try {
+    state = await readState();
+    stateErr = false;
+  } catch (e) {
+    state = null;
+    stateErr = true;
+  }
+  try { acct = await readAccount(); } catch (e) { acct = null; }
+  renderAll();
+}
+
+// ============================== static renders ==============================
+function firstIdOfClass(c) {
+  for (let id = 1; id <= 2500; id++) if (Number(CLS[id - 1]) === c) return id;
+  return 1;
+}
+function renderCrewGrid() {
+  const g = el("crewgrid");
+  g.innerHTML = "";
+  for (let c = 0; c < 8; c++) {
+    const id = firstIdOfClass(c);
+    const d = document.createElement("div");
+    d.className = "ccard";
+    d.innerHTML =
+      renderPassport(id, { classIdx: c, tier: 1, level: 1, stamps: 1 }) +
+      `<div class="ccard-meta"><b>${CLASSES[c]}</b> <span class="rar ${c >= 5 ? "rare" : c >= 3 ? "uncom" : ""}">${RARITY[c]}</span><br>
+       <span class="dim">#${ART.pad4(id)} example · ${CAPS[c]} of 2500</span></div>`;
+    g.appendChild(d);
+  }
+}
+function renderHero() {
+  const id = firstIdOfClass(7); // Auditor
+  el("heropassport").innerHTML = renderPassport(id, { classIdx: 7, tier: 0, level: 5, stamps: 15, agent: "arc-sentinel" });
+}
+
+// ============================== 3d cards ==============================
+function upgrade3D(scope, opts) {
+  opts = opts || {};
+  scope.querySelectorAll('svg').forEach((svg, i) => {
+    if (svg.parentElement && svg.parentElement.classList.contains('nft3d')) return;
+    const stage = document.createElement('div');
+    stage.className = 'nft3d-stage' + (opts.glow ? ' glow' : '');
+    const fl = document.createElement('div');
+    fl.className = 'nft3d-float';
+    fl.style.animationDelay = (-(i * 1.9) % 7.5).toFixed(1) + 's';
+    const card = document.createElement('div');
+    card.className = 'nft3d';
+    const glare = document.createElement('div');
+    glare.className = 'glare';
+    const shine = document.createElement('div');
+    shine.className = 'shine';
+    card.appendChild(glare);
+    card.appendChild(shine);
+    const shadow = document.createElement('div');
+    shadow.className = 'nftshadow';
+    const parent = svg.parentNode;
+    parent.insertBefore(stage, svg);
+    stage.appendChild(shadow);
+    stage.appendChild(fl);
+    fl.appendChild(card);
+    card.appendChild(svg);
+    card.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'rotateX(' + (-py * 16).toFixed(2) + 'deg) rotateY(' + (px * 20).toFixed(2) + 'deg) translateZ(14px)';
+      glare.style.setProperty('--gx', ((px + 0.5) * 100).toFixed(1) + '%');
+      glare.style.setProperty('--gy', ((py + 0.5) * 100).toFixed(1) + '%');
+    });
+    stage.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+      glare.style.opacity = '';
+    });
+  });
+}
+
+// ============================== init ==============================
+document.addEventListener("DOMContentLoaded", () => {
+  renderHero();
+  renderCrewGrid();
+  upgrade3D(el("heropassport"), { glow: true });
+  upgrade3D(el("crewgrid"));
+  el("connect").addEventListener("click", connect);
+  el("mintbtn").addEventListener("click", doMint);
+  el("wl-save").addEventListener("click", saveWL);
+  el("wl-count").textContent = wlList().length;
+  document.querySelectorAll(".copyaddr").forEach((b) =>
+    b.addEventListener("click", () => copyTxt(b.dataset.addr, b.dataset.label))
+  );
+  const q = el("qty");
+  el("qminus").addEventListener("click", () => { qty = Math.max(1, qty - 1); q.value = qty; renderMintControls(); });
+  el("qplus").addEventListener("click", () => { qty = Math.min(50, qty + 1); q.value = qty; renderMintControls(); });
+  q.addEventListener("input", () => { qty = Math.max(1, Math.min(50, parseInt(q.value || "1", 10))); });
+  renderStatus();
+  refreshAll();
+  setInterval(refreshAll, 15000);
+});
+
+</script>
+</body>
+</html>
