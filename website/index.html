@@ -686,11 +686,7 @@ window.__BCD__ = "102ae549986a41fe7467dee6e7411b5e9070480aaa120c345ee80041e7557f
 "use strict";
 
 // ============================== config ==============================
-const NET = {
-  name: "Arc Mainnet",
-  rpc: "https://rpc.testnet.arc.io",
-  contract: "0x258Cbb33A0FEA6674CC27F87B6a608641B265110",
-};
+const NET = { name: "Arc Mainnet" };
 const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "Pioneer", "Auditor"];
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
@@ -699,46 +695,9 @@ const PHASES = {
   fcfs: { cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
-const S = {
-  totalSupply: "0x18160ddd", wlMinted: "0x463fb323", fcfsMinted: "0xe81e1c83", publicMinted: "0xa4f4f8af",
-  fcfsExtra: "0xbc43c321", fcfsStart: "0xe483b3c3", publicStart: "0xa5f4c6ff", wlOpen: "0x1a904acb",
-  foundingMinted: "0x2536da0f",
-};
-
-// ============================== mini ABI ==============================
-function wordsOf(hex) {
-  const h = hex && hex.startsWith("0x") ? hex.slice(2) : "";
-  const w = [];
-  for (let i = 0; i + 64 <= h.length; i += 64) w.push(h.slice(i, i + 64));
-  return w;
-}
-const du = (hex) => (hex && hex.length > 2 ? BigInt(hex) : 0n);
-
-async function rpc(method, params) {
-  const r = await fetch(NET.rpc, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-  });
-  const j = await r.json();
-  if (j.error) throw new Error(j.error.message || "rpc error");
-  return j.result;
-}
-async function ccall(sel) {
-  return rpc("eth_call", [{ to: NET.contract, data: sel }, "latest"]);
-}
-
-async function readState() {
-  const r = await Promise.all([
-    ccall(S.totalSupply), ccall(S.wlMinted), ccall(S.fcfsMinted), ccall(S.publicMinted),
-    ccall(S.fcfsExtra), ccall(S.fcfsStart), ccall(S.publicStart), ccall(S.wlOpen),
-    ccall(S.foundingMinted),
-  ]);
-  return {
-    total: du(r[0]), wl: du(r[1]), fcfs: du(r[2]), pub: du(r[3]), extra: du(r[4]),
-    fcfsStart: du(r[5]), pubStart: du(r[6]), wlOpen: du(r[7]) === 1n, gtd: du(r[8]),
-  };
-}
+// Mint counters — static at 0. The mint itself runs on OpenSea; this site
+// intentionally does not read any testnet contract state.
+const state = { total: 0n, wl: 0n, fcfs: 0n, pub: 0n, extra: 0n, gtd: 0n };
 // ============================== art ==============================
 const ART = window.__ART__;
 const CLS = window.__CLS__; // 2500 chars: class index per token id (id-1)
@@ -817,10 +776,6 @@ function chip(txt, cls) {
 }
 function renderStatus() {
   const bar = el("statusbar");
-  if (!state) {
-    bar.innerHTML = chip("loading live counters…", "dim");
-    return;
-  }
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
     chip(`GTD ${state.gtd}/500`) +
@@ -848,16 +803,7 @@ function renderPhaseCards() {
 }
 function renderAll() {
   renderStatus();
-  if (state) renderPhaseCards();
-}
-let state = null;
-async function refreshAll() {
-  try {
-    state = await readState();
-  } catch (e) {
-    state = null;
-  }
-  renderAll();
+  renderPhaseCards();
 }
 
 // ============================== static renders ==============================
@@ -979,9 +925,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".copyaddr").forEach((b) =>
     b.addEventListener("click", () => copyTxt(b.dataset.addr, b.dataset.label))
   );
-  renderStatus();
-  refreshAll();
-  setInterval(refreshAll, 15000);
+  renderAll();
 });
 
 </script>
