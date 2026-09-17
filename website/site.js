@@ -31,7 +31,7 @@ const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "P
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 const PHASES = {
-  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "GOLD", priceStr: "$0.50", gold: true },
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "WL", priceStr: "$0.50", gold: true },
   fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
@@ -332,7 +332,7 @@ async function loadMyPassports() {
 function tokenCard(t) {
   const d = document.createElement("div");
   d.className = "tpass";
-  const tierName = t.tier === 0 ? "Founding Crew" : t.tier === 1 ? "FCFS" : "Public";
+  const tierName = t.tier === 0 ? "GTD (Guaranteed)" : t.tier === 1 ? "FCFS" : "Public";
   d.innerHTML =
     renderPassport(t.id, t) +
     `<div class="tpass-meta">
@@ -428,8 +428,8 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`GOLD open · ${state.wl}/1500`, "gold") : chip(`GOLD ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
-    chip(`FCFS ${state.fcfs}/1000 · via GOLD mint`, "dim") +
+    (o.wl ? chip(`WL open · ${state.wl}/1500`, "gold") : chip(`WL ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
+    chip(`FCFS ${state.fcfs}/1000 · via WL`, "dim") +
     (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
 }
@@ -447,7 +447,7 @@ function renderPhaseCards() {
     if (o) { badge = "OPEN"; cls = "open"; }
     else if (minted >= cap) { badge = "SOLD OUT"; cls = "out"; }
     else if (ph === "wl") { badge = "BY WHITELIST"; cls = "dim"; }
-    else if (ph === "fcfs") { badge = "VIA GOLD MINT"; cls = "dim"; }
+    else if (ph === "fcfs") { badge = "VIA WL MINT"; cls = "dim"; }
     else { badge = "OPENS IN " + countdown(starts).toUpperCase(); cls = "dim"; }
     const pct = cap ? Number(minted * 100n / cap) : 0;
     const c = document.createElement("div");
@@ -456,7 +456,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>gold</b> or FCFS" : ph === "fcfs" ? "· filled via GOLD mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
@@ -476,7 +476,7 @@ function renderMintControls() {
     const st = state;
     const now = BigInt(Math.floor(Date.now() / 1000));
     let msg = "No open phase for your wallet right now.";
-    if (st && !st.wlOpen && st.pubStart > now) msg = "GOLD is closed — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
+    if (st && !st.wlOpen && st.pubStart > now) msg = "WL is closed — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
     info.innerHTML = msg;
     btn.textContent = "Mint closed";
     btn.disabled = true;
@@ -488,7 +488,7 @@ function renderMintControls() {
   el("qty").value = qty;
   total.innerHTML = `Total: <b>${(qty * Number(P.price) / 1e18).toLocaleString()} USDC</b> (${qty} × ${P.priceStr})`;
   const claimed = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
-  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · GOLD access: ${acct && acct.wl ? "<b>granted ✓</b>" : "—"}`;
+  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · WL access: ${acct && acct.wl ? "<b>granted ✓</b>" : "—"}`;
   btn.textContent = `Mint ${qty} Passport${qty > 1 ? "s" : ""}`;
   btn.disabled = max < 1 || busy;
   if (max < 1) btn.textContent = "Sold out for you";

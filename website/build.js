@@ -319,12 +319,12 @@ footer code:hover{color:var(--gold2)}
     <p class="lede">Tier (how you minted) × Class (what you got) × Level (what you did). The card you see is never the card you'll keep.</p>
     <table>
       <tr><th>Axis</th><th>Tiers</th><th>Supply</th></tr>
-      <tr><td><b>Tier</b> (frame)</td><td>Founding Crew (gold, via GOLD) / FCFS (via GOLD) / Public</td><td>500 / 1,000 / 1,000</td></tr>
+      <tr><td><b>Tier</b> (frame)</td><td>GTD (Guaranteed, via WL) / FCFS (via WL) / Public</td><td>500 / 1,000 / 1,000</td></tr>
       <tr><td><b>Class</b> (face)</td><td>Common → Uncommon → Rare → <span style="color:var(--gold2)">Legendary</span></td><td>1,360 / 600 / 380 / 160</td></tr>
       <tr><td><b>Level</b> (badge)</td><td>L1 → L5 via on-chain attestations</td><td>earned, not minted</td></tr>
       <tr><td><b>Stamps</b></td><td>ENLISTED → ONBOARDED → VETTED → MASTER</td><td>earned, not minted</td></tr>
     </table>
-    <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × Founding Crew (gold) = maximum <b>25 passports</b>. Five percent of the gold frame, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
+    <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × GTD (Guaranteed) = maximum <b>25 passports</b>. Five percent of the GTD tier, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
   </section>
 
   <section class="sec" id="mint">
@@ -354,9 +354,9 @@ footer code:hover{color:var(--gold2)}
   </section>
 
   <section class="sec" id="wl">
-    <div class="kicker">GOLD</div>
-    <h2>GOLD — 1,500 slots @ $0.50</h2>
-    <p class="lede">Every GOLD mint is a <b>random result</b>: Founding Crew (gold frame) or FCFS — drawn on-chain from a bag of 500 gold + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
+    <div class="kicker">WL</div>
+    <h2>WL — 1,500 slots @ $0.50</h2>
+    <p class="lede">1,500 wallets get WL. Every WL mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
     <div class="wlbox">
       <div class="wl-tasks">
         <div class="wl-task">
@@ -366,7 +366,7 @@ footer code:hover{color:var(--gold2)}
         </div>
         <div class="wl-task soon">
           <span class="wl-n">2</span>
-          <div class="wl-tx"><b>Like &amp; RT the GOLD announcement post</b>
+          <div class="wl-tx"><b>Like &amp; RT the WL announcement post</b>
           <p>Link coming soon — posted here once the CREW X account is ready.</p></div>
         </div>
         <div class="wl-task soon">
@@ -378,7 +378,7 @@ footer code:hover{color:var(--gold2)}
       <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
       <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
       <button class="btn gold" id="wl-save" style="width:100%">Register for GOLD</button>
-      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the GOLD drop — on-chain via <code>setWhitelist()</code>.</div>
+      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
     </div>
   </section>
 
@@ -387,7 +387,7 @@ footer code:hover{color:var(--gold2)}
     <h2>From testnet to the agent economy</h2>
     <div class="road">
       <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc Testnet</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
-      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 GOLD slots @ $0.50 — random result: Founding Crew (gold) or FCFS → 1,000 Public @ $10. Max 1 per wallet (GOLD), 4 (Public). Total raise: $10,750 USDC. GOLD tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 WL slots @ $0.50 — random result: GTD (Guaranteed) or FCFS → 1,000 Public @ $10. Max 1 per wallet (WL), 4 (Public). Total raise: $10,750 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
       <div class="ritem"><span class="st next">NEXT</span><div><b>Phase 2 — Mainnet mint</b><p>Same contract, deployed to Arc mainnet (chain 5042). Testnet passports are the dry run.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 4 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>

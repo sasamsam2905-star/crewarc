@@ -272,12 +272,12 @@ footer code:hover{color:var(--gold2)}
     <p class="lede">Tier (how you minted) × Class (what you got) × Level (what you did). The card you see is never the card you'll keep.</p>
     <table>
       <tr><th>Axis</th><th>Tiers</th><th>Supply</th></tr>
-      <tr><td><b>Tier</b> (frame)</td><td>Founding Crew (gold, via GOLD) / FCFS (via GOLD) / Public</td><td>500 / 1,000 / 1,000</td></tr>
+      <tr><td><b>Tier</b> (frame)</td><td>GTD (Guaranteed, via WL) / FCFS (via WL) / Public</td><td>500 / 1,000 / 1,000</td></tr>
       <tr><td><b>Class</b> (face)</td><td>Common → Uncommon → Rare → <span style="color:var(--gold2)">Legendary</span></td><td>1,360 / 600 / 380 / 160</td></tr>
       <tr><td><b>Level</b> (badge)</td><td>L1 → L5 via on-chain attestations</td><td>earned, not minted</td></tr>
       <tr><td><b>Stamps</b></td><td>ENLISTED → ONBOARDED → VETTED → MASTER</td><td>earned, not minted</td></tr>
     </table>
-    <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × Founding Crew (gold) = maximum <b>25 passports</b>. Five percent of the gold frame, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
+    <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × GTD (Guaranteed) = maximum <b>25 passports</b>. Five percent of the GTD tier, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
   </section>
 
   <section class="sec" id="mint">
@@ -307,9 +307,9 @@ footer code:hover{color:var(--gold2)}
   </section>
 
   <section class="sec" id="wl">
-    <div class="kicker">GOLD</div>
-    <h2>GOLD — 1,500 slots @ $0.50</h2>
-    <p class="lede">Every GOLD mint is a <b>random result</b>: Founding Crew (gold frame) or FCFS — drawn on-chain from a bag of 500 gold + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
+    <div class="kicker">WL</div>
+    <h2>WL — 1,500 slots @ $0.50</h2>
+    <p class="lede">1,500 wallets get WL. Every WL mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
     <div class="wlbox">
       <div class="wl-tasks">
         <div class="wl-task">
@@ -319,7 +319,7 @@ footer code:hover{color:var(--gold2)}
         </div>
         <div class="wl-task soon">
           <span class="wl-n">2</span>
-          <div class="wl-tx"><b>Like &amp; RT the GOLD announcement post</b>
+          <div class="wl-tx"><b>Like &amp; RT the WL announcement post</b>
           <p>Link coming soon — posted here once the CREW X account is ready.</p></div>
         </div>
         <div class="wl-task soon">
@@ -331,7 +331,7 @@ footer code:hover{color:var(--gold2)}
       <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
       <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
       <button class="btn gold" id="wl-save" style="width:100%">Register for GOLD</button>
-      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the GOLD drop — on-chain via <code>setWhitelist()</code>.</div>
+      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
     </div>
   </section>
 
@@ -340,7 +340,7 @@ footer code:hover{color:var(--gold2)}
     <h2>From testnet to the agent economy</h2>
     <div class="road">
       <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc Testnet</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
-      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 GOLD slots @ $0.50 — random result: Founding Crew (gold) or FCFS → 1,000 Public @ $10. Max 1 per wallet (GOLD), 4 (Public). Total raise: $10,750 USDC. GOLD tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Testnet mint</b><p>1,500 WL slots @ $0.50 — random result: GTD (Guaranteed) or FCFS → 1,000 Public @ $10. Max 1 per wallet (WL), 4 (Public). Total raise: $10,750 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
       <div class="ritem"><span class="st next">NEXT</span><div><b>Phase 2 — Mainnet mint</b><p>Same contract, deployed to Arc mainnet (chain 5042). Testnet passports are the dry run.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 4 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
@@ -728,7 +728,7 @@ const CLASSES = ["Builder", "Scout", "Trader", "Diplomat", "Guard", "Oracle", "P
 const RARITY = ["Common", "Common", "Common", "Uncommon", "Uncommon", "Rare", "Rare", "Legendary"];
 const CAPS = [500, 430, 430, 300, 300, 190, 190, 160];
 const PHASES = {
-  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "GOLD", priceStr: "$0.50", gold: true },
+  wl: { sel: "0xba419de0", price: 500000000000000000n, cap: 1500n, maxPer: 1n, label: "WL", priceStr: "$0.50", gold: true },
   fcfs: { sel: "0xcd2cbf4f", price: 1000000000000000000n, cap: 1000n, maxPer: 1n, label: "FCFS", priceStr: "$1.00", gold: false },
   pub: { sel: "0xefd0cbf9", price: 10000000000000000000n, cap: 1000n, maxPer: 4n, label: "Public", priceStr: "$10.00", gold: false },
 };
@@ -1029,7 +1029,7 @@ async function loadMyPassports() {
 function tokenCard(t) {
   const d = document.createElement("div");
   d.className = "tpass";
-  const tierName = t.tier === 0 ? "Founding Crew" : t.tier === 1 ? "FCFS" : "Public";
+  const tierName = t.tier === 0 ? "GTD (Guaranteed)" : t.tier === 1 ? "FCFS" : "Public";
   d.innerHTML =
     renderPassport(t.id, t) +
     `<div class="tpass-meta">
@@ -1125,8 +1125,8 @@ function renderStatus() {
   const o = phaseOpen(state, now);
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
-    (o.wl ? chip(`GOLD open · ${state.wl}/1500`, "gold") : chip(`GOLD ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
-    chip(`FCFS ${state.fcfs}/1000 · via GOLD mint`, "dim") +
+    (o.wl ? chip(`WL open · ${state.wl}/1500`, "gold") : chip(`WL ${state.wl}/1500 · ${state.wl >= 1500n ? "sold out" : "closed"}`, "dim")) +
+    chip(`FCFS ${state.fcfs}/1000 · via WL`, "dim") +
     (o.pub ? chip(`PUBLIC OPEN · ${state.pub}/1000`, "gold") : chip(`Public ${state.pub}/1000 · opens in ${countdown(state.pubStart)}`, "dim")) +
     chip(net().name, "net");
 }
@@ -1144,7 +1144,7 @@ function renderPhaseCards() {
     if (o) { badge = "OPEN"; cls = "open"; }
     else if (minted >= cap) { badge = "SOLD OUT"; cls = "out"; }
     else if (ph === "wl") { badge = "BY WHITELIST"; cls = "dim"; }
-    else if (ph === "fcfs") { badge = "VIA GOLD MINT"; cls = "dim"; }
+    else if (ph === "fcfs") { badge = "VIA WL MINT"; cls = "dim"; }
     else { badge = "OPENS IN " + countdown(starts).toUpperCase(); cls = "dim"; }
     const pct = cap ? Number(minted * 100n / cap) : 0;
     const c = document.createElement("div");
@@ -1153,7 +1153,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span><span class="badge ${cls}">${badge}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>gold</b> or FCFS" : ph === "fcfs" ? "· filled via GOLD mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
@@ -1173,7 +1173,7 @@ function renderMintControls() {
     const st = state;
     const now = BigInt(Math.floor(Date.now() / 1000));
     let msg = "No open phase for your wallet right now.";
-    if (st && !st.wlOpen && st.pubStart > now) msg = "GOLD is closed — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
+    if (st && !st.wlOpen && st.pubStart > now) msg = "WL is closed — Public opens in <b>" + countdown(st.pubStart) + "</b>.";
     info.innerHTML = msg;
     btn.textContent = "Mint closed";
     btn.disabled = true;
@@ -1185,7 +1185,7 @@ function renderMintControls() {
   el("qty").value = qty;
   total.innerHTML = `Total: <b>${(qty * Number(P.price) / 1e18).toLocaleString()} USDC</b> (${qty} × ${P.priceStr})`;
   const claimed = ph === "wl" ? (acct ? acct.wlPer : 0n) : (acct ? acct.tierMinted[PHASE_IDX[ph]] : 0n);
-  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · GOLD access: ${acct && acct.wl ? "<b>granted ✓</b>" : "—"}`;
+  info.innerHTML = `Minting in <b>${P.label}</b> · you've claimed ${claimed}/${P.maxPer} · WL access: ${acct && acct.wl ? "<b>granted ✓</b>" : "—"}`;
   btn.textContent = `Mint ${qty} Passport${qty > 1 ? "s" : ""}`;
   btn.disabled = max < 1 || busy;
   if (max < 1) btn.textContent = "Sold out for you";
