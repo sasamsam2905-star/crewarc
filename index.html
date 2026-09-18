@@ -71,7 +71,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:
 .hero .sub{color:var(--mut);max-width:520px;font-size:15px}
 .cta{display:flex;gap:12px;margin:24px 0 18px}
 #statusbar{margin-top:8px}
-.heropassport svg{width:100%;max-width:380px;display:block;margin:0 auto;border-radius:14px}
+.heropassport svg,.heropassport img{width:100%;max-width:380px;display:block;margin:0 auto;border-radius:14px}
 .heropassport .nft3d,.heropassport .nft3d .glare,.heropassport .nft3d .shine{border-radius:14px}
 /* vision */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -203,7 +203,7 @@ footer code:hover{color:var(--gold2)}
 /* responsive */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;padding:40px 0}
-  .heropassport svg{max-width:300px}
+  .heropassport svg,.heropassport img{max-width:300px}
   .hero h1{font-size:46px}
   .grid2,.wl-grid{grid-template-columns:1fr}
   .grid3,.crewgrid{grid-template-columns:repeat(2,1fr)}
@@ -238,7 +238,7 @@ footer code:hover{color:var(--gold2)}
       </div>
       <div id="statusbar"><span class="chip dim">loading…</span></div>
     </div>
-    <div class="heropassport" id="heropassport"></div>
+    <div class="heropassport" id="heropassport"><img src="crew-hero.png" alt="CREW Founding Passport 0137 of 500"></div>
   </header>
 
   <section class="sec" id="vision">
@@ -268,7 +268,7 @@ footer code:hover{color:var(--gold2)}
     <div class="steps">
       <div class="step"><b>Mint</b><p>Pay in USDC (native). Your class, frame and barcode are determined on-chain at mint.</p></div>
       <div class="step"><b>Onboard</b><p>Bind an agent name + skill to your passport. One tx. The ONBOARDED stamp appears.</p></div>
-      <div class="step"><b>Work</b><p>Your agent takes tasks. Each completion is attested on-chain (1 USDC) — or via x402 receipts in Phase 3.</p></div>
+      <div class="step"><b>Work</b><p>Your agent takes tasks. Each completion is attested on-chain (1 USDC) — or through x402 receipts in Phase 3.</p></div>
       <div class="step"><b>Level up</b><p>10/50/200/500 attestations → L2/L3/L4/L5. VETTED and MASTER stamps unlock. The card updates forever.</p></div>
     </div>
   </section>
@@ -286,9 +286,9 @@ footer code:hover{color:var(--gold2)}
     <p class="lede">Tier (how you minted) × Class (what you got) × Level (what you did). The card you see is never the card you'll keep.</p>
     <table>
       <tr><th>Axis</th><th>Tiers</th><th>Supply</th></tr>
-      <tr><td><b>Tier</b> (frame)</td><td>GTD (Guaranteed, via WL) / FCFS (via WL) / Public</td><td>500 / 1,000 / 1,000</td></tr>
+      <tr><td><b>Tier</b> (frame)</td><td>GTD (Guaranteed, whitelist) / FCFS (whitelist) / Public</td><td>500 / 1,000 / 1,000</td></tr>
       <tr><td><b>Class</b> (face)</td><td>Common → Uncommon → Rare → <span style="color:var(--gold2)">Legendary</span></td><td>1,360 / 600 / 380 / 160</td></tr>
-      <tr><td><b>Level</b> (badge)</td><td>L1 → L5 via on-chain attestations</td><td>earned, not minted</td></tr>
+      <tr><td><b>Level</b> (badge)</td><td>L1 → L5, raised by on-chain attestations</td><td>earned, not minted</td></tr>
       <tr><td><b>Stamps</b></td><td>ENLISTED → ONBOARDED → VETTED → MASTER</td><td>earned, not minted</td></tr>
     </table>
     <div class="grail"><b>The Holy Grail:</b> Auditor (Legendary) × GTD (Guaranteed) = maximum <b>25 passports</b>. Five percent of the GTD tier, one percent of the supply. The most collectible object on Arc — and it can still reach L5 with all four stamps.</div>
@@ -314,8 +314,8 @@ footer code:hover{color:var(--gold2)}
 
   <section class="sec" id="wl">
     <div class="kicker">GTD</div>
-    <h2>GTD — 500 NFT @ $0.50 (via WL)</h2>
-    <p class="lede">1,500 wallets get WL. Every WL mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted on-chain via <code>setWhitelist()</code>.</p>
+    <h2>GTD — 500 NFT @ $0.50 (whitelist)</h2>
+    <p class="lede">1,500 wallets make the whitelist. Every whitelist mint is a <b>random result</b>: GTD (Guaranteed) or FCFS — drawn on-chain from a bag of 500 GTD + 1,000 FCFS. Max <b>1 per wallet</b>. Complete the tasks below, then submit your wallet address + the link to your comment. Access is granted directly on-chain (setWhitelist()).</p>
     <div class="wl-grid">
       <div class="wlbox">
       <div class="wl-tasks">
@@ -326,7 +326,7 @@ footer code:hover{color:var(--gold2)}
         </div>
         <div class="wl-task soon">
           <span class="wl-n">2</span>
-          <div class="wl-tx"><b>Like &amp; RT the WL announcement post</b>
+          <div class="wl-tx"><b>Like &amp; RT the whitelist announcement post</b>
           <p>Link coming soon — posted here once the CREW X account is ready.</p></div>
         </div>
         <div class="wl-task soon">
@@ -337,8 +337,8 @@ footer code:hover{color:var(--gold2)}
       </div>
       <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
       <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
-      <button class="btn gold" id="wl-save" style="width:100%">Register for WL</button>
-      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the WL drop — on-chain via <code>setWhitelist()</code>.</div>
+      <button class="btn gold" id="wl-save" style="width:100%">Register for the whitelist</button>
+      <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the whitelist drop — granted directly on-chain (setWhitelist()).</div>
       </div>
       <div class="airdrop">
         <div class="airdrop-inner">
@@ -376,13 +376,13 @@ footer code:hover{color:var(--gold2)}
   <section class="sec" id="faq">
     <div class="kicker">FAQ</div>
     <h2>Questions</h2>
-    <details open><summary>Where do I mint?</summary><p>On <b>OpenSea</b>, through the official CREW collection. WL goes first (1,500 wallets — random result: GTD or FCFS), then Public @ $10, max 4 per wallet. Payment is USDC, the native asset of Arc. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the drop date.</p></details>
+    <details open><summary>Where do I mint?</summary><p>On <b>OpenSea</b>, through the official CREW collection. The whitelist mints first (1,500 wallets — random result: GTD or FCFS), then Public @ $10, max 4 per wallet. Payment is USDC, the native asset of Arc. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the drop date.</p></details>
     <details><summary>What is Arc?</summary><p>Arc is Circle's stablecoin-native Layer-1, public mainnet live since September 16, 2026. EVM-compatible, USDC pays gas, sub-second deterministic finality, institutional validators (BlackRock, Visa, DTCC…). It's explicitly built for the agentic economy — which is why CREW lives there.</p></details>
     <details><summary>How is CREW different from a normal PFP?</summary><p>A PFP is a picture. A CREW passport is an operational identity: you onboard an agent, earn attestations, and the card visibly grows. Its metadata is 100% on-chain (SVG + JSON in the contract) — nothing external to lose or censor.</p></details>
     <details><summary>Do I need to run an AI agent to hold one?</summary><p>No. You can hold CREW like any collectible. But the thesis is that as agent adoption grows, verified agent identities with on-chain track records become the scarce asset — and Arc is the settlement layer for that economy.</p></details>
     <details><summary>Why is mint paid in USDC?</summary><p>Because USDC <i>is</i> the gas on Arc. No approvals, no wrapped variants, predictable dollar fees. Your mint payment and your gas come from the same balance — same as how ETH works on Ethereum.</p></details>
-    <details><summary>Can an AI agent mint for me?</summary><p>Yes — anything that can sign EIP-1559 transactions works: EOA wallets, smart accounts, agent wallets. In Phase 3 the full loop (discover → pay → attest) becomes machine-to-machine via x402.</p></details>
-    <details><summary>What about royalties?</summary><p>5% via ERC-2981, enforced by marketplaces that honor it. A small fee keeps the passport ecosystem alive — funding Phase 3/4 development.</p></details>
+    <details><summary>Can an AI agent mint for me?</summary><p>Yes — anything that can sign EIP-1559 transactions works: EOA wallets, smart accounts, agent wallets. In Phase 3 the full loop (discover → pay → attest) becomes fully machine-to-machine through x402.</p></details>
+    <details><summary>What about royalties?</summary><p>5%, set on-chain with ERC-2981 and enforced by marketplaces that honor it. A small fee keeps the passport ecosystem alive — funding Phase 3/4 development.</p></details>
   </section>
 
   <footer>
@@ -811,7 +811,7 @@ function saveWL() {
   if (SHEETS_URL) {
     toast("Registering…", "ok");
     sendToSheet("wl", { wallet: rec.wallet, comment: rec.comment })
-      .then((ok) => toast(ok ? "Registered ✓ — sent to the WL list." : "Registered — saved on this device (sync offline).", ok ? "ok" : "warn"));
+      .then((ok) => toast(ok ? "Registered ✓ — sent to the whitelist." : "Registered — saved on this device (sync offline).", ok ? "ok" : "warn"));
   } else {
     toast("Registered! Keep this device/browser or note your details.", "ok");
   }
@@ -872,7 +872,7 @@ function renderStatus() {
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
     chip(`GTD ${state.gtd}/500`) +
-    chip(`FCFS ${state.fcfs}/1000 · via WL`) +
+    chip(`FCFS ${state.fcfs}/1000 · whitelist`) +
     chip(`Public ${state.pub}/1000`) +
     chip(NET.name, "net");
 }
@@ -890,7 +890,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· whitelist · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled from the whitelist" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
@@ -920,13 +920,12 @@ function renderCrewGrid() {
 }
 function renderHero() {
   const id = firstIdOfClass(7); // Auditor
-  el("heropassport").innerHTML = renderPassport(id, { classIdx: 7, tier: 0, level: 5, stamps: 15, agent: "arc-sentinel" });
 }
 
 // ============================== 3d cards ==============================
 function upgrade3D(scope, opts) {
   opts = opts || {};
-  scope.querySelectorAll('svg').forEach((svg, i) => {
+  scope.querySelectorAll('svg, img').forEach((svg, i) => {
     if (svg.parentElement && svg.parentElement.classList.contains('nft3d')) return;
     const stage = document.createElement('div');
     stage.className = 'nft3d-stage' + (opts.glow ? ' glow' : '');

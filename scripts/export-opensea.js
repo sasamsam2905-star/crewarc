@@ -123,6 +123,21 @@ function main() {
   }
   if (fresh) fs.writeFileSync(path.join(OUT, "metadata.csv"), rows.join("\n") + "\n");
   else fs.appendFileSync(path.join(OUT, "metadata.csv"), rows.join("\n") + "\n");
+
+  // Safety: dedupe CSV rows by image filename (guards against double-appends)
+  const final = fs.readFileSync(path.join(OUT, "metadata.csv"), "utf8").trim().split("\n");
+  const seen = new Set();
+  const deduped = [];
+  for (const line of final) {
+    const m = line.match(/"(crew-\d{4}\.png)"/);
+    const key = m ? m[1] : line;
+    if (!seen.has(key)) {
+      seen.add(key);
+      deduped.push(line);
+    }
+  }
+  fs.writeFileSync(path.join(OUT, "metadata.csv"), deduped.join("\n") + "\n");
+  if (deduped.length !== final.length) console.log(`  csv deduped: ${final.length} -> ${deduped.length} lines`);
   const n = fs.readdirSync(MEDIA).filter((f) => f.endsWith(".png")).length;
   const sample = fs.statSync(path.join(MEDIA, "crew-0001.png")).size;
   console.log(`done: ${n} png files, metadata.csv rows=${rows.length - 1}, sample crew-0001.png=${(sample / 1024).toFixed(0)} KB, elapsed=${Date.now() - t0} ms`);

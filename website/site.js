@@ -87,7 +87,7 @@ function saveWL() {
   if (SHEETS_URL) {
     toast("Registering…", "ok");
     sendToSheet("wl", { wallet: rec.wallet, comment: rec.comment })
-      .then((ok) => toast(ok ? "Registered ✓ — sent to the WL list." : "Registered — saved on this device (sync offline).", ok ? "ok" : "warn"));
+      .then((ok) => toast(ok ? "Registered ✓ — sent to the whitelist." : "Registered — saved on this device (sync offline).", ok ? "ok" : "warn"));
   } else {
     toast("Registered! Keep this device/browser or note your details.", "ok");
   }
@@ -148,7 +148,7 @@ function renderStatus() {
   bar.innerHTML =
     chip(`minted ${state.total} / 2500`) +
     chip(`GTD ${state.gtd}/500`) +
-    chip(`FCFS ${state.fcfs}/1000 · via WL`) +
+    chip(`FCFS ${state.fcfs}/1000 · whitelist`) +
     chip(`Public ${state.pub}/1000`) +
     chip(NET.name, "net");
 }
@@ -166,7 +166,7 @@ function renderPhaseCards() {
       <div class="phase-top"><span class="phase-name">${P.label}</span></div>
       <div class="phase-price">${P.priceStr} <span>USDC</span></div>
       <div class="phase-bar"><i style="width:${pct}%"></i></div>
-      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· via WL · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled via WL mint" : ""}</div>`;
+      <div class="phase-sub">${minted} / ${cap} · max ${P.maxPer} / wallet ${P.gold ? "· whitelist · random: <b>GTD</b> or FCFS" : ph === "fcfs" ? "· filled from the whitelist" : ""}</div>`;
     wrap.appendChild(c);
   });
 }
@@ -196,13 +196,12 @@ function renderCrewGrid() {
 }
 function renderHero() {
   const id = firstIdOfClass(7); // Auditor
-  el("heropassport").innerHTML = renderPassport(id, { classIdx: 7, tier: 0, level: 5, stamps: 15, agent: "arc-sentinel" });
 }
 
 // ============================== 3d cards ==============================
 function upgrade3D(scope, opts) {
   opts = opts || {};
-  scope.querySelectorAll('svg').forEach((svg, i) => {
+  scope.querySelectorAll('svg, img').forEach((svg, i) => {
     if (svg.parentElement && svg.parentElement.classList.contains('nft3d')) return;
     const stage = document.createElement('div');
     stage.className = 'nft3d-stage' + (opts.glow ? ' glow' : '');
