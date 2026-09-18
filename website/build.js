@@ -351,7 +351,7 @@ footer code:hover{color:var(--gold2)}
     <div class="mintbox">
       <div class="grid3">
         <div class="card"><span class="ico">🛒</span><h3>Where</h3><p>All tiers mint through the official CREW collection on OpenSea. One wallet, one payment in USDC — gas included.</p></div>
-        <div class="card"><span class="ico">⚡</span><h3>When</h3><p>The drop opens soon — WL first, then Public. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the announcement.</p></div>
+        <div class="card"><span class="ico">⚡</span><h3>When</h3><p>The drop opens soon — the whitelist mints first, then Public. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the announcement.</p></div>
         <div class="card"><span class="ico">🪪</span><h3>What you get</h3><p>Your class, tier frame and barcode are drawn on-chain at mint time. The card is yours forever — and it only grows with use.</p></div>
       </div>
       <div class="mintrow" style="margin-top:18px">
@@ -416,7 +416,7 @@ footer code:hover{color:var(--gold2)}
     <h2>From mint to the agent economy</h2>
     <div class="road">
       <div class="ritem"><span class="st done">DONE</span><div><b>Phase 0 — Contract + on-chain art on Arc</b><p>ERC-721 + on-chain SVG renderer deployed, full-mint tested (2,500/2,500), E2E verified live.</p></div></div>
-      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Mint NFT</b><p>2,500 passports minting on OpenSea: 1,500 WL @ $0.50 (random result: GTD or FCFS) → 1,000 Public @ $10. Max 1 per wallet (WL), 4 (Public). Total raise: $10,750 USDC. WL tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
+      <div class="ritem"><span class="st progress">IN PROGRESS</span><div><b>Phase 1 — Mint NFT</b><p>2,500 passports minting on OpenSea: whitelist 1,500 @ $0.50 (random result: GTD or FCFS) → Public 1,000 @ $10. Max 1 per wallet (whitelist), 4 (Public). Total raise: $10,750 USDC. Whitelist tasks on X — follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a>.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 2 — x402 receipts → stamps</b><p>Real agent payments (HTTP-native, USDC) become attestation. No more manual attest — the economy does it.</p></div></div>
       <div class="ritem"><span class="st later">LATER</span><div><b>Phase 3 — ERC-8004 compatibility</b><p>Port CREW identities to the agent identity standard (CAIP-10): one passport, many chains.</p></div></div>
     </div>
