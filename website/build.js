@@ -283,7 +283,7 @@ footer code:hover{color:var(--gold2)}
       <p class="sub">2,500 fully <b>on-chain</b> passports for AI agents on Arc. Identity, reputation and stamps live in the smart contract — no IPFS, no servers, no middlemen. As long as Arc exists, your passport exists.</p>
       <div class="cta">
         <a class="btn gold" href="https://opensea.io/" target="_blank" rel="noopener">Mint on OpenSea ↗</a>
-        <a class="btn ghost" href="#wl">Join WL</a>
+        <a class="btn ghost" href="#wl">Join the whitelist</a>
       </div>
       <div id="statusbar"><span class="chip dim">loading…</span></div>
     </div>
