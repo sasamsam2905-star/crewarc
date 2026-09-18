@@ -80,7 +80,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
 .card h3{margin:0 0 8px;font-size:15px;letter-spacing:.5px}
 .card p{margin:0;color:var(--mut);font-size:13.5px}
-.card .ico{font-size:20px;margin-bottom:10px;display:block}
+.card .ico{display:block;margin-bottom:10px}
+.card .ico img{width:34px;height:34px;display:block;mix-blend-mode:screen}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}
 .step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative}
@@ -246,8 +247,8 @@ footer code:hover{color:var(--gold2)}
     <h2>Why CREW exists</h2>
     <p class="lede">AI agents already transact on-chain. The missing piece is identity — who this agent is, and what it has actually delivered.</p>
     <div class="grid2">
-      <div class="card"><span class="ico">🌐</span><h3>Vision</h3><p>An economy where every AI agent carries a permanent, verifiable identity: issued on-chain, portable across chains, readable by anyone. No servers to go down, no database to trust, no middleman to ask. Identity as public infrastructure — minted as a collectible.</p></div>
-      <div class="card"><span class="ico">🎯</span><h3>Mission</h3><p>Mint 2,500 fully on-chain agent passports on Arc, Circle's stablecoin L1. Make identity deterministic, make reputation earnable through real work, and make the proof visible on the card itself. Every passport that levels up is a public record of an agent that delivered.</p></div>
+      <div class="card"><span class="ico"><img src="icon-vision.png" alt=""></span><h3>Vision</h3><p>An economy where every AI agent carries a permanent, verifiable identity: issued on-chain, portable across chains, readable by anyone. No servers to go down, no database to trust, no middleman to ask. Identity as public infrastructure — minted as a collectible.</p></div>
+      <div class="card"><span class="ico"><img src="icon-mission.png" alt=""></span><h3>Mission</h3><p>Mint 2,500 fully on-chain agent passports on Arc, Circle's stablecoin L1. Make identity deterministic, make reputation earnable through real work, and make the proof visible on the card itself. Every passport that levels up is a public record of an agent that delivered.</p></div>
     </div>
   </section>
 
@@ -256,9 +257,9 @@ footer code:hover{color:var(--gold2)}
     <h2>The first thing every agent needs</h2>
     <p class="lede">AI agents already transact on-chain — they just can't be verified. CREW is the identity + reputation layer, minted as collectibles on the chain built for the agentic economy.</p>
     <div class="grid3">
-      <div class="card"><span class="ico">🪪</span><h3>Identity</h3><p>Onboard any agent — name, skill, endpoints. The passport binds a verifiable profile to a permanent ERC-721, compatible with the ERC-8004 model (CAIP-10, cross-chain portable).</p></div>
-      <div class="card"><span class="ico">📈</span><h3>Reputation</h3><p>Every completed task can be attested on-chain (1 USDC). Attestations raise your clearance level L1→L5 and unlock stamps. Reputation can't be bought — only earned.</p></div>
-      <div class="card"><span class="ico">🧬</span><h3>A living passport</h3><p>The card itself is a procedural on-chain SVG: class face, tier frame, barcode, level badge and stamps. Fresh mints are blank; used passports grow. The most-used passport is the rarest one.</p></div>
+      <div class="card"><span class="ico"><img src="icon-identity.png" alt=""></span><h3>Identity</h3><p>Onboard any agent — name, skill, endpoints. The passport binds a verifiable profile to a permanent ERC-721, compatible with the ERC-8004 model (CAIP-10, cross-chain portable).</p></div>
+      <div class="card"><span class="ico"><img src="icon-reputation.png" alt=""></span><h3>Reputation</h3><p>Every completed task can be attested on-chain (1 USDC). Attestations raise your clearance level L1→L5 and unlock stamps. Reputation can't be bought — only earned.</p></div>
+      <div class="card"><span class="ico"><img src="icon-passport.png" alt=""></span><h3>A living passport</h3><p>The card itself is a procedural on-chain SVG: class face, tier frame, barcode, level badge and stamps. Fresh mints are blank; used passports grow. The most-used passport is the rarest one.</p></div>
     </div>
   </section>
 
@@ -301,9 +302,9 @@ footer code:hover{color:var(--gold2)}
     <div class="phasecards" id="phasecards"></div>
     <div class="mintbox">
       <div class="grid3">
-        <div class="card"><span class="ico">🛒</span><h3>Where</h3><p>All tiers mint through the official CREW collection on OpenSea. One wallet, one payment in USDC — gas included.</p></div>
-        <div class="card"><span class="ico">⚡</span><h3>When</h3><p>The drop opens soon — the whitelist mints first, then Public. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the announcement.</p></div>
-        <div class="card"><span class="ico">🪪</span><h3>What you get</h3><p>Your class, tier frame and barcode are drawn on-chain at mint time. The card is yours forever — and it only grows with use.</p></div>
+        <div class="card"><span class="ico"><img src="icon-where.png" alt=""></span><h3>Where</h3><p>All tiers mint through the official CREW collection on OpenSea. One wallet, one payment in USDC — gas included.</p></div>
+        <div class="card"><span class="ico"><img src="icon-when.png" alt=""></span><h3>When</h3><p>The drop opens soon — the whitelist mints first, then Public. Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the announcement.</p></div>
+        <div class="card"><span class="ico"><img src="icon-identity.png" alt=""></span><h3>What you get</h3><p>Your class, tier frame and barcode are drawn on-chain at mint time. The card is yours forever — and it only grows with use.</p></div>
       </div>
       <div class="mintrow" style="margin-top:18px">
         <a class="btn gold big" href="https://opensea.io/" target="_blank" rel="noopener">Mint on OpenSea ↗</a>
