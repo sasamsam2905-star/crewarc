@@ -54,7 +54,7 @@ let html = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>CREW — Agent Passport of the Agentic Economy | Arc</title>
 <link rel="canonical" href="https://crewarc.xyz/">
 <meta property="og:url" content="https://crewarc.xyz/"/>
@@ -93,8 +93,8 @@ h2{font-size:24px;letter-spacing:1px;margin:0 0 6px;font-family:var(--font-disp)
 nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .navin{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
 .logo{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:3px;font-size:17px;color:var(--tx);font-family:var(--font-disp)}
-.navlinks{display:flex;gap:16px;margin-left:12px;font-size:13px}
-.navlinks a{color:var(--mut)}
+.navlinks{display:flex;gap:20px;margin-left:12px;font-size:14.5px}
+.navlinks a{color:var(--mut);font-family:var(--font-disp);font-weight:500;letter-spacing:1.2px}
 .navlinks a:hover{color:var(--tx);text-decoration:none}
 .spacer{flex:1}
 /* buttons */
