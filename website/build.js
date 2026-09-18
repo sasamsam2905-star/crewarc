@@ -130,7 +130,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(21,3,3,.9);backdrop-filter:
 .card h3{margin:0 0 8px;font-size:15px;letter-spacing:.5px}
 .card p{margin:0;color:var(--mut);font-size:13.5px}
 .card .ico{display:block;margin-bottom:10px}
-.card .ico img{width:52px;height:52px;display:block;mix-blend-mode:screen}
+.card .ico img{width:64px;height:64px;display:block;mix-blend-mode:screen}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}
 .step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative}
