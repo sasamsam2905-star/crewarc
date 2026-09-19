@@ -406,6 +406,7 @@ footer code:hover{color:var(--gold2)}
           <h3 class="airdrop-title">$CREW</h3>
           <p class="airdrop-lede">Every CREW passport holds <b>$CREW</b>. When the token launches — after the NFT mint ends — each passport receives its airdrop straight to the holding wallet. Holders first, always.</p>
           <div class="airdrop-amount"><b>10,000</b> $CREW <span>per NFT</span></div>
+          <!-- TOKENOMICS — HIDDEN 2026-09-19 (community doubt). Restore by uncommenting.
           <div class="tok">
             <b class="tok-head">Tokenomics</b>
             <div class="tok-supply">Total supply <b>1,000,000,000</b> $CREW · ERC-20 on Arc</div>
@@ -420,6 +421,7 @@ footer code:hover{color:var(--gold2)}
             </table>
             <p class="tok-note">Holders &amp; community: 100% at launch. Liquidity locked 2 years. Team: 12-month cliff + 48-month vest.</p>
           </div>
+          -->
           <div class="airdrop-task">
             <b>Community airdrop task</b>
             <p>Post on <a href="https://x.com/crewonarc" target="_blank" rel="noopener">X</a> about CREW and tag <b>@crewonarc</b> to enter the community airdrop.</p>
