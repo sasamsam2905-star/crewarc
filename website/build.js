@@ -374,19 +374,19 @@ footer code:hover{color:var(--gold2)}
           <div class="wl-tx"><b>Follow <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc on X</a></b>
           <p>Follow the official CREW account.</p></div>
         </div>
-        <div class="wl-task soon">
+        <div class="wl-task">
           <span class="wl-n">2</span>
-          <div class="wl-tx"><b>Like &amp; RT the whitelist announcement post</b>
-          <p>Link coming soon — posted here once the CREW X account is ready.</p></div>
+          <div class="wl-tx"><b>Like &amp; RT <a href="https://x.com/crewonarc/status/2101287745603977261" target="_blank" rel="noopener">the CREW announcement post</a></b>
+          <p>Like and repost the launch post above.</p></div>
         </div>
-        <div class="wl-task soon">
+        <div class="wl-task">
           <span class="wl-n">3</span>
           <div class="wl-tx"><b>Comment your wallet address</b>
-          <p>Comment your wallet address on the same post — coming soon.</p></div>
+          <p>Comment your wallet address on <a href="https://x.com/crewonarc/status/2101287745603977261" target="_blank" rel="noopener">the same post</a>, then paste the link to your comment below.</p></div>
         </div>
       </div>
       <input id="wl-wallet" placeholder="Wallet address (0x…) — must be a valid Arc address">
-      <input id="wl-comment" placeholder="Paste your comment link here (after the post is live)">
+      <input id="wl-comment" placeholder="Paste your comment link here (https://x.com/…)">
       <button class="btn gold" id="wl-save" style="width:100%">Register for the whitelist</button>
       <div id="wl-done" class="hidden">✓ Registered (<span id="wl-count">0</span> on this device). Watch <a href="https://x.com/crewonarc" target="_blank" rel="noopener">@crewonarc</a> for the whitelist drop — granted directly on-chain (setWhitelist()).</div>
       </div>
