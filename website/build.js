@@ -418,7 +418,7 @@ footer code:hover{color:var(--gold2)}
               <tr><td>Treasury</td><td>250,000,000</td><td>25%</td></tr>
               <tr><td>Team &amp; advisors</td><td>125,000,000</td><td>12.5%</td></tr>
             </table>
-            <p class="tok-note">Holders &amp; community: 100% at launch. Liquidity locked 12 months. Team: 6-month cliff + 24-month vest.</p>
+            <p class="tok-note">Holders &amp; community: 100% at launch. Liquidity locked 2 years. Team: 12-month cliff + 48-month vest.</p>
           </div>
           <div class="airdrop-task">
             <b>Community airdrop task</b>
